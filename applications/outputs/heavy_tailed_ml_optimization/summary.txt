@@ -1,0 +1,13 @@
+Heavy-Tailed Optimization Application
+
+Setup
+- Optimize `0.5 * (log(log(x)) - 3)^2` from a large initial scale.
+- Compare raw gradient descent in `x` against gradient descent in `L2 = log(log(x))`.
+
+Results
+- Raw gradient descent: 40 steps, final loss=2.000000e+00, final x=2.851124e+64, final L2=5.000000e+00
+- L2-coordinate descent: 40 steps, final loss=9.860761e-32, final x=5.284913e+08, final L2=3.000000e+00
+
+Interpretation
+- In raw space the gradient is suppressed by `1 / (x log x)`, so the optimizer crawls across the plateau.
+- In L2 space the optimizer sees the true quadratic geometry directly, so it descends the heavy-tailed landscape much more efficiently.

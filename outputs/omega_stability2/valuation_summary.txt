@@ -1,0 +1,23 @@
+Base-pollution strip test summary
+
+Positional base: 10
+Archimedean log base: 10
+
+Valuation split
+- 299792458: 2 * 7 * 73 * 293339; base_part=2; coprime_part=149896229; v_2=1, v_5=0
+- 133732252: 2^2 * 61 * 548083; base_part=4; coprime_part=33433063; v_2=2, v_5=0
+- 233732252: 2^2 * 13 * 17 * 264403; base_part=4; coprime_part=58433063; v_2=2, v_5=0
+
+Pairwise archimedean shifts
+- expected_to_variant:
+  raw: L1=2.424825e-01, L2=1.276953e-02, L3=6.052583e-03
+  coprime: L1=2.424825e-01, L2=1.377526e-02, L3=6.772701e-03
+- seed_to_expected:
+  raw: L1=-3.505845e-01, L2=-1.834356e-02, L3=-8.668378e-03
+  coprime: L1=-6.516145e-01, L2=-3.607081e-02, L3=-1.751546e-02
+
+Interpretation
+- For 133732252 vs 233732252, stripping the base-10 part leaves the level-1 shift unchanged (2.424825e-01 vs 2.424825e-01) because both numbers have the same base-part.
+- At level 2 the coprime-only shift is slightly larger (1.377526e-02) than the raw shift (1.276953e-02), so the leading-digit perturbation does not disappear after stripping.
+- For 299792458 vs 133732252, the coprime-only deltas are larger in magnitude than the raw deltas because the two numbers do not share the same 2-adic depth.
+- On these examples, 5 contributes nothing: every tested value has v_5 = 0. The only base-10 pollution present is dyadic.

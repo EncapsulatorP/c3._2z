@@ -1,0 +1,24 @@
+Test 5 summary
+
+Assumption
+- Each random digit string is evaluated on the composite positional layer `base=10` and the prime positional shadows `base=5` and `base=2`.
+- `Δ1` is defined as `log(V_composite) - log(V_prime)` and `Δ2` as `log(log(V_composite)) - log(log(V_prime))`, both computed with high precision.
+- Stability is defined by the median split of the absorption ratio `Δ2 / Δ1`: lower ratio means the first log-level difference is more absorbed by the second.
+
+Run
+- sample count: 1000
+- digit width: 9
+- mpmath precision: 250 decimal digits
+- stability threshold (median Δ2/Δ1): 5.809456989123e-02
+- stable class fraction: 0.5000
+- ratio range: min=5.595420899327e-02, max=6.453673172688e-02, mean=5.852656377404e-02, std=1.995924449003e-03
+
+Cheap-feature screening
+- first_digit_benford_prob: best_auc=0.993784, best_threshold_accuracy=0.962000, pearson_with_ratio=0.942063, direction=decreasing => stable
+- leading_trailing_asymmetry: best_auc=0.514276, best_threshold_accuracy=0.516000, pearson_with_ratio=0.048446, direction=decreasing => stable
+- digit_entropy_bits: best_auc=0.500988, best_threshold_accuracy=0.508000, pearson_with_ratio=-0.005430, direction=increasing => stable
+
+Conclusion
+- The strongest cheap predictor was `first_digit_benford_prob` with AUC 0.993784 and threshold accuracy 0.962000.
+- On this construction, the stability split is almost entirely recoverable from a first-digit Benford-like statistic. That means the tower classification is not adding much beyond a very cheap leading-digit feature.
+- Digit entropy by itself was weak here: AUC 0.500988.

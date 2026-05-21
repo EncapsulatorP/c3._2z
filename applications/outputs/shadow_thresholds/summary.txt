@@ -1,0 +1,29 @@
+Shadow Threshold Application
+
+Setup
+- Recaman and Collatz are analyzed with multi-level log coordinates `L1`, `L2`, `L3`.
+- A shadow-threshold score is defined as `max(|dL1|, |dL2|, |dL3|)` per step.
+
+Top Recaman anomalies
+- index=112, value=152, raw_delta=1.120000e+02, jump_score=1.316866e+00
+- index=111, value=40, raw_delta=-1.110000e+02, jump_score=1.310308e+00
+- index=65, value=91, raw_delta=6.500000e+01, jump_score=1.225952e+00
+- index=64, value=26, raw_delta=-6.400000e+01, jump_score=1.215023e+00
+- index=63, value=90, raw_delta=6.300000e+01, jump_score=1.178655e+00
+- index=62, value=27, raw_delta=-6.200000e+01, jump_score=1.167605e+00
+- index=32, value=46, raw_delta=3.200000e+01, jump_score=1.142097e+00
+- index=61, value=89, raw_delta=6.100000e+01, jump_score=1.132514e+00
+
+Top Collatz anomalies
+- index=77, value=9232, raw_delta=6.155000e+03, jump_score=1.098504e+00
+- index=67, value=7288, raw_delta=4.859000e+03, jump_score=1.098475e+00
+- index=75, value=6154, raw_delta=4.103000e+03, jump_score=1.098450e+00
+- index=65, value=4858, raw_delta=3.239000e+03, jump_score=1.098407e+00
+- index=73, value=4102, raw_delta=2.735000e+03, jump_score=1.098369e+00
+- index=63, value=3238, raw_delta=2.159000e+03, jump_score=1.098304e+00
+- index=71, value=2734, raw_delta=1.823000e+03, jump_score=1.098247e+00
+- index=61, value=2158, raw_delta=1.439000e+03, jump_score=1.098149e+00
+
+Interpretation
+- The log-level jump score highlights steps where the sequence changes scale class abruptly, while suppressing raw magnitude blow-ups.
+- In practice this is the use-case: mark comparability-class transitions first, then inspect the raw step only at the flagged indices.

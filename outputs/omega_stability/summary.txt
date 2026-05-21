@@ -1,0 +1,22 @@
+Omega perturbation stability summary
+
+Test 1: residue profile vs z
+- c=1.200000: min=4.178370e-05, max=1.056476e-04, max|omega|=1.056476e-04
+- c=1.500000: min=1.617335e-08, max=4.749131e-06, max|omega|=4.749131e-06
+- c=2.718282: min=0.000000e+00, max=8.120649e-09, max|omega|=8.120649e-09
+- c=2.000000: min=0.000000e+00, max=2.535712e-07, max|omega|=2.535712e-07
+
+Test 2: residue stability vs base c
+- c* candidate (min |omega|): c=2.500000, omega=4.645790e-132
+- sweep range: min omega=4.645790e-132, max omega=9.704004e-01
+- min sits on sweep boundary: yes
+- sign flips in d|omega|/dc: 0
+- zero crossing intervals found: 0
+
+Test 3: symmetry breaking
+- symmetric residue: 9.756143e-07
+- broken sweep: min omega=5.563915e-08, max omega=9.756143e-07
+- max adjacent jump: 1.319616e-08
+
+Validation
+- direct vs stable comparisons: 100 points, max abs error=1.664974e-10

@@ -1,0 +1,29 @@
+Framework v1.3 summary
+
+Object
+- This runner measures local depth-3 log alignment around x=8 and compares Recaman against a matched random-walk null model.
+- Base 2 is included as the blind-spot control; non-dyadic bases are the actual discriminators.
+
+Test 1: local residual around x=8
+- base 2: omega3(8)=0.000000e+00
+- base 2.01: omega3(8)=-2.143229e-02
+- base sqrt2: omega3(8)=3.000000e+00
+- base 1.5: omega3(8)=2.128534e+00
+- base e: omega3(8)=-9.205585e-01
+- base pi: omega3(8)=-1.183465e+00
+
+Test 2: base sweep at x=8
+- min |omega3(c, 8)| on the sweep occurs at c=2.000125 with omega3=-2.708110e-04
+- compression at c=2 is 1.803369e-01; compression falls to 9.016844e-02 at the top of the sweep
+
+Test 3: Recaman vs matched random walk
+- Recaman first hits 8 at index 16
+- random-hit rate within the first 64 terms: 0.4440
+- among random walks that do hit 8, the fraction hitting by index 16 is 0.7624
+- mean first-hit index under the null model: 14.2252
+- base 2: Recaman mean |omega3| in the hit window=1.446335e+00, null mean=1.174193e+00, percentile=0.7793
+- base 2.01: Recaman mean |omega3| in the hit window=1.419332e+00, null mean=1.160138e+00, percentile=0.7658
+- base sqrt2: Recaman mean |omega3| in the hit window=5.892669e+00, null mean=4.663199e+00, percentile=0.8024
+- base 1.5: Recaman mean |omega3| in the hit window=4.601059e+00, null mean=3.602108e+00, percentile=0.8024
+- base e: Recaman mean |omega3| in the hit window=6.199085e-01, null mean=8.407621e-01, percentile=0.2658
+- base pi: Recaman mean |omega3| in the hit window=5.646066e-01, null mean=9.150876e-01, percentile=0.1430

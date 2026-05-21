@@ -1,0 +1,13 @@
+target,feature,label_rate,pearson_with_label,best_auc,best_threshold_accuracy,direction,threshold_rule
+peak_signature_disagreement,digit_entropy_bits,0.799,0.014700393045456806,0.5006818224272879,0.8,decreasing => label=1,-digit_entropy_bits <= -1.794653e+00
+peak_signature_disagreement,first_digit_benford_prob,0.799,-0.17427471186042715,0.6765297417792141,0.799,decreasing => label=1,-first_digit_benford_prob >= -3.010300e-01
+peak_signature_disagreement,leading_trailing_asymmetry,0.799,0.014820816391503185,0.5167466796181794,0.799,increasing => label=1,feature >= -1.000000e-12
+first_break_signature_disagreement,digit_entropy_bits,1.0,nan,nan,1.0,decreasing => label=1,-digit_entropy_bits >= -3.169925e+00
+first_break_signature_disagreement,first_digit_benford_prob,1.0,nan,nan,1.0,decreasing => label=1,-first_digit_benford_prob >= -3.010300e-01
+first_break_signature_disagreement,leading_trailing_asymmetry,1.0,nan,nan,1.0,decreasing => label=1,-leading_trailing_asymmetry >= -6.944444e-01
+late_prime_obstruction_peak,digit_entropy_bits,0.525,0.02618642995436738,0.5061172932330827,0.535,increasing => label=1,feature >= 1.974938e+00
+late_prime_obstruction_peak,first_digit_benford_prob,0.525,-0.2719258286835031,0.7160781954887218,0.697,decreasing => label=1,-first_digit_benford_prob >= -8.804563e-02
+late_prime_obstruction_peak,leading_trailing_asymmetry,0.525,0.01710133546009124,0.5140451127819549,0.535,increasing => label=1,feature >= 1.388889e-02
+late_prime_obstruction_first_break,digit_entropy_bits,1.0,nan,nan,1.0,decreasing => label=1,-digit_entropy_bits >= -3.169925e+00
+late_prime_obstruction_first_break,first_digit_benford_prob,1.0,nan,nan,1.0,decreasing => label=1,-first_digit_benford_prob >= -3.010300e-01
+late_prime_obstruction_first_break,leading_trailing_asymmetry,1.0,nan,nan,1.0,decreasing => label=1,-leading_trailing_asymmetry >= -6.944444e-01

@@ -1,0 +1,13 @@
+Pathological Root-Finding Application
+
+Setup
+- Solve `L2 + 0.05 sin(5 L2) = 5`, where `L2 = log(log(x))`.
+- Compare Newton directly in `x` against Newton in `L2` space.
+
+Results
+- Raw x-space Newton: 25 iterations, final |f|=7.999609e-03, final x=2.419146e+64, final L2=4.998892e+00
+- L2-space Newton: 5 iterations, final |f|=6.217249e-15, final x=6.275410e+64, final L2=5.005302e+00
+
+Interpretation
+- The raw solver pays the `1 / (x log x)` conditioning penalty, so steps are numerically awkward in raw coordinates.
+- The L2-space solver works on the natural comparability class of the equation and therefore converges in a much better-conditioned coordinate system.

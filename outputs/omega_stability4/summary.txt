@@ -1,0 +1,18 @@
+Test 4 summary
+
+Metric definitions
+- `residue_robustness_score = H / log2(|alphabet|)` when the active alphabet has size > 1, else 0.
+- `same_alphabet_rate_pm1` measures how often a valid single-digit +/-1 perturbation keeps the active alphabet size unchanged.
+- `carry_slack_std` measures how uneven the distances to overflow (`9 - digit`) are across positions.
+
+State metrics
+- repunit (111111111): score=0.000000, alphabet=1, entropy=-0.000000, same_alphabet_rate=0.000000, mean_abs_score_delta=0.503258, carry_slack_std=0.000000
+- balanced_12 (122121212): score=0.991076, alphabet=2, entropy=0.991076, same_alphabet_rate=0.500000, mean_abs_score_delta=0.078217, carry_slack_std=0.496904
+- mixed_2357 (233732252): score=0.876358, alphabet=4, entropy=1.752715, same_alphabet_rate=0.611111, mean_abs_score_delta=0.017143, carry_slack_std=1.617802
+
+Conclusions
+- The proposed entropy score does separate the three states as claimed: repunit=0.000000, balanced_12=0.991076, mixed_2357=0.876358.
+- On that metric, `122121212` is the strongest interior state of the three, while `111111111` is the boundary case with score 0.
+- A simple perturbation proxy does not fully support the stronger robustness claim: `233732252` preserves alphabet size under +/-1 perturbations more often (0.611111) than `122121212` (0.500000), and its mean score drift is smaller (0.017143 vs 0.078217).
+- The carry geometry story is supported: `233732252` has much more uneven carry slack (std 1.617802) than `122121212` (0.496904) and `111111111` (0.000000).
+- The falsifiable takeaway is that the normalized entropy score captures one notion of interior typicality, but it is not by itself a complete residue-robustness metric.

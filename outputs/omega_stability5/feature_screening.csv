@@ -1,0 +1,4 @@
+feature,pearson_with_ratio,best_auc,best_threshold_accuracy,stable_direction,threshold_rule
+digit_entropy_bits,-0.005430212421652724,0.500988,0.508,increasing => stable,feature <= 2.641604e+00
+first_digit_benford_prob,0.9420634580005118,0.993784,0.962,decreasing => stable,-first_digit_benford_prob >= -8.804563e-02
+leading_trailing_asymmetry,0.04844615707672372,0.514276,0.516,decreasing => stable,-leading_trailing_asymmetry >= -1.805556e-01
