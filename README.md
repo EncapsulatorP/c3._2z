@@ -1,5 +1,7 @@
 # Omega Stability — Iterated Logarithm Framework
 
+![Omega Stability Banner](assets/omega-readme-banner.svg)
+
 This repository implements and tests an **analytic tower framework** built around iterated exponential and logarithmic maps, with applications to numerical optimization, root-finding, sequence analysis, and digit-symbolic number theory.
 
 ---
