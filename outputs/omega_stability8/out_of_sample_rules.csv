@@ -1,0 +1,4 @@
+base,sample_count,mod_b_minus_1_success_rate,mod_b_plus_1_success_rate,leading_zero_rule_success_rate
+10,500,1.0,1.0,1.0
+11,500,1.0,1.0,1.0
+12,500,1.0,1.0,1.0

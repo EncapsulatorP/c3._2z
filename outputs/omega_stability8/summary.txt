@@ -1,0 +1,38 @@
+Modularity crash-test summary
+
+Object under test
+- The current reversed positional observation is the coefficient-evaluation map used by Tests 6-7: a decimal digit string `d_0...d_{m-1}` is sent to `P_b = sum d_i b^(m-1-i)` and compared with its reversed-digit partner.
+
+Minimal protocol results
+- Bases checked: 2, 3, 5, 10, 11, 12. The low bases 2, 3, 5 are the stress test for hidden carries.
+- For the three main constants `299792458`, `133732252`, and `233732252`, the displayed decimal strings are legal positional digit strings only in bases 10, 11, 12.
+- Out-of-sample arithmetic rule check: the universal reversal congruences and zero-padding law held with 100% success on random 12-digit strings in every valid base tested.
+
+Checklist
+- 1. Carry and borrow: FAIL. Example: `299792458` in base 2 has 9 digits >= base, so the current map hides the carry state instead of tracking it.
+- 2. Exact reconstruction: FAIL below base 10. `299792458` is not itself a legal base-2 digit string; exact reconstruction requires the hidden normalized form `101001100010`.
+- 3. Base dependence: FAIL as a structural claim for the main constants. Below base 10 their displayed strings stop being legal base-b digit expansions and become a different polynomial-evaluation object.
+- 4. Predictable base covariance: PASS in the negative sense. `P_b` and its reverse are explicit polynomials in `b`, so their variation with base is generic and derivable in advance.
+- 5. Prime-factor decomposition: PARTIAL PASS. Existing Test 2 already shows the base-10 effect on the named constants is dyadic (`v_2`) rather than 5-adic; the decimal layer is not uniquely selecting them.
+- 6. Residue accounting: FAIL for the low-base runs. The residue/carry information is not optional there; it is exactly what turns the displayed decimal coefficients into a legal base-b expansion.
+- 7. Alignment and shift: FAIL mathematically. Prepending one zero leaves `P_b` unchanged but multiplies the reversed partner by exactly `b`, so the mirror signal depends on arbitrary padding.
+- 8. Scale persistence: PARTIAL. The generic modular laws persist out of sample; a constant-specific anomaly was not established by this test.
+- 9. Matched null models: MIXED but not supportive of specialness. Reverse-gap percentiles against digit-shuffled controls were light_speed@b10: shuffle percentile=0.797; light_speed@b11: shuffle percentile=0.763; light_speed@b12: shuffle percentile=0.781; expected_next@b10: shuffle percentile=0.419; expected_next@b11: shuffle percentile=0.379; expected_next@b12: shuffle percentile=0.412; variant@b10: shuffle percentile=0.136; variant@b11: shuffle percentile=0.126; variant@b12: shuffle percentile=0.118.
+- 10. Boring adversarial controls: the named constants are not isolated by a large reverse-gap effect versus nearby same-width integers. light_speed@b10: nearby percentile=0.854; light_speed@b11: nearby percentile=0.854; light_speed@b12: nearby percentile=0.854; expected_next@b10: nearby percentile=0.237; expected_next@b11: nearby percentile=0.237; expected_next@b12: nearby percentile=0.237; variant@b10: nearby percentile=0.037; variant@b11: nearby percentile=0.037; variant@b12: nearby percentile=0.037.
+- 11. Out-of-sample prediction: PASS for the generic arithmetic mechanism. The frozen laws `rev == n (mod b-1)`, `rev == (-1)^(m-1) n (mod b+1)`, and the zero-padding multiplier all held on 500 unseen samples per valid base.
+- 12. Multiple-testing correction: GAP in the existing repo outputs. The prior summaries do not count searched bases, paddings, or transformations.
+- 13. Representation independence: PASS. There is a clean arithmetic carrier, but it is generic: reversal preserves residue mod `b-1` and fixes residue mod `b+1` up to the parity sign.
+- 14. Mechanism rather than resemblance: PASS. The exact identity is `P_b(rev) - P_b = sum d_i (b^(m-1-i) - b^i)`, plus the zero-padding law above.
+- 15. Error and effect size: weak. The control percentiles do not show an obviously exceptional reverse-gap effect for the named constants.
+- 16. Leakage test: FAIL in the broader repo. Existing Tests 5-7 already show first-digit Benford probability recovers much of the reported label structure.
+
+Named constants
+- light_speed: b2: valid=0, carries=12, gap=606; b3: valid=0, carries=10, gap=25944; b5: valid=0, carries=7, gap=1938264; b10: valid=1, carries=0, gap=554505534; b11: valid=1, carries=0, gap=1198548840; b12: valid=1, carries=0, gap=2420398266
+- expected_next: b2: valid=0, carries=11, gap=327; b3: valid=0, carries=7, gap=9128; b5: valid=0, carries=2, gap=516264; b10: valid=1, carries=0, gap=118505079; b11: valid=1, carries=0, gap=250763160; b12: valid=1, carries=0, gap=497423927
+- variant: b2: valid=0, carries=11, gap=72; b3: valid=0, carries=9, gap=2568; b5: valid=0, carries=2, gap=125640; b10: valid=1, carries=0, gap=18505080; b11: valid=1, carries=0, gap=36404280; b12: valid=1, carries=0, gap=67442232
+- balanced_12: b2: valid=0, carries=10, gap=129; b3: valid=1, carries=0, gap=4376; b5: valid=1, carries=0, gap=312504; b10: valid=1, carries=0, gap=90000009; b11: valid=1, carries=0, gap=194871720; b12: valid=1, carries=0, gap=394149899
+- repunit: b2: valid=1, carries=0, gap=0; b3: valid=1, carries=0, gap=0; b5: valid=1, carries=0, gap=0; b10: valid=1, carries=0, gap=0; b11: valid=1, carries=0, gap=0; b12: valid=1, carries=0, gap=0
+
+Bottom line
+- The crash-test does find a modular mechanism, but it is the generic arithmetic of digit reversal itself, not a constant-specific law. The current low-base runs also fail the positional-validity test because the displayed decimal strings are not legal base-2/base-3/base-5 digit expansions.
+- The sharpest failure mode would be alignment: because checking zeros changes the reversed value by an exact factor of `b` while leaving the original value fixed, the mirror observation is not invariant under arbitrary width choices.

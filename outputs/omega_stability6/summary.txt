@@ -4,30 +4,36 @@ Setup
 - sample count: 1000 random 9-digit integers
 - positional layers: 10, 5, 2
 - mpmath precision: 250 decimal digits
-- Each digit string is analyzed against its mirror on each positional layer. The obstruction signature keeps the peak level `h*`, the nearest anchor class (`one`, `e`, or nearest integer), and the valid depth before the tower invalidates or decoheres.
+- Each decimal coefficient string is first canonicalized into a legal base-b digit string by carrying in base b. The obstruction test is then applied to that legal string and its mirror on each positional layer.
 
 Random-band obstruction spectrum
-- prime-signature disagreement rate: 0.4040
-- late-prime-obstruction rate: 0.4010
-- signature `b10:h1:integer:d3||b5:h1:integer:d4||b2:h1:integer:d5` occurred 596 times
-- signature `b10:h1:integer:d3||b5:h4:integer:d4||b2:h1:integer:d5` occurred 401 times
-- signature `b10:h1:integer:d3||b5:h1:integer:d4||b2:sym` occurred 3 times
+- prime-signature disagreement rate: 0.4710
+- late-prime-obstruction rate: 0.4540
+- signature `b10:h1:integer:d3||b5:h1:integer:d4||b2:h1:integer:d5` occurred 527 times
+- signature `b10:h1:integer:d3||b5:h4:integer:d4||b2:h1:integer:d5` occurred 425 times
+- signature `b10:h1:integer:d3||b5:h1:integer:d4||b2:sym` occurred 16 times
+- signature `b10:h1:integer:d3||b5:h1:integer:d4||b2:h2:integer:d5` occurred 14 times
+- signature `b10:h1:integer:d3||b5:h4:integer:d4||b2:sym` occurred 5 times
 
 Cheap-feature recovery
-- prime_signature_disagreement: best cheap feature was `first_digit_benford_prob` with AUC 0.805186, threshold accuracy 0.738000, direction decreasing => label=1
-- late_prime_obstruction: best cheap feature was `first_digit_benford_prob` with AUC 0.809566, threshold accuracy 0.741000, direction decreasing => label=1
+- prime_signature_disagreement: best cheap feature was `first_digit_benford_prob` with AUC 0.781043, threshold accuracy 0.767000, direction decreasing => label=1
+- late_prime_obstruction: best cheap feature was `first_digit_benford_prob` with AUC 0.795525, threshold accuracy 0.778000, direction decreasing => label=1
 
 Named examples
-- light_speed (299792458): signatures `b10:h1:integer:d3||b5:h4:integer:d4||b2:h1:integer:d5`, total peak score 1.445373, disagreement=1, late_prime=1
-- balanced_12 (122121212): signatures `b10:h1:integer:d3||b5:h1:integer:d4||b2:h1:integer:d5`, total peak score 0.773965, disagreement=0, late_prime=0
-- mixed_2357 (233732252): signatures `b10:h1:integer:d3||b5:h1:integer:d4||b2:h1:integer:d5`, total peak score 0.177796, disagreement=0, late_prime=0
+- light_speed (299792458): signatures `b10:h1:integer:d3||b5:h1:integer:d4||b2:h1:integer:d5`, total peak score 1.465750, disagreement=0, late_prime=0
+  legal digits: b10=299792458; b5=410343013; b2=101001100010
+- balanced_12 (122121212): signatures `b10:h1:integer:d3||b5:h1:integer:d4||b2:h2:integer:d5`, total peak score 1.340942, disagreement=1, late_prime=1
+  legal digits: b10=122121212; b5=122121212; b2=1011010100
+- mixed_2357 (233732252): signatures `b10:h1:integer:d3||b5:h1:integer:d4||b2:h1:integer:d5`, total peak score 0.856170, disagreement=0, late_prime=0
+  legal digits: b10=233732252; b5=234232302; b2=10101110100
 - repunit (111111111): signatures `b10:sym||b5:sym||b2:sym`, total peak score 0.000000, disagreement=0, late_prime=0
+  legal digits: b10=111111111; b5=111111111; b2=111111111
 
 Sequence comparison
-- Recaman: disagreement rate 0.7031, signature changes 61, mean total peak score 5.885345
-- matched random walk: disagreement rate 0.7188, signature changes 52, mean total peak score 7.595731
+- Recaman: disagreement rate 0.8594, signature changes 59, mean total peak score 3.910877
+- matched random walk: disagreement rate 0.8438, signature changes 61, mean total peak score 5.376567
 
 Interpretation
-- The light-speed seed does produce a nontrivial cross-layer signature: `b10:h1:integer:d3||b5:h4:integer:d4||b2:h1:integer:d5`. That means the obstruction view is not collapsing it to the same object on every positional layer.
+- After carry-canonicalization, the light-speed seed still produces a nontrivial cross-layer signature: `b10:h1:integer:d3||b5:h1:integer:d4||b2:h1:integer:d5`. That means the obstruction view is not collapsing it to the same legal object on every positional layer.
 - Cheap digit summaries do not fully recover the late-prime obstruction label. That is weaker than a theorem, but stronger than the earlier Test 5 result where the split was almost purely a first-digit effect.
-- On this finite window the obstruction signature changes more often on Recaman than on the matched random walk, which is the direction you would want from an anomaly detector.
+- On this finite window Recaman does not change obstruction signature more often than the matched random walk, so the sequence claim should stay provisional.

@@ -5,48 +5,52 @@ Setup
 - positional layers: 10, 7, 5, 3, 2
 - mpmath precision: 250 decimal digits
 - Anchor classes use tolerance bands: `one` and `e` are checked first, `integer` is only assigned inside its own narrower band, and everything else falls back to `generic`.
-- Each layer now logs both `h_star_peak` (where the obstruction is loudest) and `h_star_first_break` (where mirror contraction first fails).
+- Each decimal coefficient string is first canonicalized into a legal base-b digit string by carrying in base b. Each layer then logs both `h_star_peak` (where the obstruction is loudest) and `h_star_first_break` (where mirror contraction first fails) for that legal string and its mirror.
 
 Random-band obstruction spectrum
-- peak-signature disagreement rate: 0.7990
+- peak-signature disagreement rate: 0.7350
 - first-break-signature disagreement rate: 1.0000
-- late-prime peak delay rate: 0.5250
+- late-prime peak delay rate: 0.5640
 - late-prime first-break delay rate: 1.0000
-- first-break signature `b10:contracting:d3||b7:h4:generic:d4||b5:h4:integer:d4||b3:h4:generic:d4||b2:h5:generic:d5` occurred 932 times
-- first-break signature `b10:contracting:d3||b7:h4:generic:d4||b5:h4:generic:d4||b3:h4:generic:d4||b2:h5:generic:d5` occurred 48 times
+- first-break signature `b10:contracting:d3||b7:h4:generic:d4||b5:h4:integer:d4||b3:h4:generic:d4||b2:h5:generic:d5` occurred 778 times
+- first-break signature `b10:contracting:d3||b7:h4:generic:d4||b5:h4:generic:d4||b3:h4:generic:d4||b2:h5:generic:d5` occurred 156 times
 - first-break signature `b10:contracting:d3||b7:contracting:d3||b5:h4:generic:d4||b3:h4:generic:d4||b2:h5:generic:d5` occurred 14 times
-- first-break signature `b10:contracting:d3||b7:h4:generic:d4||b5:h4:integer:d4||b3:h4:generic:d4||b2:sym` occurred 3 times
-- first-break signature `b10:contracting:d3||b7:h4:integer:d4||b5:h4:generic:d4||b3:h4:generic:d4||b2:h5:generic:d5` occurred 3 times
+- first-break signature `b10:contracting:d3||b7:h4:generic:d4||b5:h4:integer:d4||b3:h4:generic:d4||b2:sym` occurred 14 times
+- first-break signature `b10:contracting:d3||b7:contracting:d3||b5:h4:integer:d4||b3:h4:generic:d4||b2:h5:generic:d5` occurred 8 times
 
 Odd-prime delay check
-- base 7: peak delay vs base 10 = 0.0040, first-break delay vs base 10 = 0.9860
-- base 5: peak delay vs base 10 = 0.4010, first-break delay vs base 10 = 1.0000
-- base 3: peak delay vs base 10 = 0.1200, first-break delay vs base 10 = 1.0000
+- base 7: peak delay vs base 10 = 0.0130, first-break delay vs base 10 = 0.9780
+- base 5: peak delay vs base 10 = 0.4350, first-break delay vs base 10 = 0.9980
+- base 3: peak delay vs base 10 = 0.1770, first-break delay vs base 10 = 0.9960
 
 Cheap-feature recovery
-- peak_signature_disagreement: best cheap feature was `first_digit_benford_prob` with AUC 0.676530, threshold accuracy 0.799000
+- peak_signature_disagreement: best cheap feature was `first_digit_benford_prob` with AUC 0.745660, threshold accuracy 0.750000
 - first_break_signature_disagreement: label collapsed to a constant or near-constant pattern under these bases, so AUC is not diagnostic.
-- late_prime_obstruction_peak: best cheap feature was `first_digit_benford_prob` with AUC 0.716078, threshold accuracy 0.697000
+- late_prime_obstruction_peak: best cheap feature was `first_digit_benford_prob` with AUC 0.723750, threshold accuracy 0.741000
 - late_prime_obstruction_first_break: label collapsed to a constant or near-constant pattern under these bases, so AUC is not diagnostic.
 
 Benford residual check
-- late_prime_obstruction_peak: after the best Benford threshold, the residual error rate is 0.303000; the strongest remaining cheap feature is `leading_trailing_asymmetry` with residual AUC 0.571109
+- late_prime_obstruction_peak: after the best Benford threshold, the residual error rate is 0.259000; the strongest remaining cheap feature is `digit_entropy_bits` with residual AUC 0.521897
 - late_prime_obstruction_first_break: after the best Benford threshold, the residual error rate is 0.000000; the strongest remaining cheap feature is `digit_entropy_bits` with residual AUC nan
 
 Named examples
-- light_speed (299792458): peak cores `h1:generic|h1:generic|h4:integer|h1:generic|h1:generic`, first-break cores `contracting|h4:generic|h4:integer|h4:generic|h5:generic`, first-break score 0.991101
-- balanced_12 (122121212): peak cores `h1:generic|h1:generic|h1:generic|h2:integer|h1:generic`, first-break cores `contracting|h4:generic|h4:generic|h4:generic|h5:generic`, first-break score 0.277814
-- mixed_2357 (233732252): peak cores `h1:generic|h1:generic|h1:generic|h1:generic|h1:generic`, first-break cores `contracting|h4:generic|h4:integer|h4:generic|h5:generic`, first-break score 0.084900
+- light_speed (299792458): peak cores `h1:generic|h1:generic|h1:generic|h1:generic|h1:generic`, first-break cores `contracting|h4:generic|h4:integer|h4:generic|h5:generic`, first-break score 0.381867
+  legal digits: b10=299792458; b7=333122461; b5=410343013; b3=2010111012; b2=101001100010
+- balanced_12 (122121212): peak cores `h1:generic|h1:generic|h1:generic|h2:integer|h2:integer`, first-break cores `contracting|h4:generic|h4:generic|h4:generic|h5:generic`, first-break score 0.475291
+  legal digits: b10=122121212; b7=122121212; b5=122121212; b3=122121212; b2=1011010100
+- mixed_2357 (233732252): peak cores `h1:generic|h1:generic|h1:generic|h1:generic|h1:generic`, first-break cores `contracting|h4:generic|h4:integer|h4:generic|h5:generic`, first-break score 0.347834
+  legal digits: b10=233732252; b7=234032252; b5=234232302; b3=1012210022; b2=10101110100
 - repunit (111111111): peak cores `sym|sym|sym|sym|sym`, first-break cores `sym|sym|sym|sym|sym`, first-break score 0.000000
+  legal digits: b10=111111111; b7=111111111; b5=111111111; b3=111111111; b2=111111111
 
 Sequence comparison
-- Recaman: analyzed 163 of 256 terms after skipping widths < 3; first-break disagreement 0.8957, peak disagreement 0.8957, first-break changes 136, mean peak score 3.586019
-- matched random walk: analyzed 202 of 256 terms after skipping widths < 3; first-break disagreement 0.8713, peak disagreement 0.6634, first-break changes 103, mean peak score 4.668800
+- Recaman: analyzed 256 of 256 terms after skipping max legal widths < 1; first-break disagreement 0.9648, peak disagreement 0.9727, first-break changes 252, mean peak score 6.595030
+- matched random walk: analyzed 256 of 256 terms after skipping max legal widths < 1; first-break disagreement 0.9531, peak disagreement 0.8984, first-break changes 234, mean peak score 6.935820
 
 Interpretation
-- The light-speed seed still separates after the anchor fix: peak `h1:generic|h1:generic|h4:integer|h1:generic|h1:generic`, first-break `contracting|h4:generic|h4:integer|h4:generic|h5:generic`.
+- After carry-canonicalization, the light-speed seed still separates after the anchor fix: peak `h1:generic|h1:generic|h1:generic|h1:generic|h1:generic`, first-break `contracting|h4:generic|h4:integer|h4:generic|h5:generic`.
 - The first-break delay label collapses under this base set: base 10 is almost always contracting while the prime layers almost always break later. That makes `h_star_first_break` informative descriptively, but weak as a random-band discriminator.
 - For the non-degenerate peak-delay label, the Benford residual is only weakly explained by other cheap features. That supports a small independent obstruction signal.
 - On the informative peak-delay statistic, base 7 does not track base 5 closely. Base 5 is the strongest odd-prime anomaly, base 3 is weaker, and base 7 is almost absent.
-- After removing the padding artifact, Recaman still changes first-break signature more often than the matched random walk.
+- Under legal base-b representations, Recaman still changes first-break signature more often than the matched random walk.
 - That sequence win is not uniform: the matched random walk still carries a higher mean peak obstruction score, so the sequence evidence is mixed rather than decisive.

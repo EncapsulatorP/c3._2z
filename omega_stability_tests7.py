@@ -27,7 +27,7 @@ DEFAULT_BASES = (10, 7, 5, 3, 2)
 DEFAULT_MP_DPS = 250
 DEFAULT_MAX_LEVELS = 8
 DEFAULT_RECAMAN_TERMS = 256
-DEFAULT_SEQUENCE_MIN_WIDTH = 3
+DEFAULT_SEQUENCE_MIN_WIDTH = 1
 DEFAULT_RNG_SEED = 12345
 DEFAULT_ONE_TOL = 0.125
 DEFAULT_E_TOL = 0.125
@@ -39,6 +39,7 @@ DEFAULT_EXAMPLES = (
     ("mixed_2357", "233732252"),
     ("repunit", "111111111"),
 )
+DIGIT_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
 def random_digit_string(width: int, rng: np.random.Generator) -> str:
@@ -76,6 +77,24 @@ def positional_shadow_value(digit_string: str, base: int) -> int:
     for char in digit_string:
         value = value * int(base) + int(char)
     return value
+
+
+def canonicalize_coefficients(digit_string: str, base: int) -> str:
+    coefficients = [int(char) for char in digit_string]
+    digits_rev: list[int] = []
+    carry = 0
+
+    for coefficient in reversed(coefficients):
+        total = coefficient + carry
+        digits_rev.append(total % base)
+        carry = total // base
+
+    while carry > 0:
+        digits_rev.append(carry % base)
+        carry //= base
+
+    canonical = "".join(DIGIT_ALPHABET[digit] for digit in reversed(digits_rev)).lstrip("0")
+    return canonical or "0"
 
 
 def iterated_logs(value: int, base: int, max_levels: int) -> list[mp.mpf]:
@@ -148,8 +167,9 @@ def layer_obstruction(
     e_tol: mp.mpf,
     integer_tol: mp.mpf,
 ) -> dict[str, object]:
-    mirror_string = digit_string[::-1]
-    value = positional_shadow_value(digit_string, base)
+    legal_digit_string = canonicalize_coefficients(digit_string, base)
+    mirror_string = legal_digit_string[::-1]
+    value = positional_shadow_value(legal_digit_string, base)
     mirror_value = positional_shadow_value(mirror_string, base)
     forward_levels = iterated_logs(value, base=base, max_levels=max_levels)
     mirror_levels = iterated_logs(mirror_value, base=base, max_levels=max_levels)
@@ -241,6 +261,9 @@ def layer_obstruction(
 
     return {
         "base": base,
+        "input_digit_string": digit_string,
+        "legal_digit_string": legal_digit_string,
+        "mirror_digit_string": mirror_string,
         "value": value,
         "mirror_value": mirror_value,
         "valid_depth": valid_depth,
@@ -335,6 +358,8 @@ def analyze_digit_string(
         base = int(layer["base"])
         row[f"base_{base}_peak_signature"] = layer["peak_signature"]
         row[f"base_{base}_first_break_signature"] = layer["first_break_signature"]
+        row[f"base_{base}_legal_digits"] = layer["legal_digit_string"]
+        row[f"base_{base}_mirror_digits"] = layer["mirror_digit_string"]
         row[f"base_{base}_peak_core"] = layer["peak_core"]
         row[f"base_{base}_first_break_core"] = layer["first_break_core"]
         row[f"base_{base}_h_star_peak"] = int(layer["h_star_peak"])
@@ -515,7 +540,8 @@ def analyze_sequence(
     for index, value in enumerate(values):
         digit_string = str(int(value))
         width = len(digit_string)
-        if width < min_width:
+        legal_widths = [len(canonicalize_coefficients(digit_string, base)) for base in bases]
+        if max(legal_widths, default=0) < min_width:
             skipped_terms += 1
             continue
 
@@ -533,6 +559,7 @@ def analyze_sequence(
         row["index"] = index
         row["value"] = int(value)
         row["sequence_width"] = width
+        row["max_legal_width"] = max(legal_widths, default=0)
         row["peak_signature_changed"] = int(previous_peak_signature is not None and row["peak_signature_vector"] != previous_peak_signature)
         row["first_break_signature_changed"] = int(
             previous_first_break_signature is not None and row["first_break_signature_vector"] != previous_first_break_signature
@@ -750,7 +777,7 @@ def build_summary(
         "- Anchor classes use tolerance bands: `one` and `e` are checked first, `integer` is only assigned inside its own narrower band, and everything else falls back to `generic`."
     )
     lines.append(
-        "- Each layer now logs both `h_star_peak` (where the obstruction is loudest) and `h_star_first_break` (where mirror contraction first fails)."
+        "- Each decimal coefficient string is first canonicalized into a legal base-b digit string by carrying in base b. Each layer then logs both `h_star_peak` (where the obstruction is loudest) and `h_star_first_break` (where mirror contraction first fails) for that legal string and its mirror."
     )
     lines.append("")
     lines.append("Random-band obstruction spectrum")
@@ -808,14 +835,18 @@ def build_summary(
         lines.append(
             f"- {row['name']} ({row['digits']}): peak cores `{row['peak_core_vector']}`, first-break cores `{row['first_break_core_vector']}`, first-break score {float(row['total_first_break_score_log10']):.6f}"
         )
+        legal_bits = []
+        for base in bases:
+            legal_bits.append(f"b{base}={row[f'base_{base}_legal_digits']}")
+        lines.append(f"  legal digits: {'; '.join(legal_bits)}")
 
     lines.append("")
     lines.append("Sequence comparison")
     lines.append(
-        f"- Recaman: analyzed {recaman_meta['used_terms']} of {recaman_meta['requested_terms']} terms after skipping widths < {recaman_meta['min_width']}; first-break disagreement {rec_first_dis:.4f}, peak disagreement {rec_peak_dis:.4f}, first-break changes {rec_changes}, mean peak score {rec_peak_mean:.6f}"
+        f"- Recaman: analyzed {recaman_meta['used_terms']} of {recaman_meta['requested_terms']} terms after skipping max legal widths < {recaman_meta['min_width']}; first-break disagreement {rec_first_dis:.4f}, peak disagreement {rec_peak_dis:.4f}, first-break changes {rec_changes}, mean peak score {rec_peak_mean:.6f}"
     )
     lines.append(
-        f"- matched random walk: analyzed {random_walk_meta['used_terms']} of {random_walk_meta['requested_terms']} terms after skipping widths < {random_walk_meta['min_width']}; first-break disagreement {walk_first_dis:.4f}, peak disagreement {walk_peak_dis:.4f}, first-break changes {walk_changes}, mean peak score {walk_peak_mean:.6f}"
+        f"- matched random walk: analyzed {random_walk_meta['used_terms']} of {random_walk_meta['requested_terms']} terms after skipping max legal widths < {random_walk_meta['min_width']}; first-break disagreement {walk_first_dis:.4f}, peak disagreement {walk_peak_dis:.4f}, first-break changes {walk_changes}, mean peak score {walk_peak_mean:.6f}"
     )
 
     light_speed_row = next((row for row in example_rows if str(row["name"]) == "light_speed"), None)
@@ -823,7 +854,7 @@ def build_summary(
     lines.append("Interpretation")
     if light_speed_row is not None:
         lines.append(
-            f"- The light-speed seed still separates after the anchor fix: peak `{light_speed_row['peak_core_vector']}`, first-break `{light_speed_row['first_break_core_vector']}`."
+            f"- After carry-canonicalization, the light-speed seed still separates after the anchor fix: peak `{light_speed_row['peak_core_vector']}`, first-break `{light_speed_row['first_break_core_vector']}`."
         )
 
     best_peak = best_target_rows("late_prime_obstruction_peak")
@@ -866,11 +897,11 @@ def build_summary(
 
     if rec_changes > walk_changes:
         lines.append(
-            "- After removing the padding artifact, Recaman still changes first-break signature more often than the matched random walk."
+            "- Under legal base-b representations, Recaman still changes first-break signature more often than the matched random walk."
         )
     else:
         lines.append(
-            "- After removing the padding artifact, Recaman no longer leads the matched random walk on first-break signature changes."
+            "- Under legal base-b representations, Recaman no longer leads the matched random walk on first-break signature changes."
         )
     if rec_peak_mean < walk_peak_mean:
         lines.append(

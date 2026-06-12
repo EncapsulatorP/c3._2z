@@ -35,6 +35,7 @@ DEFAULT_EXAMPLES = (
     ("mixed_2357", "233732252"),
     ("repunit", "111111111"),
 )
+DIGIT_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
 def random_digit_string(width: int, rng: np.random.Generator) -> str:
@@ -75,6 +76,24 @@ def positional_shadow_value(digit_string: str, base: int) -> int:
     for char in digit_string:
         value = value * int(base) + int(char)
     return value
+
+
+def canonicalize_coefficients(digit_string: str, base: int) -> str:
+    coefficients = [int(char) for char in digit_string]
+    digits_rev: list[int] = []
+    carry = 0
+
+    for coefficient in reversed(coefficients):
+        total = coefficient + carry
+        digits_rev.append(total % base)
+        carry = total // base
+
+    while carry > 0:
+        digits_rev.append(carry % base)
+        carry //= base
+
+    canonical = "".join(DIGIT_ALPHABET[digit] for digit in reversed(digits_rev)).lstrip("0")
+    return canonical or "0"
 
 
 def iterated_logs(value: int, base: int, max_levels: int) -> list[mp.mpf]:
@@ -132,8 +151,9 @@ def layer_obstruction(
     max_levels: int,
     mp_dps: int,
 ) -> dict[str, object]:
-    mirror_string = digit_string[::-1]
-    value = positional_shadow_value(digit_string, base)
+    legal_digit_string = canonicalize_coefficients(digit_string, base)
+    mirror_string = legal_digit_string[::-1]
+    value = positional_shadow_value(legal_digit_string, base)
     mirror_value = positional_shadow_value(mirror_string, base)
     forward_levels = iterated_logs(value, base=base, max_levels=max_levels)
     mirror_levels = iterated_logs(mirror_value, base=base, max_levels=max_levels)
@@ -189,6 +209,9 @@ def layer_obstruction(
         signature = f"b{base}:sym"
         return {
             "base": base,
+            "input_digit_string": digit_string,
+            "legal_digit_string": legal_digit_string,
+            "mirror_digit_string": mirror_string,
             "value": value,
             "mirror_value": mirror_value,
             "valid_depth": valid_depth,
@@ -212,6 +235,9 @@ def layer_obstruction(
     signature = f"b{base}:h{h_star}:{best_anchor_class}:d{depth_to_decoherence}"
     return {
         "base": base,
+        "input_digit_string": digit_string,
+        "legal_digit_string": legal_digit_string,
+        "mirror_digit_string": mirror_string,
         "value": value,
         "mirror_value": mirror_value,
         "valid_depth": valid_depth,
@@ -272,6 +298,8 @@ def analyze_digit_string(
     for layer in layer_rows:
         base = int(layer["base"])
         row[f"base_{base}_signature"] = layer["signature"]
+        row[f"base_{base}_legal_digits"] = layer["legal_digit_string"]
+        row[f"base_{base}_mirror_digits"] = layer["mirror_digit_string"]
         row[f"base_{base}_h_star"] = int(layer["h_star"])
         row[f"base_{base}_anchor_class"] = layer["anchor_class"]
         row[f"base_{base}_depth_to_decoherence"] = int(layer["depth_to_decoherence"])
@@ -396,12 +424,11 @@ def analyze_sequence(
     max_levels: int,
     mp_dps: int,
 ) -> list[dict[str, object]]:
-    width = max(1, len(str(max(values))))
     rows: list[dict[str, object]] = []
     previous_signature = None
 
     for index, value in enumerate(values):
-        digit_string = str(int(value)).zfill(width)
+        digit_string = str(int(value))
         row = analyze_digit_string(
             name=f"{name}_{index}",
             digit_string=digit_string,
@@ -412,7 +439,7 @@ def analyze_sequence(
         row["sequence"] = name
         row["index"] = index
         row["value"] = int(value)
-        row["sequence_width"] = width
+        row["sequence_width"] = len(digit_string)
         row["signature_changed"] = int(previous_signature is not None and row["layer_signature_vector"] != previous_signature)
         previous_signature = str(row["layer_signature_vector"])
         rows.append(row)
@@ -541,7 +568,7 @@ def build_summary(
     lines.append(f"- positional layers: {', '.join(str(base) for base in bases)}")
     lines.append(f"- mpmath precision: {mp_dps} decimal digits")
     lines.append(
-        "- Each digit string is analyzed against its mirror on each positional layer. The obstruction signature keeps the peak level `h*`, the nearest anchor class (`one`, `e`, or nearest integer), and the valid depth before the tower invalidates or decoheres."
+        "- Each decimal coefficient string is first canonicalized into a legal base-b digit string by carrying in base b. The obstruction test is then applied to that legal string and its mirror on each positional layer."
     )
     lines.append("")
     lines.append("Random-band obstruction spectrum")
@@ -562,6 +589,10 @@ def build_summary(
         lines.append(
             f"- {row['name']} ({row['digits']}): signatures `{row['layer_signature_vector']}`, total peak score {float(row['total_peak_score_log10']):.6f}, disagreement={int(row['prime_signature_disagreement'])}, late_prime={int(row['late_prime_obstruction'])}"
         )
+        legal_bits = []
+        for base in bases:
+            legal_bits.append(f"b{base}={row[f'base_{base}_legal_digits']}")
+        lines.append(f"  legal digits: {'; '.join(legal_bits)}")
     lines.append("")
     lines.append("Sequence comparison")
     lines.append(
@@ -576,7 +607,7 @@ def build_summary(
         lines.append("")
         lines.append("Interpretation")
         lines.append(
-            f"- The light-speed seed does produce a nontrivial cross-layer signature: `{light_speed_row['layer_signature_vector']}`. That means the obstruction view is not collapsing it to the same object on every positional layer."
+            f"- After carry-canonicalization, the light-speed seed still produces a nontrivial cross-layer signature: `{light_speed_row['layer_signature_vector']}`. That means the obstruction view is not collapsing it to the same legal object on every positional layer."
         )
     if float(best_by_target["late_prime_obstruction"]["best_auc"]) < 0.9:
         lines.append(

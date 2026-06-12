@@ -1,9 +1,9 @@
 target,feature,benford_accuracy,residual_rate,pearson_with_residual,best_auc_on_residual
-peak_signature_disagreement,digit_entropy_bits,0.799,0.201,-0.014700393045456787,0.5049782377225263
-peak_signature_disagreement,leading_trailing_asymmetry,0.799,0.201,-0.014820816391503183,0.5161987310008157
+peak_signature_disagreement,digit_entropy_bits,0.75,0.25,-0.038100357438038,0.5228266666666667
+peak_signature_disagreement,leading_trailing_asymmetry,0.75,0.25,0.043555279718339834,0.525936
 first_break_signature_disagreement,digit_entropy_bits,1.0,0.0,nan,nan
 first_break_signature_disagreement,leading_trailing_asymmetry,1.0,0.0,nan,nan
-late_prime_obstruction_peak,digit_entropy_bits,0.697,0.303,0.008329937760435308,0.5108408975761277
-late_prime_obstruction_peak,leading_trailing_asymmetry,0.697,0.303,0.13571492333968294,0.5711086173179728
+late_prime_obstruction_peak,digit_entropy_bits,0.741,0.259,-0.040350277058299154,0.521897258739364
+late_prime_obstruction_peak,leading_trailing_asymmetry,0.741,0.259,0.028127247345984895,0.5149620412778307
 late_prime_obstruction_first_break,digit_entropy_bits,1.0,0.0,nan,nan
 late_prime_obstruction_first_break,leading_trailing_asymmetry,1.0,0.0,nan,nan
