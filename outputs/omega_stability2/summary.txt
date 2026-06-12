@@ -4,7 +4,7 @@ Operator: example operator: cyclic adjacent sum modulo base
 Warning: edit T(...) near the top of the file if this is not your actual chain operator.
 
 Operator check
-- T(299792458) produced 186616930 in base 10; expected 133732252; match=no
+- T(299792458) produced 186616930 in base 10; expected 233732252; match=no
 - The current operator does not reproduce the quoted chain, so the null-model outputs below are about the placeholder rule only.
 
 Seed across bases
@@ -13,9 +13,9 @@ Seed across bases
 - base 16: width=8, seed=11DE784A, next=2EB5FCEB, terminal=00000000, label=repdigit_fixed_point, steps=20, cycle_length=1
 
 Null model
-- base 8: P(same terminal label)=0.9950, P(repunit endpoint)=0.0000, P(repdigit endpoint)=0.0000, step percentile=1.0000
+- base 8: P(same terminal label)=1.0000, P(repunit endpoint)=0.0000, P(repdigit endpoint)=0.0000, step percentile=1.0000
 - base 10: P(same terminal label)=1.0000, P(repunit endpoint)=0.0000, P(repdigit endpoint)=0.0000, step percentile=1.0000
-- base 16: P(same terminal label)=1.0000, P(repunit endpoint)=0.0000, P(repdigit endpoint)=1.0000, step percentile=0.5220
+- base 16: P(same terminal label)=1.0000, P(repunit endpoint)=0.0000, P(repdigit endpoint)=1.0000, step percentile=0.4990
 
 Cross-base consistency
 - unique terminal labels across tested bases: 2

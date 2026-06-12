@@ -48,7 +48,7 @@ The tower is **numerically stable** and well-conditioned. However, **no interior
 
 | | |
 |---|---|
-| Expected `T(299792458)` in base 10 | `133732252` |
+| Expected `T(299792458)` in base 10 | `233732252` | base 10 | 122121212 | base 10 111111111+e
 | Actual placeholder output | `186616930` |
 | Match | **No** |
 
@@ -353,3 +353,27 @@ After removing small-width padding artifacts, Recaman still changes its first-br
 | `299792458` obstruction | Persistently distinguished across all test configurations (first-break score 0.991) |
 | Benford dominance | First-digit Benford probability is the strongest cheap predictor (AUC up to 0.994), but residual obstruction signal exists |
 | L2 reparametrization | Dramatically improves both gradient descent (loss 2.0 → 10⁻³²) and root-finding (25 → 5 iterations) |
+
+---
+
+## Next Steps
+
+| Area | Recommended next action |
+|---|---|
+| L2 reparametrization | Dramatically improves both gradient descent (loss 2.0 → 10⁻³²) and root-finding (25 → 5 iterations) |
+
+---
+
+## Remarks
+
+**1. Implement the real operator T (Test 2 is explicitly broken)**
+Every Test 2 result describes the placeholder, not the intended object. The scaffolding is verified; the science has not been plugged in yet. All Test 2 conclusions are about the placeholder and cannot serve as evidence for or against the quoted digit chain.
+
+**2. Condition on Benford, then retest obstruction (highest priority)**
+Test 5 shows AUC 0.994 for first-digit Benford probability — suspiciously close to perfect. This raises a concrete question: does the tower obstruction metric measure anything beyond Benford's law, or is it simply recovering it? Controlled test: stratify samples by leading digit, recompute within-stratum AUC. If within-stratum AUC ≈ 0.5, the obstruction signal is an artifact of Benford's law, not tower structure. This could invalidate a core claim.
+
+**3. Fix the collapsed first-break metric (Test 7)**
+First-break disagreement rate reached 1.000 because base 10 is always contracting — the metric is degenerate when base 10 is used as the reference. Using relative first-break depths between prime bases only (e.g., base-5 delay vs. base-7 delay) would recover a non-trivial discriminator without the ceiling collapse.
+
+**4. Get a proper p-value for Recaman at non-dyadic bases**
+Test 3 shows Recaman at base π is at the 14.3rd percentile vs. the null — suggestive but based on a small null sample. Running 10,000 null walks at bases e and π specifically would produce an actual p-value and either confirm or eliminate this as a signal worth pursuing.
