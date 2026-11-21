@@ -1,0 +1,2100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>c3.2z · Prime Forms</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0a1222;
+  --panel:#0e1830;
+  --canvas:#070d1a;
+  --rg-bg:#070d1a;
+  --line:#24365c;
+  --line-soft:#172443;
+  --ink:#f4f7fc;
+  --dim:#9fb0cf;
+  --mint:#bfd9f5;
+  --violet:#a39bd5;
+  --gold:#d6ba73;
+  --sky:#6fb6c3;
+  --coral:#ff8a3c;
+  --pass:#3fd0bd;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --prism:linear-gradient(90deg,#A39BD5,#948AC8,#6FB6C3,#9BC8D8);
+  font:15px/1.55 "IBM Plex Sans",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:radial-gradient(ellipse at 85% 0,#13254a 0,transparent 36rem),var(--bg);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+h1,h2,h3,p{margin:0}
+h1{font-size:clamp(1.3rem,2.8vw,1.85rem);letter-spacing:-.04em;line-height:1.1}
+h2{font-size:1.25rem;letter-spacing:-.02em}
+h3{font-size:1.02rem}
+p{color:var(--dim)}
+a{color:var(--mint);text-underline-offset:3px}
+strong{color:var(--ink)}
+code,.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+button,select,input[type=number]{
+  background:#12203d;
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:8px;
+  font:inherit;
+}
+button{cursor:pointer;padding:6px 10px}
+button:hover{background:#1a2c52}
+button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:2px;
+}
+select{padding:5px 8px}
+input[type=number]{width:96px;padding:4px 6px;font-family:var(--mono)}
+input[type=range]{accent-color:var(--mint);cursor:pointer}
+
+/* Sticky Top Navigation & Shared State Bar */
+.topbar{
+  position:sticky;top:0;z-index:40;
+  background:rgba(10,18,34,.9);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  padding:10px 18px;
+}
+.topbar-inner{max-width:1240px;margin:auto;display:flex;flex-direction:column;gap:9px}
+.top-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.brand-pill{
+  font:700 11px/1 var(--mono);color:var(--mint);
+  background:rgba(191,217,245,.11);
+  border:1px solid rgba(191,217,245,.4);
+  padding:4px 8px;border-radius:6px;
+}
+.status-strip{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:.82rem}
+.unit-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:8px;padding:2px 6px 2px 9px;
+  font-family:var(--mono);color:var(--dim);
+}
+.unit-pill select{
+  border:none;background:transparent;color:var(--mint);
+  font-family:var(--mono);font-weight:700;padding:3px 4px;
+}
+.unit-pill select option{background:var(--panel);color:var(--ink)}
+.btn-mint{
+  background:rgba(191,217,245,.14);border-color:rgba(191,217,245,.5);
+  color:var(--mint);font:700 .8rem var(--mono);
+}
+.btn-mint:hover{background:rgba(191,217,245,.24)}
+.btn-play{display:inline-flex;align-items:center;gap:6px;font:600 .8rem var(--mono)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--pass);box-shadow:0 0 8px var(--pass)}
+.dot.paused{background:var(--dim);box-shadow:none}
+
+
+/* Main Workspace */
+main{max-width:1240px;padding:18px 18px 48px;margin:auto}
+.panel{
+  border:1px solid var(--line);border-radius:14px;
+  background:var(--panel);padding:20px;min-width:0;margin-bottom:18px;
+}
+.phase-frame{
+  padding:12px;background:var(--canvas);
+  border:1px solid var(--line);border-radius:12px;min-width:0;
+}
+.phase-frame canvas{width:100%;height:auto;display:block}
+.controls{
+  display:flex;flex-wrap:wrap;align-items:center;
+  gap:10px 16px;margin:11px 0;font-size:.86rem;
+}
+.controls [hidden]{display:none}
+.controls label{display:inline-flex;align-items:center;gap:7px;color:var(--dim)}
+.note,.readout{font-size:.86rem;margin-top:9px}
+.readout{min-height:2.2em}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px;margin-top:12px}
+.kpi{background:var(--canvas);border:1px solid var(--line-soft);border-radius:9px;padding:8px 11px}
+.kpi-lbl{font:600 10px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin-bottom:3px}
+.kpi-val{font:700 .95rem var(--mono);color:var(--mint)}
+.kpi-val.violet{color:var(--violet)}.kpi-val.gold{color:var(--gold)}.kpi-val.coral{color:var(--coral)}
+.btn-coral{background:rgba(255,138,60,.14);border-color:rgba(255,138,60,.5);color:var(--coral);font:600 .8rem var(--mono)}
+.btn-gold{background:rgba(214,186,115,.14);border-color:rgba(214,186,115,.5);color:var(--gold);font:600 .8rem var(--mono)}
+
+/* TAB 1: RG Precision Instrument & Hopf Lab */
+.rg-header{
+  display:flex;flex-wrap:wrap;align-items:flex-start;
+  justify-content:space-between;gap:12px;margin-bottom:10px;
+}
+.rg-readouts{display:flex;gap:22px;align-items:flex-start}
+.rg-readout-block{text-align:right}
+.rg-readout-lbl{
+  font:600 10px/1 var(--mono);letter-spacing:.09em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:4px;
+}
+.rg-readout-val{font:700 1rem/1.1 var(--mono);color:var(--ink)}
+.rg-readout-val.mint{color:var(--mint)}
+.rg-stage{
+  width:100%;height:390px;
+  background:var(--rg-bg);
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  margin-top:10px;
+}
+.rg-stage canvas{width:100%;height:100%;display:block}
+.rg-bar{
+  display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;gap:12px;margin-top:12px;
+}
+.rg-slider-wrap{display:flex;align-items:center;gap:10px;flex:1 1 280px}
+.rg-slider-wrap input[type=range]{flex:1 1 160px}
+
+.dimension-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,1fr);gap:16px;margin-top:12px}
+.dimension-controls{display:grid;gap:9px;align-content:start}
+.dimension-controls label{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(110px,1.25fr);
+  gap:8px;align-items:center;font-size:.85rem;color:var(--dim);
+}
+.dimension-controls select,.dimension-controls input{width:100%;min-width:0}
+.mode-kpis{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:11px;font-size:.84rem;color:var(--dim)}
+.mode-kpis span span{color:var(--mint);font-family:var(--mono)}
+
+/* Main index */
+.lab-menu{display:flex;flex-wrap:wrap;gap:6px 8px}
+.lab-menu a{display:inline-block;padding:5px 9px;border:1px solid var(--line);border-radius:6px;font:.79rem var(--sans);text-decoration:none;color:var(--ink)}
+.lab-menu a:is(:hover,:focus-visible){border-color:var(--gold);color:var(--gold)}
+main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-height,140px) + 16px)}
+.lab-screen{margin-bottom:20px}
+.wave-plate{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:22px;align-items:center}
+.wave-plate img{width:100%;height:auto;display:block;border-radius:8px}
+.lab-credit{font:.82rem var(--sans);color:var(--dim);margin-top:20px}
+@media(max-width:620px){.wave-plate{grid-template-columns:minmax(0,1fr)}.wave-plate figure{max-width:280px}}
+
+/* TAB 3: Prime Forms & Fork */
+.prime-gallery{margin:0 0 14px}
+.gallery-modes{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px}
+.gallery-modes button{font-size:.84rem;padding:6px 10px}
+.gallery-modes button[aria-pressed=true]{border-color:#a39bd5;background:#1d2a55;color:#eef3ff}
+.gallery-stage{margin:0;border:1px solid #24365c;border-radius:13px;overflow:hidden;background:var(--canvas)}
+.gallery-stage canvas{width:100%;height:auto;display:block}
+.gallery-stage #helix-dna{max-width:650px;margin:auto}
+.gallery-stage[hidden],.gallery-toolbar [hidden]{display:none}
+.gallery-toolbar{display:flex;gap:8px 14px;flex-wrap:wrap;align-items:center;padding:8px 0}
+.gallery-toolbar label{display:flex;align-items:center;gap:7px;font-size:.83rem;color:var(--dim)}
+.gallery-toolbar input[type=range]{width:92px;accent-color:var(--violet)}
+.gallery-case{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.gallery-notes{font-size:.86rem;margin:6px 0 0}
+.orbit-details{margin:10px 0 4px}
+.orbit-details summary{cursor:pointer;color:var(--mint);font-size:.88rem}
+.orbit-details figure{max-width:570px;margin:8px 0 0}
+.helix-word{
+  margin-top:10px;overflow-wrap:anywhere;word-break:break-word;
+  color:var(--mint);font:.83rem/1.6 var(--mono);
+  background:var(--canvas);padding:8px 10px;border-radius:8px;border:1px solid var(--line-soft);
+}
+.helix-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;margin-top:10px}
+.helix-results p{font-size:.83rem;overflow-wrap:anywhere}
+.helix-results span{color:var(--mint);font-family:var(--mono)}
+.helix-insight{margin-top:10px;font-size:.87rem;color:var(--ink)}
+.lab-sources{margin-top:10px;font-size:.8rem}
+
+/* TAB 4: Unit Tree & Optics */
+.rule-controls{border-top:1px solid var(--line);padding-top:9px}
+.layout{display:grid;grid-template-columns:minmax(240px,1fr) minmax(0,2.15fr);gap:18px;align-items:start}
+.tree ul{list-style:none;margin:0;padding:0}
+.root{margin:10px 0 8px;color:var(--mint)}
+.branch{position:relative;margin-left:8px;padding:10px 0 0 14px;border-left:1px solid var(--line)}
+.branch::before{content:"";position:absolute;top:21px;left:0;width:11px;border-top:1px solid var(--line)}
+.branch h3{margin-bottom:4px;font-size:.95rem}
+.leaves{display:grid;gap:2px}
+.leaves button{
+  display:flex;justify-content:space-between;align-items:center;text-align:left;
+  width:100%;padding:5px 8px;border-color:transparent;background:transparent;gap:6px;
+}
+.leaves button:hover{background:#1a2c52}
+.leaves button[aria-pressed=true]{border-color:#bfd9f5;color:var(--mint);background:#16305a}
+.period{color:var(--dim);font:.73rem var(--mono);white-space:nowrap}
+.intro,.properties{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;justify-content:space-between}
+.intro{margin-bottom:10px}
+.value{font:clamp(1.1rem,2.6vw,1.65rem) var(--mono);line-height:1.3;overflow-wrap:anywhere;margin-bottom:4px}
+.exact{font:.81rem var(--mono);overflow-wrap:anywhere}
+.properties{
+  justify-content:flex-start;margin:13px 0;padding:9px 0;
+  border-block:1px solid var(--line);color:var(--dim);font-size:.86rem;
+}
+.properties span span{color:var(--mint);font-family:var(--mono)}
+.tiles{display:flex;flex-wrap:wrap;gap:4px;align-items:center;min-height:46px}
+.tile{
+  width:26px;height:44px;display:grid;grid-template-rows:19px 1fr;
+  justify-items:center;align-items:center;border:1px solid var(--line);
+  border-radius:5px;background:#101c36;font:.74rem var(--mono);position:relative;padding:0;
+}
+.tile.repeat{background:#14223f;border-bottom-color:#bfd9f5}
+.tile.active{border-color:var(--gold)}
+.tile.edited{box-shadow:inset 0 -2px var(--violet)}
+.tile.overflow::after{
+  content:"";position:absolute;right:3px;top:3px;width:4px;height:4px;
+  border-radius:50%;background:var(--gold);
+}
+.stack{display:flex;flex-direction:column-reverse;gap:2px}
+.brick{width:13px;height:4px;background:var(--mint);border-radius:1px}
+.brick:nth-child(2){background:var(--violet)}
+.brick:nth-child(3){background:var(--gold)}
+.zero{font-style:normal;color:var(--dim)}
+.radix{width:8px;text-align:center}
+.repeatbox,.model,.notes{border-top:1px solid var(--line);margin-top:16px;padding-top:14px}
+.repeat-text{overflow-wrap:anywhere;word-break:break-all;margin:4px 0 0;color:var(--mint);font:.82rem/1.6 var(--mono)}
+.summary{margin:10px 0 3px;display:flex;flex-wrap:wrap;column-gap:16px;font:.83rem var(--mono);color:var(--mint)}
+.work{font-size:.81rem;margin:6px 0 0}
+.plot{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:4px;height:96px;align-items:end;margin-top:8px}
+.plot-col{height:100%;display:grid;grid-template-rows:1fr 17px;text-align:center;font:.62rem var(--mono);color:var(--dim);align-items:end}
+.bar-space{height:100%;display:flex;align-items:end;border-bottom:1px solid var(--line)}
+.bar{width:100%;background:#bfd9f5;border-radius:3px 3px 0 0}
+.plot-col:nth-child(7) .bar{background:var(--gold)}
+.plot-col:nth-child(n+8) .bar{background:#a39bd5}
+
+/* TAB 5: Gain, Research & SPEC */
+.research-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.research-table{border-collapse:collapse;margin:10px 0;width:100%;font-size:.83rem}
+.research-table th,.research-table td{padding:6px 5px;border-bottom:1px solid var(--line);text-align:left}
+.research-table td:last-child{font-family:var(--mono);text-align:right;white-space:nowrap}
+.gain-lab .research-table td{text-align:left;white-space:normal}
+.gain-lab .research-table tr.is-probe th{color:var(--mint)}
+.gain-lab .research-table tr.is-probe th::after{content:" ·";color:var(--gold)}
+.badge{display:inline-block;font:700 10.5px/1 var(--mono);padding:4px 7px;border-radius:5px}
+.badge.pass{background:rgba(63,208,189,.14);color:var(--pass);border:1px solid rgba(63,208,189,.45)}
+.badge.fail{background:rgba(255,138,60,.16);color:var(--coral);border:1px solid rgba(255,138,60,.5)}
+
+@media(max-width:820px){
+  .layout,.dimension-layout,.research-grid{grid-template-columns:minmax(0,1fr)}
+  .helix-results{grid-template-columns:minmax(0,1fr)}
+  .tree .leaves{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rg-readout-block{text-align:left}
+}
+
+/* ---- Neon layer: glass tubes on black. Website palette: ice blue = parent strand, violet = mirror, gold = thresholds. ---- */
+[hidden]{display:none!important}
+body{background:radial-gradient(ellipse at 78% -6%,#1b3566 0,transparent 38rem),radial-gradient(ellipse at 0 100%,#102a4a 0,transparent 32rem),var(--bg)}
+h1,h2{font-family:"Fraunces","Iowan Old Style",Palatino,Georgia,serif;letter-spacing:-.02em}
+h1{font-weight:700;color:#fff;text-shadow:0 0 14px rgba(191,217,245,.55),0 0 38px rgba(85,124,219,.6)}
+h1 em{font-style:italic;font-weight:500;background:var(--prism);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 0 10px rgba(163,155,213,.75))}
+h2{font-weight:700;color:#fff;text-shadow:0 0 10px rgba(163,155,213,.75),0 0 28px rgba(85,124,219,.45)}
+h3{color:#fff;text-shadow:0 0 10px rgba(111,182,195,.6)}
+.topbar{border-bottom:3px solid transparent;border-image:var(--prism) 1;box-shadow:0 6px 30px -8px rgba(111,182,195,.45)}
+.brand-pill{box-shadow:0 0 12px rgba(191,217,245,.5),inset 0 0 8px rgba(191,217,245,.25);text-shadow:0 0 8px var(--mint)}
+#research .panel{overflow-x:auto}
+.panel{border-color:rgba(163,155,213,.3);box-shadow:0 0 44px -18px rgba(163,155,213,.6)}
+.rg-stage,.canvas-box,.gallery-stage,.phase-frame{border-color:rgba(111,182,195,.34);box-shadow:inset 0 0 44px rgba(111,182,195,.06),0 0 28px -12px rgba(111,182,195,.65)}
+.kpi{border-color:rgba(163,155,213,.24)}
+.kpi-val,.rg-readout-val.mint,.btn-mint,.btn-gold,.btn-coral,.badge{text-shadow:0 0 9px currentColor}
+button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
+.gallery-modes button[aria-pressed=true]{box-shadow:0 0 14px rgba(163,155,213,.5);text-shadow:0 0 8px var(--violet)}
+.leaves button[aria-pressed=true]{box-shadow:0 0 12px rgba(191,217,245,.35)}
+.brick{box-shadow:0 0 6px var(--mint)}.brick:nth-child(2){box-shadow:0 0 6px var(--violet)}.brick:nth-child(3){box-shadow:0 0 6px var(--gold)}
+.bar{box-shadow:0 0 10px var(--mint)}.plot-col:nth-child(7) .bar{box-shadow:0 0 12px var(--gold)}.plot-col:nth-child(n+8) .bar{box-shadow:0 0 10px var(--violet)}
+.helix-word,.repeat-text,.summary,.value{text-shadow:0 0 9px rgba(191,217,245,.45)}
+.rg-stage canvas{cursor:grab;touch-action:none}.rg-stage canvas:active{cursor:grabbing}
+.omega-readout{font:.84rem/1.75 var(--mono);color:var(--mint);margin-top:12px;text-shadow:0 0 8px rgba(191,217,245,.4);overflow-wrap:anywhere}
+.omega-lab .research-table td{font-family:var(--mono);text-align:left;white-space:nowrap}
+.omega-lab .research-table tr.is-probe :is(th,td){color:var(--gold);text-shadow:0 0 8px rgba(214,186,115,.6)}
+.omega-lab .phase-frame{overflow-x:auto}
+.omega-lab .phase-frame canvas{margin:10px 0}
+
+.showcase{margin:16px 0 26px;padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.showcase-header,.showcase-controls{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.showcase-header{margin-bottom:13px}.showcase-header h2{margin:0}
+.showcase-count{color:var(--dim);font:.8rem var(--mono)}
+.showcase-stage{min-height:200px;display:grid;grid-template-columns:minmax(12rem,1fr) minmax(0,1.6fr);gap:18px;align-items:center;padding:16px;background:var(--canvas);border-radius:8px}
+.showcase-stage h3{margin:0 0 7px;font:600 1.25rem var(--sans)}
+.showcase-stage p{margin:6px 0;color:var(--dim)}
+.showcase-stage .showcase-detail{display:block;color:var(--gold);font:600 .86rem/1.5 var(--mono);overflow-wrap:anywhere}
+.showcase-stage canvas{display:block;width:100%;max-height:230px;object-fit:contain}
+.showcase-stage canvas[hidden]{display:none}
+.showcase-stage:has(canvas[hidden]){grid-template-columns:1fr}
+.showcase-controls{margin-top:12px}
+.showcase-controls .actions{display:flex;flex-wrap:wrap;gap:7px}
+.showcase-controls a{color:var(--mint)}
+.lab-menu a[data-showcase-current]{border-color:var(--gold);color:var(--gold)}
+@media(max-width:620px){.showcase{padding:12px}.showcase-stage{grid-template-columns:1fr;min-height:220px;gap:11px}.showcase-stage canvas{max-height:150px}}
+
+.thread-intro{max-width:68ch;color:var(--dim)}
+.thread-notes{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}
+.thread-notes li{padding:13px 0;border-top:1px solid var(--line)}
+.thread-notes h3{margin:0 0 6px;font:600 1.04rem var(--sans)}
+.thread-notes p{max-width:76ch;margin:0 0 8px}
+.thread-notes p:last-child{margin-bottom:0}
+.thread-links{font:.82rem var(--sans);color:var(--dim)}
+.thread-notes code{word-break:normal;overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+
+<!-- STICKY TOP NAVIGATION BAR -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="top-row">
+      <div class="brand">
+        <span class="brand-pill">c3.2z</span>
+        <h1><em>Prime Forms</em></h1>
+      </div>
+      <div class="status-strip">
+        <label class="unit-pill" for="top-unit-select">
+          <span>Unit</span>
+          <select id="top-unit-select" aria-label="Shared unit of c"></select>
+        </label>
+        <button type="button" id="top-play" class="btn-play" aria-pressed="true">
+          <span id="top-play-dot" class="dot"></span>
+          <span id="top-play-txt">Pause</span>
+        </button>
+        <button type="button" id="top-copy-spec" class="btn-mint">Copy settings</button>
+      </div>
+    </div>
+    <nav class="lab-menu" aria-label="Main menu">
+      <a href="#unit-tree">Unit tree</a>
+      <a href="#phase-slots">Optical phase slots</a>
+      <a href="#prime-forms">Prime Forms</a>
+      <a href="#logistic-fork">Logistic fork</a>
+      <a href="#lattice">3D lattice</a>
+      <a href="#dimensions">Hopf detector</a>
+      <a href="#gain-title">Gain sweep</a>
+      <a href="#research-controls">Research controls</a>
+      <a href="#omega-towers">Ω towers</a>
+      <a href="#omega-light">Ω light loop</a>
+      <a href="#order-of-waves">Wave plate</a>
+      <a href="#model-checks">Model checks</a>
+      <a href="#thread-notes">From the thread</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <p class="note">Start with the exact unit conversion. Use its digit towers to drive the drawings, then compare their dynamics and Ω layers.</p>
+
+  <section class="showcase" id="showcase" aria-labelledby="showcase-title">
+    <div class="showcase-header">
+      <h2 id="showcase-title">Prime Forms showcase</h2>
+      <span class="showcase-count" id="showcase-count"></span>
+    </div>
+    <div class="showcase-stage" id="showcase-stage" aria-live="off">
+      <div>
+        <h3 id="showcase-screen">Unit tree</h3>
+        <p id="showcase-description">See the same vacuum speed in several units.</p>
+        <p class="showcase-detail" id="showcase-detail"></p>
+      </div>
+      <canvas id="showcase-canvas" width="800" height="320" aria-hidden="true" hidden></canvas>
+    </div>
+    <div class="showcase-controls">
+      <div class="actions" aria-label="Showcase playback">
+        <button type="button" id="showcase-prev">Previous</button>
+        <button type="button" id="showcase-play">Pause tour</button>
+        <button type="button" id="showcase-next">Next</button>
+      </div>
+      <a id="showcase-open" href="#unit-tree">Open Unit tree</a>
+    </div>
+  </section>
+
+<section class="lab-screen" id="unit-tree">
+    <div class="panel" id="tower-configuration">
+      <h2>Top-level configuration</h2>
+      <div class="controls">
+        <label><input type="checkbox" id="uncap"> Restore the third layer</label>
+        <label>Drive <select id="drive"><option value="word">Displayed digits</option><option value="cycle">Repeating block</option></select></label>
+        <label>Mirror <select id="mirror"><option value="off">Off</option><option value="whole">Whole word</option><option value="slot">One slot</option></select></label>
+        <label id="slot-field" hidden>Slot <select id="slot" aria-label="Slot to mirror"></select></label>
+      </div>
+      <div class="controls rule-controls">
+        <label>Tower rule <select id="rule"><option value="off">Prime-factor count</option><option value="mirror">Mirror one digit</option><option value="set">Set one digit’s height</option></select></label>
+        <label id="rule-digit-field" hidden>Digit <select id="rule-digit"><option>0</option><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option></select></label>
+        <label id="rule-order-field" hidden>Apply <select id="rule-order"><option value="after">After cap</option><option value="before">Before cap</option></select></label>
+        <label id="rule-height-field" hidden>Height <select id="rule-height"><option>0</option><option>1</option><option>2</option><option selected>3</option></select></label>
+      </div>
+      <p class="note">The tower rule edits every occurrence of the chosen digit. Choose whether it runs before or after the height-2 cap. A phase mirror sends h to −h modulo 4.</p>
+    </div>
+
+    <div class="layout">
+      <nav class="panel tree" aria-label="Unit tree">
+        <div class="intro"><h2>Unit tree</h2></div>
+        <p class="root mono">c &nbsp;·&nbsp; 299792458 m/s</p>
+        <ul id="branches"></ul>
+      </nav>
+
+      <section class="panel" id="inspect" aria-labelledby="unit-name">
+        <div class="intro"><h2 id="unit-name"></h2><span class="period" id="family-name"></span></div>
+        <p class="value" id="value" aria-live="polite"></p>
+        <p class="exact" id="exact"></p>
+        <div class="properties" id="properties"></div>
+        <div class="controls">
+          <label>Fractional digits
+            <select id="precision"><option>0</option><option>6</option><option selected>9</option><option>24</option><option>48</option><option>160</option></select>
+          </label>
+        </div>
+        <div id="tiles" class="tiles" aria-label="Digit factor towers"></div>
+        <p id="details" class="readout" aria-live="polite"></p>
+        <div id="repeat" class="repeatbox" hidden>
+          <h3>Repeating tower block</h3>
+          <p id="repeatText" class="repeat-text"></p>
+          <p id="repeatInfo" class="note"></p>
+        </div>
+
+        <section class="model" id="phase-slots" aria-labelledby="model-title">
+          <h3 id="model-title">Optical phase model</h3>
+          <p class="note">One tower layer sets a 90° phase step. An ideal modulator repeats the chosen word on a continuous laser. The bars show the resulting carrier and sideband powers.</p>
+          <div class="controls">
+            <label>Slot rate <select id="rate"><option value="10">10 MHz</option><option value="100" selected>100 MHz</option><option value="1000">1 GHz</option></select></label>
+          </div>
+          <div id="spectrumSummary" class="summary" aria-live="polite"></div>
+          <p id="work" class="work"></p>
+          <div id="plot" class="plot" role="group" aria-label="Carrier and six sidebands on either side"></div>
+        </section>
+      </section>
+    </div>
+  </section>
+<section class="lab-screen" id="prime-forms">
+    <div class="panel helix-lab">
+      <div class="prime-gallery">
+        <nav class="gallery-modes" id="gallery-modes" aria-label="Gallery forms"></nav>
+        <figure class="gallery-stage" id="gallery-frame">
+          <canvas id="gallery-art" width="2080" height="880" role="img" aria-label="Prime forms"></canvas>
+        </figure>
+        <figure class="gallery-stage" id="gallery-classic" hidden>
+          <canvas id="helix-dna" width="530" height="220" role="img" aria-label="Original and mirrored prime-letter strand"></canvas>
+        </figure>
+        <p class="gallery-notes" id="gallery-caption"></p>
+        <div class="gallery-toolbar">
+          <label id="gallery-angle-label">Angle <input id="gallery-angle" type="range" min="0" max="360" step="1" value="18"></label>
+          <label id="gallery-pitch-label" hidden>Helix pitch <input id="helix-pitch" type="range" min="4" max="24" step="1" value="8"></label>
+          <span class="gallery-case" id="gallery-loom-tools" hidden>
+            <button type="button" id="gallery-seal">Seal seam</button>
+            <button type="button" id="gallery-drift">Let it drift</button>
+          </span>
+          <button type="button" id="gallery-gain-jump" hidden>Adjust gain sweep</button>
+          <label id="gallery-folds-label" hidden>Odd folds
+            <select id="gallery-folds"><option>3</option><option selected>5</option><option>7</option></select>
+          </label>
+          <span class="gallery-case" id="gallery-knot-tools" hidden>
+            <label>Knot r <input id="gallery-knot-r" type="range" min="0.55" max="1.85" step="0.01" value="1.22"><output id="gallery-r-out"></output></label>
+            <label>Knot e <input id="gallery-knot-e" type="range" min="0.25" max="2.25" step="0.01" value="0.70"><output id="gallery-e-out"></output></label>
+          </span>
+          <button type="button" id="gallery-save">Save PNG</button>
+        </div>
+      </div>
+
+      <h2 id="logistic-fork">Logistic fork</h2>
+      <div class="controls">
+        <label>Downstream
+          <select id="helix-mode">
+            <option value="split">Bias the R branch</option>
+            <option value="merge">Same logistic map</option>
+            <option value="mirror">Keep the exact mirror</option>
+            <option value="roundoff">Compute mirror independently</option>
+          </select>
+        </label>
+        <label>Parent r <input id="helix-r" type="number" min="0" max="4" step="any" value="3.445"></label>
+        <label>Seed <input id="helix-seed" type="range" min="0.01" max="0.99" step="0.01" value="0.37"><output id="helix-seed-out"></output></label>
+        <label id="helix-bias-label">R bias
+          <select id="helix-bias">
+            <option value="alpha">α</option>
+            <option value="proxy">1/137</option>
+            <option value="custom">Custom</option>
+          </select>
+        </label>
+        <label id="helix-delta-label" hidden>Δr <input id="helix-delta" type="number" min="-4" max="4" step="any" value="0.007"></label>
+        <button type="button" id="helix-threshold">Compare α with 1/137 at the flip</button>
+      </div>
+
+      <details class="orbit-details">
+        <summary>Read the logistic orbit</summary>
+        <figure class="phase-frame">
+          <canvas id="helix-orbit" width="530" height="220" role="img" aria-label="Parent and mirror-copy logistic trajectories"></canvas>
+          <figcaption id="helix-orbit-note" class="note"></figcaption>
+        </figure>
+      </details>
+
+      <div id="helix-word" class="helix-word"></div>
+      <div id="helix-results" class="helix-results" aria-live="polite"></div>
+      <p class="helix-insight" id="helix-insight"></p>
+      <p class="lab-sources">The α setting uses the fine-structure constant as an exploratory dimensionless bias in a chosen rule. Use <strong>Tab 4</strong> to edit the unit, cap, or tower rule.</p>
+    </div>
+  </section>
+<section class="lab-screen" id="lattice">
+    <!-- Block averaging and detector models -->
+    <div class="panel">
+      <div class="rg-header">
+        <div>
+          <h2>Lattice coarse-graining</h2>
+          <p class="note" id="rg-subtitle" style="margin-top:5px">A 32 × 32 field seeded by the digit heights and the knot setting. Average adjacent cells to view it at coarser resolutions.</p>
+        </div>
+        <div class="rg-readouts">
+          <div class="rg-readout-block">
+            <div class="rg-readout-lbl">Scale</div>
+            <div class="rg-readout-val" id="rg-top-scale">32 × 32</div>
+          </div>
+          <div class="rg-readout-block">
+            <div class="rg-readout-lbl">State</div>
+            <div class="rg-readout-val mint" id="rg-top-state">Input field</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rg-stage" id="wrap-rg">
+        <canvas id="canvas-rg" role="img" aria-label="32 by 32 coarse-graining lattice drawn as a 3D relief. Drag to orbit."></canvas>
+      </div>
+
+      <div class="rg-bar">
+        <div class="rg-slider-wrap">
+          <label for="rg-scale" class="mono" style="font-size:.83rem;color:var(--dim)">Coarse-Graining Layer</label>
+          <input id="rg-scale" type="range" min="0" max="3" step="1" value="0">
+          <output id="rg-scale-out" class="mono" style="color:var(--mint);min-width:6.5em">Layer 0 (1×1)</output>
+        </div>
+        <span class="note" style="margin:0">Drag the lattice to orbit it.</span>
+        <button type="button" id="rg-save">Save PNG</button>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-lbl">Variance retained</div><div class="kpi-val gold" id="rg-kpi-var">100.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Cells averaged per block</div><div class="kpi-val coral" id="rg-kpi-ent">1</div></div>
+        <div class="kpi"><div class="kpi-lbl">Active Scale</div><div class="kpi-val" id="rg-kpi-scale">32 × 32 · Input field</div></div>
+        <div class="kpi"><div class="kpi-lbl">Field settings</div><div class="kpi-val violet" id="rg-kpi-seed">m/s · r=1.22</div></div>
+      </div>
+    </div>
+
+    <!-- 2) Recovered Hopf Dimension Lab -->
+    <div class="panel dimension-lab" id="dimensions">
+      <h2>When does the hole disappear?</h2>
+      <p class="note">Change the detector to hide the hole. Change the pump to collapse the loop. Change units to see what the tower would command if we wired it into the pump.</p>
+      <div class="dimension-layout">
+        <div>
+          <div class="phase-frame">
+            <canvas id="dimension-canvas" width="640" height="244" role="img" aria-label="Oscillator orbit and detector output"></canvas>
+            <p id="dimension-caption" class="note" aria-live="polite"></p>
+          </div>
+          <div class="mode-kpis" id="dimension-kpis" aria-live="polite"></div>
+        </div>
+        <div class="dimension-controls">
+          <label>Detector
+            <select id="dimension-view">
+              <option value="iq">Both quadratures</option>
+              <option value="sum">Coherent mirror sum</option>
+              <option value="power">Power only</option>
+            </select>
+          </label>
+          <label>Unit <select id="dimension-unit"></select></label>
+          <label>Pump input
+            <select id="dimension-drive">
+              <option value="manual">Physical setting</option>
+              <option value="tower">Unit digit → pump</option>
+            </select>
+          </label>
+          <label><span>Pump bias <output id="dimension-bias-label"></output></span>
+            <input id="dimension-bias" type="range" min="-0.60" max="0.60" step="0.01" value="0.18">
+          </label>
+          <label><span>Detection floor <output id="dimension-floor-label"></output></span>
+            <input id="dimension-floor" type="range" min="0" max="0.75" step="0.01" value="0">
+          </label>
+        </div>
+      </div>
+      <p id="dimension-command" class="note"></p>
+      <p class="note">Normalized Hopf model. The attractor is a fixed point or a cycle. The dimension and hole shown by the detector depend on the chosen projection.</p>
+    </div>
+  </section>
+<section class="lab-screen" id="research">
+    <div class="panel gain-lab">
+      <h2 id="gain-title">One gain, many towers</h2>
+      <p class="note">Idealized analog circuit. Each step is an exponential amplifier: x_next = exp(g · ln(p) · x). Repeat a row to build a tower; bracketed thresholds sync with Threshold Crown in Tab 3.</p>
+      <div class="controls">
+        <label>Center gain <input id="gain-center" type="number" min="0" max="1" step="any" value="0.189"></label>
+        <label>Mirror sweep ± <input id="gain-sweep" type="number" min="0" max="1" step="any" value="0.003"></label>
+      </div>
+      <table class="research-table">
+        <thead><tr><th>Repeating primes</th><th>Critical gain</th><th id="gain-left"></th><th id="gain-right"></th></tr></thead>
+        <tbody id="gain-probes"></tbody>
+      </table>
+      <p class="note" id="gain-insight" aria-live="polite"></p>
+    </div>
+
+    <div class="panel">
+      <h2 id="research-controls">Which part is doing the work?</h2>
+      <div class="research-grid">
+        <section class="phase-frame">
+          <h3>Does α win the flip test?</h3>
+          <p class="note">Uniform parent r ∈ [3.40, 3.49]. Fraction below r = 1 + √6 whose R copy crosses above it:</p>
+          <table class="research-table">
+            <thead><tr><th>R offset</th><th>Crossing probability</th></tr></thead>
+            <tbody id="research-crossings"></tbody>
+          </table>
+        </section>
+        <section class="phase-frame">
+          <h3>Does the repunit top survive equal gain?</h3>
+          <p class="note">Analytic log ratio V = L(u + iε)/L(u) matched to first-order phase gain 0.1:</p>
+          <div class="controls">
+            <label>Tower depth <select id="research-depth"><option value="2">2 primes</option><option value="3" selected>3 primes</option></select></label>
+            <label>Top u <select id="research-top"><option>1.10</option><option selected>1.11</option><option>1.12</option><option>11</option></select></label>
+          </div>
+          <div id="research-readout" class="mono" style="font-size:.83rem;color:var(--mint)" aria-live="polite"></div>
+          <p class="note" id="research-tower-note"></p>
+        </section>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="intro">
+        <h2 id="model-checks">Model checks</h2>
+        <button type="button" id="spec-copy-btn" class="btn-mint">Copy settings</button>
+      </div>
+      <table class="research-table">
+        <thead><tr><th>#</th><th>Invariant</th><th>Status</th><th>Live Measurement</th></tr></thead>
+        <tbody id="spec-invariants"></tbody>
+      </table>
+    </div>
+  </section>
+<section class="lab-screen" id="omega-towers">
+    <div class="panel omega-lab">
+      <h2>Ω towers: one fixed point, many stabilities</h2>
+      <p class="note">Ω = W(1) ≈ 0.56714329 solves Ω = e<sup>−Ω</sup>. Each prime letter is one tower layer, T<sub>p</sub>(x) = Ω·p<sup>Ω−x</sup>, and every layer sends Ω to Ω. Both towers start at the little top 1.11 and differ only in which prime goes first.</p>
+      <div class="controls">
+        <label>Prime pair
+          <select id="omega-pair"><option value="2,7">2 → 7</option><option value="5,7" selected>5 → 7</option><option value="3,5">3 → 5</option><option value="2,3">2 → 3</option><option value="3,7">3 → 7</option><option value="5,11">5 → 11</option><option value="7,11">7 → 11</option></select>
+        </label>
+        <button type="button" id="omega-save">Save PNG</button>
+      </div>
+      <figure class="gallery-stage"><canvas id="omega-art" width="2080" height="880" role="img" aria-label="Prime layers crossing at omega, two cobwebs from 1.11, and the order difference over 48 double layers"></canvas></figure>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-lbl">Ω = W(1)</div><div class="kpi-val gold" id="omega-kpi-omega"></div></div>
+        <div class="kpi"><div class="kpi-lbl">Pair multiplier Ω²·ln p·ln q</div><div class="kpi-val" id="omega-kpi-mult"></div></div>
+        <div class="kpi"><div class="kpi-lbl" id="omega-lbl-a">End reading</div><div class="kpi-val" id="omega-kpi-a"></div></div>
+        <div class="kpi"><div class="kpi-lbl" id="omega-lbl-b">End reading</div><div class="kpi-val violet" id="omega-kpi-b"></div></div>
+      </div>
+      <div id="omega-channels" class="omega-readout" aria-live="polite"></div>
+      <p class="note" id="omega-channel-note" style="color:var(--ink)"></p>
+    </div>
+
+    <div class="panel omega-lab" id="omega-light">
+      <h2>Ω in a beam of light, and in the letters</h2>
+      <div class="research-grid">
+        <section class="phase-frame">
+          <h3>A light loop that settles on Ω</h3>
+          <p class="note">An attenuator sets its optical depth from the transmission it last measured. With feedback gain g the ideal Beer–Lambert loop is x → e<sup>−g·x</sup>, and its fixed-point transmission is W(g)/g.</p>
+          <div class="controls">
+            <label>Feedback gain g <input id="omega-gain" type="range" min="0.2" max="4" step="0.01" value="1"><output id="omega-gain-out" class="mono"></output></label>
+            <button type="button" id="omega-gain-e">Set g = e</button>
+          </div>
+          <canvas id="omega-orbit" width="530" height="170" role="img" aria-label="Transmission over 60 passes of the feedback loop"></canvas>
+          <div id="omega-light-readout" class="omega-readout" aria-live="polite"></div>
+          <p class="note" id="omega-light-note"></p>
+        </section>
+        <section class="phase-frame">
+          <h3>Every pair, both letter orders</h3>
+          <p class="note">The multiplier is the same in either order. The curvature (second derivative of the two-layer map at Ω) is not. End readings are taken after 20,000 double layers started at 1.11.</p>
+          <table class="research-table">
+            <thead><tr><th>Pair</th><th>Multiplier</th><th>Curv. p→q</th><th>Curv. q→p</th><th>End p→q</th><th>End q→p</th></tr></thead>
+            <tbody id="omega-pairs"></tbody>
+          </table>
+        </section>
+      </div>
+      <p class="lab-sources"><a href="https://dlmf.nist.gov/4.13">Lambert W function, NIST DLMF §4.13</a></p>
+    </div>
+  </section>
+  <section class="panel wave-plate" id="order-of-waves" aria-labelledby="wave-plate-title">
+    <figure><a href="assets/omega-tower-waves.png"><img id="wave-plate-image" src="assets/omega-tower-waves.png" width="1400" height="1890" loading="lazy" alt="Signed interference rosette with a mint sum trace and an amber difference trace."></a></figure>
+    <div><h2 id="wave-plate-title">The Order of Waves</h2>
+      <p class="note">The 5 → 7 and 7 → 5 layers share Ω and the same first derivative. Under a small sinusoidal drive their half-difference starts at quadratic order. Subtract its mean to see a leading oscillation at twice the drive frequency. Reversing the layers reverses its sign.</p>
+      <p class="note">The rosette uses the computed tower outputs as phase masks. The two plotted signals use separate vertical scales.</p>
+    </div>
+  </section>
+  <section id="thread-notes" class="panel" aria-labelledby="thread-title">
+    <h2 id="thread-title">From the original thread</h2>
+    <p class="thread-intro">The project began with a question about patterns that survive a change of representation. These are the steps that led from the first number-theory experiments to the Prime Forms screens.</p>
+    <ol class="thread-notes">
+      <li>
+        <h3>Start with a digit and ask what survives</h3>
+        <p>In the m/s spelling <code>299792458</code>, counting prime factors with multiplicity gives <code>122121213</code>. Capping each height at two gives <code>122121212</code>. The whole difference is the third factor of 2 in the final digit, <strong>8 = 2³</strong>. That became the amber layer. Changing units re-encodes the number, which gave us a control for the mirror patterns.</p>
+        <p class="thread-links"><a href="#unit-tree">Open the unit tree</a> · <a href="#phase-slots">Open the phase slots</a></p>
+      </li>
+      <li>
+        <h3>Use the arithmetic as a control</h3>
+        <p>Our Goldbach picture used a centre <em>m</em> and a half-gap <em>d</em>. Goldbach varies <em>d</em>; the twin-prime slice fixes <em>d</em> = 1. At centres <em>m</em> = 2<sup>k</sup>, <em>k</em> ≥ 1, an admissible pair with both primes above 3 requires <em>d</em> ≡ 3 (mod 6). The twin slice hits this spine at 3 + 5, where the prime 3 is the exception. The Collatz question furnished a second exact check. For the shortcut map, the first <em>j</em> steps from 2<sup>k</sup> − 1 give 3<sup>j</sup>2<sup>k−j</sup> − 1 for 0 ≤ <em>j</em> ≤ <em>k</em>. These are finite identities from the discussion.</p>
+      </li>
+      <li>
+        <h3>Get the quarter-turn from a logistic orbit</h3>
+        <p>At <em>r</em> = 1 + √6, the logistic two-cycle has multiplier −1. Following a tangent perturbation on its two phases gives a matrix whose square is −<em>I</em>. In an adapted basis, reading the second coordinate gives <code>0,+1,0,−1</code>, the values of χ₄. On the Gaussian CM curve <em>y</em>² = <em>x</em>³ − <em>x</em>, the negative sign selects the odd primes with vanishing Frobenius trace. The even steps are zeros of the sequence itself.</p>
+        <p class="thread-links"><a href="#logistic-fork">Open the logistic fork</a> · <a href="https://personalpages.manchester.ac.uk/staff/yanghong.huang/ads/html/maps-log.html">Logistic bifurcations</a> · <a href="https://math.bu.edu/people/drhast/Notes/Math844-elliptic-curves-notes.pdf">CM curve notes</a></p>
+      </li>
+      <li>
+        <h3>Put Catalan at the centre</h3>
+        <p>Use <em>w</em> = (<em>s</em> − 2)/(<em>s</em> + 1) to put the critical line on the rim. The Dirichlet beta function evaluated at the centre gives Catalan’s constant; at <em>w</em> = −½ it gives π/4. Damping the quarter-turn sequence by exp(−<em>nt</em>) gives the kernel 1/(2 cosh <em>t</em>). The weighted Gauss inverse branches give β(<em>s</em>) when applied once to the constant function and evaluated at zero. Green–Tao’s relative-density result lets us find arbitrarily long prime progressions within either odd remainder class modulo 4. For example, 3, 7, 11 contribute with the same negative sign to Catalan’s series.</p>
+        <p class="thread-links"><a href="https://mathworld.wolfram.com/DirichletBetaFunction.html">Dirichlet beta</a> · <a href="https://annals.math.princeton.edu/2008/167-2/p03">Green–Tao</a></p>
+      </li>
+      <li>
+        <h3>Reverse two layers and listen for the difference</h3>
+        <p>The odd/even studies compare what changes sign under a swap with what survives the swap. The Ω study uses a separate exponential rule, <code>Tₚ(x) = Ω p^(Ω−x)</code>, with Ω = <em>W</em>(1). The two orders 5 → 7 and 7 → 5 share a fixed point and a slope. Their half-difference starts at quadratic order, so a small sinusoidal drive leaves a leading second harmonic after its mean is removed. That is the amber trace in the signed plate. A separate gain control models the effect of changing a calibrated parameter in every stage.</p>
+        <p class="thread-links"><a href="#omega-towers">Open Ω towers</a> · <a href="#order-of-waves">View the signed wave plate</a> · <a href="#gain-title">Open the shared gain sweep</a></p>
+      </li>
+    </ol>
+    <p class="lab-credit">The project author brought the initial questions and tower ideas. Codex worked through the calculations and drew The Order of Waves. Neon contributed the visual design and 3D lattice.</p>
+  </section>
+</main>
+
+<script>
+'use strict';
+
+// ============================================================================
+// 1. SHARED CONSTANTS, BIGINT UNIT TREE & STATE
+// ============================================================================
+const C = 299792458n;
+const fineStructure = 1 / 137.035999177;
+const alphaProxy = 1 / 137;
+const flipParameter = 1 + Math.sqrt(6);
+const factors = ['', '', '2', '3', '2²', '5', '2 × 3', '7', '2³', '3²'];
+const heights = [0, 0, 1, 1, 2, 1, 2, 1, 3, 2];
+const primesByDigit = ['', '', '2', '3', '22', '5', '23', '7', '222', '33'];
+const primeColors = { '2': '#bfd9f5', '3': '#d6ba73', '5': '#a39bd5', '7': '#6fb6c3' };
+const harmonics = Array.from({ length: 13 }, (_, i) => i - 6);
+const gainWords = [[2], [3], [5], [7], [2, 7], [7, 2], [3, 5]];
+
+const families = [
+  { label: 'Metric', rows: [
+    ['ms','m/s',1,1,1], ['kms','km/s',1000,1,1], ['cms','cm/s',1,100,1],
+    ['mms','mm/s',1,1000,1], ['mns','m/ns',1,1,1000000000, true], ['kmh','km/h',1000,1,3600],
+  ]},
+  { label: 'US customary', rows: [
+    ['ins','in/s',127,5000,1], ['fts','ft/s',381,1250,1], ['yds','yd/s',1143,1250,1],
+    ['mis','mi/s',201168,125,1], ['mph','mph',201168,125,3600],
+  ]},
+  { label: 'Nautical', rows: [['nmis','nmi/s',1852,1,1], ['kn','kn',1852,1,3600]] },
+  { label: 'Normalized', rows: [['norm','c/c',299792458,1,1]] },
+];
+
+const byId = (id) => document.getElementById(id);
+function element(tag, className, content) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (content !== undefined) node.textContent = content;
+  return node;
+}
+function gcd(a, b) { while (b) [a, b] = [b, a % b]; return a; }
+function expand(n, d) {
+  const common = gcd(n, d); n /= common; d /= common;
+  const whole = String(n / d);
+  const seen = new Map();
+  let remainder = n % d, digits = '';
+  while (remainder && !seen.has(remainder)) {
+    seen.set(remainder, digits.length);
+    remainder *= 10n;
+    digits += String(remainder / d);
+    remainder %= d;
+  }
+  const start = remainder ? seen.get(remainder) : digits.length;
+  return { n, d, whole, prefix: digits.slice(0, start), cycle: digits.slice(start) };
+}
+function primitivePeriod(word) {
+  for (let s = 1; s <= word.length; s++) {
+    if (word.length % s === 0 && word.slice(0, s).repeat(word.length / s) === word) return s;
+  }
+  return 0;
+}
+function towerHeight(d, raw) { return raw ? heights[d] : Math.min(2, heights[d]); }
+function mirrorHeight(h) { return (4 - h) % 4; }
+function ruleConfig() {
+  return {
+    mode: byId('rule').value, digit: byId('rule-digit').value,
+    height: Number(byId('rule-height').value), order: byId('rule-order').value,
+  };
+}
+function applyRule(d, h, rule) {
+  if (d !== rule.digit) return h;
+  if (rule.mode === 'mirror') return mirrorHeight(h);
+  if (rule.mode === 'set') return rule.height;
+  return h;
+}
+function configuredHeight(d, raw, rule) {
+  if (rule.order === 'before') {
+    const h = applyRule(d, heights[d], rule);
+    return raw ? h : Math.min(2, h);
+  }
+  return applyRule(d, towerHeight(d, raw), rule);
+}
+function saveCanvasPNG(canvas, filename) {
+  const a = element('a', '');
+  a.href = canvas.toDataURL('image/png');
+  a.download = filename;
+  a.click();
+}
+
+const units = new Map();
+let selected = 'ms';
+let visibleDigits = '';
+const spectrumCache = new Map();
+let slotOptionsKey = '';
+let isPlaying = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+let animTime = 0;
+
+// Build Unit Tree & sync both unit <select> dropdowns
+const topUnitSelect = byId('top-unit-select');
+const dimUnitSelect = byId('dimension-unit');
+for (const family of families) {
+  const li = element('li', 'branch');
+  li.append(element('h3', '', family.label));
+  const leaves = element('ul', 'leaves');
+  for (const [id, label, mN, mD, time, ns] of family.rows) {
+    const val = ns ? expand(C, BigInt(time)) : expand(C * BigInt(time) * BigInt(mD), BigInt(mN));
+    const btn = element('button', '');
+    btn.type = 'button';
+    btn.dataset.unit = id;
+    btn.append(element('span', '', label), element('span', 'period', val.cycle.length ? val.cycle.length + ' repeat' : 'exact'));
+    btn.addEventListener('click', () => { selected = id; render(); });
+    units.set(id, { ...val, label, family: family.label, button: btn });
+    const leaf = element('li', '');
+    leaf.append(btn);
+    leaves.append(leaf);
+
+    const optTop = element('option', '', label); optTop.value = id; topUnitSelect.append(optTop);
+    const optDim = element('option', '', label); optDim.value = id; dimUnitSelect.append(optDim);
+  }
+  li.append(leaves);
+  byId('branches').append(li);
+}
+topUnitSelect.addEventListener('change', () => { selected = topUnitSelect.value; render(); });
+dimUnitSelect.addEventListener('change', () => { selected = dimUnitSelect.value; render(); });
+
+function property(label, value) {
+  const f = element('span', '');
+  f.append(document.createTextNode(label + ' '), element('span', '', value));
+  return f;
+}
+function fractionWindow(v, count) {
+  if (!v.cycle) return v.prefix.slice(0, count);
+  return (v.prefix + v.cycle.repeat(Math.ceil(count / v.cycle.length))).slice(0, count);
+}
+function glowOf(color) { return color[0] === '#' ? color.slice(0, 7) : color; }
+function artPath(ctx, pts, color, w = 1, fill = null) {
+  if (!pts.length) return;
+  ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
+  if (fill || pts.length < 4) {
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+  } else {
+    for (let i = 1; i < pts.length - 1; i++) {
+      ctx.quadraticCurveTo(pts[i][0], pts[i][1], (pts[i][0] + pts[i + 1][0]) / 2, (pts[i][1] + pts[i + 1][1]) / 2);
+    }
+    ctx.lineTo(pts.at(-1)[0], pts.at(-1)[1]);
+  }
+  if (fill) { ctx.closePath(); ctx.fillStyle = fill; ctx.fill(); }
+  if (color) {
+    if (!fill) { ctx.shadowColor = glowOf(color); ctx.shadowBlur = w > 1.2 ? 11 : 6; }
+    ctx.strokeStyle = color; ctx.lineWidth = w; ctx.stroke();
+    ctx.shadowBlur = 0;
+  }
+}
+function artDot(ctx, x, y, r, c) {
+  if (r >= 2.5) { ctx.shadowColor = glowOf(c); ctx.shadowBlur = r * 3; }
+  ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); ctx.fillStyle = c; ctx.fill();
+  ctx.shadowBlur = 0;
+}
+
+// ============================================================================
+// 2. TAB 1: RENORMALIZATION GROUP MICRO-LATTICE & HOPF DIMENSION LAB
+// ============================================================================
+const RG_META = [
+  { scale: '32 × 32', state: 'Input field', block: 1, desc: 'One sample per cell. The heights use the current digit towers and knot setting.' },
+  { scale: '16 × 16', state: 'Block averages', block: 2, desc: 'Each visible cell averages a 2 × 2 block of the input field.' },
+  { scale: '8 × 8', state: 'Block averages', block: 4, desc: 'Each visible cell averages a 4 × 4 block of the input field.' },
+  { scale: '4 × 4', state: 'Block averages', block: 8, desc: 'Each visible cell averages an 8 × 8 block of the input field.' },
+];
+const microField = new Float32Array(1024);
+
+const rgView = { yaw: 0.65, pitch: 0.95, drag: null };
+function rgColor(v) { return v < 0.34 ? '#557cdb' : v < 0.54 ? '#6fb6c3' : v < 0.72 ? '#bfd9f5' : '#d6ba73'; }
+
+function drawRG(t) {
+  const c = byId('canvas-rg'), wrap = byId('wrap-rg');
+  const w = wrap.clientWidth || 720, h = wrap.clientHeight || 390;
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  if (c.width !== Math.round(w * dpr) || c.height !== Math.round(h * dpr)) { c.width = Math.round(w * dpr); c.height = Math.round(h * dpr); }
+  const ctx = c.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+  ctx.fillStyle = '#070d1a';
+  ctx.fillRect(0, 0, w, h);
+
+  const sc = Number(byId('rg-scale').value);
+  const meta = RG_META[sc];
+  const raw = byId('uncap').checked;
+  const rule = ruleConfig();
+  const digs = [...visibleDigits].map((d) => configuredHeight(d, raw, rule) / 3);
+  const dLen = digs.length || 1;
+  const kR = Number(byId('gallery-knot-r').value);
+  const kE = Number(byId('gallery-knot-e').value);
+  const roots = knotAttractors(kR, kE);
+  const knotAmp = roots.length === 2 ? roots[1] : 0.25;
+
+  // 32x32 Layer 0 micro-field (unchanged rule)
+  let s0 = 0, sq0 = 0;
+  for (let y = 0; y < 32; y++) {
+    for (let x = 0; x < 32; x++) {
+      const hA = digs[(x + y * 3) % dLen];
+      const hB = digs[(x * 5 + y * 7) % dLen];
+      const wave = 0.5 + 0.5 * Math.sin(t * 1.15 + x * 0.42 - y * 0.37 + knotAmp * Math.cos(t * 0.8 + ((x * 7) ^ (y * 11)) * 0.22));
+      const v = Math.max(0, Math.min(1, 0.42 * hA + 0.22 * hB + 0.36 * wave));
+      microField[y * 32 + x] = v;
+      s0 += v; sq0 += v * v;
+    }
+  }
+  const var0 = Math.max(1e-9, sq0 / 1024 - (s0 / 1024) ** 2);
+
+  // block averages for the chosen layer
+  const blk = meta.block, side = 32 / blk;
+  const vals = new Float32Array(side * side);
+  let sB = 0, sqB = 0;
+  for (let by = 0; by < side; by++) {
+    for (let bx = 0; bx < side; bx++) {
+      let acc = 0;
+      for (let dy = 0; dy < blk; dy++) for (let dx = 0; dx < blk; dx++) acc += microField[(by * blk + dy) * 32 + bx * blk + dx];
+      const avg = acc / (blk * blk);
+      vals[by * side + bx] = avg; sB += avg; sqB += avg * avg;
+    }
+  }
+
+  // camera: the field value is height above a square floor
+  const yaw = rgView.yaw + t * 0.11;
+  const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(rgView.pitch), sp = Math.sin(rgView.pitch);
+  const S = Math.min(w * 0.5, h * 0.98), H = S * 0.3, focal = S * 2.2;
+  const project = (u, v, val) => {
+    const x = (u - 0.5) * S, z = (v - 0.5) * S, y = (val - 0.5) * H;
+    const xr = x * cy - z * sy, zr = x * sy + z * cy;
+    const k = focal / (focal + zr * sp - y * cp);
+    return [w / 2 + xr * k, h / 2 - S * 0.02 - (y * sp + zr * cp) * k];
+  };
+
+  ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  ctx.globalCompositeOperation = 'lighter';
+  // floor grid
+  ctx.strokeStyle = 'rgba(163,155,213,0.22)'; ctx.lineWidth = 1; ctx.beginPath();
+  for (let i = 0; i <= 8; i++) {
+    const a = i / 8;
+    let p = project(a, 0, 0), q = project(a, 1, 0); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]);
+    p = project(0, a, 0); q = project(1, a, 0); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]);
+  }
+  ctx.stroke();
+  // ghost of the micro layer under a coarse one
+  if (sc > 0) {
+    ctx.fillStyle = 'rgba(163,155,213,0.4)';
+    for (let y = 0; y < 32; y++) for (let x = 0; x < 32; x++) {
+      const p = project((x + 0.5) / 32, (y + 0.5) / 32, microField[y * 32 + x]);
+      ctx.fillRect(p[0] - 0.7, p[1] - 0.7, 1.4, 1.4);
+    }
+  }
+  const P = new Array(side * side);
+  for (let by = 0; by < side; by++) for (let bx = 0; bx < side; bx++) {
+    P[by * side + bx] = project((bx + 0.5) / side, (by + 0.5) / side, vals[by * side + bx]);
+  }
+  const lines = new Map(), nodes = new Map();
+  const push = (map, key, item) => { if (!map.has(key)) map.set(key, []); map.get(key).push(item); };
+  for (let by = 0; by < side; by++) for (let bx = 0; bx < side; bx++) {
+    const i = by * side + bx;
+    push(nodes, rgColor(vals[i]), P[i]);
+    if (bx + 1 < side) push(lines, rgColor((vals[i] + vals[i + 1]) / 2), [P[i], P[i + 1]]);
+    if (by + 1 < side) push(lines, rgColor((vals[i] + vals[i + side]) / 2), [P[i], P[i + side]]);
+  }
+  if (side <= 8) {
+    ctx.strokeStyle = 'rgba(111,182,195,0.3)'; ctx.lineWidth = 1; ctx.beginPath();
+    for (let by = 0; by < side; by++) for (let bx = 0; bx < side; bx++) {
+      const f = project((bx + 0.5) / side, (by + 0.5) / side, 0), p = P[by * side + bx];
+      ctx.moveTo(f[0], f[1]); ctx.lineTo(p[0], p[1]);
+    }
+    ctx.stroke();
+  }
+  for (const [color, segs] of lines) {
+    ctx.beginPath();
+    for (const [p, q] of segs) { ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); }
+    ctx.strokeStyle = color;
+    ctx.globalAlpha = 0.16; ctx.lineWidth = 6; ctx.stroke();
+    ctx.globalAlpha = 0.85; ctx.lineWidth = side === 32 ? 1 : 1.6; ctx.stroke();
+  }
+  const nodeR = { 32: 1.4, 16: 2.3, 8: 3.4, 4: 5 }[side];
+  for (const [color, pts] of nodes) {
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.14; ctx.beginPath();
+    for (const p of pts) { ctx.moveTo(p[0] + nodeR * 3.2, p[1]); ctx.arc(p[0], p[1], nodeR * 3.2, 0, 2 * Math.PI); }
+    ctx.fill();
+    ctx.globalAlpha = 1; ctx.beginPath();
+    for (const p of pts) { ctx.moveTo(p[0] + nodeR, p[1]); ctx.arc(p[0], p[1], nodeR, 0, 2 * Math.PI); }
+    ctx.fill();
+  }
+  ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+
+  const nB = side * side;
+  const varB = Math.max(0, sqB / nB - (sB / nB) ** 2);
+  const varRetained = sc === 0 ? 100 : Math.min(100, (varB / var0) * 100);
+
+  byId('rg-top-scale').textContent = meta.scale;
+  byId('rg-top-state').textContent = meta.state;
+  byId('rg-subtitle').textContent = meta.desc;
+  byId('rg-scale-out').textContent = `Layer ${sc} (${blk}×${blk})`;
+  byId('rg-kpi-var').textContent = varRetained.toFixed(1) + '%';
+  byId('rg-kpi-ent').textContent = String(blk * blk);
+  byId('rg-kpi-scale').textContent = `${meta.scale} · ${meta.state}`;
+  byId('rg-kpi-seed').textContent = `${units.get(selected).label} · r=${kR.toFixed(2)}`;
+}
+const rgCanvas = byId('canvas-rg');
+rgCanvas.addEventListener('pointerdown', (e) => { rgView.drag = { x: e.clientX, y: e.clientY }; rgCanvas.setPointerCapture(e.pointerId); });
+rgCanvas.addEventListener('pointermove', (e) => {
+  if (!rgView.drag) return;
+  rgView.yaw += (e.clientX - rgView.drag.x) * 0.008;
+  rgView.pitch = Math.max(0.2, Math.min(1.45, rgView.pitch - (e.clientY - rgView.drag.y) * 0.006));
+  rgView.drag = { x: e.clientX, y: e.clientY };
+  if (!isPlaying) drawRG(animTime);
+});
+for (const ev of ['pointerup', 'pointercancel']) rgCanvas.addEventListener(ev, () => { rgView.drag = null; });
+
+// Hopf Dimension Lab (100% recovered)
+let displayedDimension = null;
+function dimensionState() {
+  const unit = units.get(selected), digit = unit.whole.at(-1);
+  const h = configuredHeight(digit, byId('uncap').checked, ruleConfig());
+  const bias = Number(byId('dimension-bias').value), floor = Number(byId('dimension-floor').value);
+  const driven = byId('dimension-drive').value === 'tower', detector = byId('dimension-view').value;
+  const mu = bias + (driven ? 0.30 * (h - 2) : 0), radius = Math.sqrt(Math.max(0, mu));
+  const active = radius > 0, resolved = active && radius > floor, visible = resolved && detector !== 'power';
+  return { digit, h, bias, floor, driven, detector, mu, radius, active, resolved, visible, hole: visible && detector === 'iq' };
+}
+function renderDimension() {
+  displayedDimension = dimensionState();
+  const d = displayedDimension;
+  byId('dimension-unit').value = selected;
+  byId('dimension-bias-label').textContent = d.bias.toFixed(2);
+  byId('dimension-floor-label').textContent = d.floor.toFixed(2);
+  byId('dimension-kpis').replaceChildren(
+    property('Attractor dimension', d.active ? 1 : 0),
+    property('Visible dimension', d.visible ? 1 : 0),
+    property('Visible holes', d.hole ? 1 : 0),
+  );
+  byId('dimension-caption').textContent = !d.active ? 'The loop has collapsed. The attracting state is a fixed point.'
+    : !d.resolved ? 'The loop is below the detection floor. The oscillator still has a limit cycle.'
+    : d.detector === 'sum' ? 'The mirror fields cancel in the imaginary quadrature. Their sum moves along a line.'
+    : d.detector === 'power' ? 'The field keeps rotating. Its steady intensity is constant.'
+    : 'The stable circle and its mirror share a loop. The two fields run in opposite directions.';
+  byId('dimension-command').textContent = 'Unit digit ' + d.digit + ' → height ' + d.h + ' · ' + (d.driven
+    ? 'tower drives the pump: μ = bias + 0.30 × (height − 2) = ' + d.mu.toFixed(2)
+    : 'physical pump held at μ = ' + d.mu.toFixed(2) + ' while the unit and tower may change');
+  paintDimension(animTime * 1000);
+  updateInvariants();
+}
+function paintDimension(timeMs) {
+  const ctx = byId('dimension-canvas').getContext('2d');
+  if (!ctx || !displayedDimension) return;
+  const { radius, visible, detector, resolved } = displayedDimension;
+  const x = 320, y = 122, angle = 0.0022 * timeMs + 0.66, px = radius * 88;
+  ctx.clearRect(0, 0, 640, 244);
+  ctx.strokeStyle = '#24365c'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(55, y); ctx.lineTo(585, y); ctx.moveTo(x, 19); ctx.lineTo(x, 225); ctx.stroke();
+  ctx.font = '14px system-ui'; ctx.fillStyle = '#9fb0cf';
+  ctx.fillText(detector === 'power' ? 'Power' : detector === 'sum' ? 'Real field sum' : 'In-phase field', 493, 145);
+  if (detector === 'iq') ctx.fillText('Quadrature field', 330, 27);
+  if (!visible) { artDot(ctx, detector === 'power' && resolved ? x + 106 * radius ** 2 : x, y, 5.5, '#d6ba73'); return; }
+  ctx.strokeStyle = '#bfd9f5'; ctx.lineWidth = 2.5; ctx.shadowColor = '#bfd9f5'; ctx.shadowBlur = 16; ctx.beginPath();
+  if (detector === 'sum') { ctx.moveTo(x - 2 * px, y); ctx.lineTo(x + 2 * px, y); } else ctx.arc(x, y, px, 0, 2 * Math.PI);
+  ctx.stroke(); ctx.shadowBlur = 0;
+  if (detector === 'sum') artDot(ctx, x + 2 * px * Math.cos(angle), y, 5.5, '#d6ba73');
+  else { artDot(ctx, x + px * Math.cos(angle), y - px * Math.sin(angle), 5.5, '#bfd9f5'); artDot(ctx, x + px * Math.cos(angle), y + px * Math.sin(angle), 5.5, '#a39bd5'); }
+}
+
+// ============================================================================
+// 4. TAB 3: PRIME FORMS GALLERY & LOGISTIC FORK ()
+// ============================================================================
+const galleryForms = {
+  knot: { title: 'Odd mirror knot', caption: 'In three state coordinates, the mirror flips the displacement and the lag, while the midpoint contracts back to 1.11.' },
+  ribbon: { title: 'Mirror ribbon', caption: 'A half-twist joins each rail to its mirror. Tower heights bend the loop; the two logistic orbits set the width.' },
+  rosette: { title: 'Prime rosette', caption: 'Prime letters set the short chords; the prime and tower height together set the long chords. The two strands wind in opposite directions.' },
+  loom: { title: 'Fracture loom', caption: 'The gap opens where |x + y − 1| grows. An exact mirror seals the seam; independent updates can tear it open.' },
+  crown: { title: 'Threshold crown', caption: 'Each petal is a prime sequence. A petal splits when the shared gain sweep crosses its analytic threshold.' },
+  helix: { title: 'Original helix', caption: 'Prime-letter rungs follow the two orbits in mirrored coordinates. Gold marks a suppressed third layer.' },
+};
+const galleryPalette = ['#bfd9f5', '#d6ba73', '#a39bd5', '#6fb6c3', '#948ac8'];
+let galleryForm = 'knot';
+let galleryState = null;
+const galleryCanvas = byId('gallery-art');
+const galleryPens = new Map();
+
+function runFork(r, delta, seed, mode, count) {
+  const f = (x, k) => k * x * (1 - x);
+  let x = seed, y = 1 - seed;
+  const traj = [[x, y]];
+  for (let n = 0; n < count; n++) {
+    const parent = f(x, r);
+    if (mode === 'mirror') y = 1 - parent;
+    else if (mode === 'roundoff') y = 1 - f(1 - y, r);
+    else if (mode === 'merge' && n === 0) y = parent;
+    else y = f(y, r + delta);
+    x = parent;
+    traj.push([x, y]);
+  }
+  return traj;
+}
+function orbitPeriod(traj, branch) {
+  const last = traj.length - 1;
+  for (const p of [1, 2, 4, 8, 16, 32]) {
+    if (traj.slice(last - 63).every((pair, i) => Math.abs(pair[branch] - traj[last - 63 + i - p][branch]) < 1e-8)) return String(p);
+  }
+  return 'unresolved';
+}
+function forkModules() {
+  const raw = byId('uncap').checked, rule = ruleConfig();
+  return [...visibleDigits].slice(0, 27).map((digit) => ({
+    digit, letters: primesByDigit[digit], height: configuredHeight(digit, raw, rule), base: heights[digit],
+  }));
+}
+function artOrbit(st, idx) {
+  const len = st.orbit.length, start = len > 512 ? Math.min(72, len - 1) : 0;
+  return st.orbit[(start + idx) % len];
+}
+function artRing(a, r, x = 520, y = 220) { return [x + r * Math.cos(a), y + r * Math.sin(a)]; }
+function galleryBackdrop(ctx, tint) {
+  ctx.setTransform(2, 0, 0, 2, 0, 0);
+  ctx.shadowBlur = 0; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  ctx.fillStyle = '#070d1a'; ctx.fillRect(0, 0, 1040, 440);
+  const wash = ctx.createRadialGradient(520, 220, 10, 520, 220, 560);
+  wash.addColorStop(0, tint + '2e'); wash.addColorStop(1, '#070d1a00');
+  ctx.fillStyle = wash; ctx.fillRect(0, 0, 1040, 440);
+}
+function perspective(x, y, z, angle) {
+  const left = x * Math.cos(angle) - z * Math.sin(angle);
+  const deep = x * Math.sin(angle) + z * Math.cos(angle);
+  const lean = 0.58;
+  const up = y * Math.cos(lean) - deep * Math.sin(lean);
+  const depth = y * Math.sin(lean) + deep * Math.cos(lean);
+  const zoom = 609 / (700 + depth);
+  return [520 + left * zoom, 220 + up * zoom, depth];
+}
+function knotStep(m, odd, lag, r, e) { return [0.78 * m, r * odd - e * odd ** 3, 0.86 * lag + 0.14 * odd]; }
+function knotAttractors(r, e) { return r <= 1 ? [0] : [-Math.sqrt((r - 1) / e), Math.sqrt((r - 1) / e)]; }
+
+function drawOddKnot(ctx, r, e, angle) {
+  const roots = knotAttractors(r, e);
+  const extent = Math.max(0.9, 1.25 * Math.sqrt(r / e));
+  const view = (odd, m, lag = odd) => {
+    const x = (odd * 370) / extent, y = m * 155 + (lag * 48 * Math.cos(angle)) / extent;
+    const tilt = 0.40 * Math.sin(angle);
+    return [520 + x * Math.cos(tilt) - y * Math.sin(tilt), 220 + x * Math.sin(tilt) + y * Math.cos(tilt)];
+  };
+  for (const seam of [-0.65, -0.32, 0, 0.32, 0.65]) {
+    artPath(ctx, [view(-0.95 * extent, seam), view(0.95 * extent, seam)], seam === 0 ? '#759bcf60' : '#759bcf28', 1);
+  }
+  const rail = Math.min(0.9, 0.79 * Math.sqrt(r / e));
+  for (const sign of [-1, 1]) {
+    for (let i = 0; i < 31; i++) {
+      let odd = sign * rail * (0.05 + (0.95 * i) / 30);
+      let m = Math.sin(i * 1.27) * 0.82, lag = sign * 0.43 * Math.cos(i * 0.91);
+      const pts = [view(odd, m, lag)];
+      for (let n = 1; n <= 150; n++) {
+        [m, odd, lag] = knotStep(m, odd, lag, r, e);
+        const weave = 0.18 * Math.sin(1.08 * n + i * 0.59 + angle) * Math.exp(-n / 14);
+        pts.push(view(odd, m + weave, lag));
+      }
+      const tint = sign < 0 ? '#a39bd5' : '#bfd9f5';
+      artPath(ctx, pts, tint + (i % 5 === 0 ? 'f0' : '65'), i % 5 === 0 ? 1.45 : 0.9);
+      artDot(ctx, ...pts[0], 1.6, tint + 'b0');
+    }
+  }
+  if (roots.length === 2) {
+    const o = view(0, 0);
+    artDot(ctx, ...o, 10, '#d6ba7355'); artDot(ctx, ...o, 2.7, '#d6ba73');
+  }
+  for (const root of roots) {
+    const p = view(root, 0);
+    for (const [rad, col] of [[23, '#a39bd528'], [15, '#a39bd550'], [8, '#a39bd5bb'], [4, '#fff0df']]) artDot(ctx, ...p, rad, col);
+  }
+}
+
+function drawMirrorRibbon(ctx, st, angle) {
+  const mods = st.modules, count = mods.length, steps = 180;
+  function pt(theta, s) {
+    const loc = (theta / (2 * Math.PI)) * count, idx = Math.floor(loc), mix = loc - idx;
+    const f = idx % count, nx = (f + 1) % count;
+    const tower = mods[f].height * (1 - mix) + mods[nx].height * mix;
+    const [a, b] = artOrbit(st, f), [c, d] = artOrbit(st, nx);
+    const span = (a + 1 - b) * (1 - mix) + (c + 1 - d) * mix;
+    const width = 36 + 21 * span, radius = 158 + 11 * tower + 10 * Math.cos(3 * theta);
+    const twist = theta / 2 + 0.2 * Math.sin(theta * 2), edge = s * width;
+    return perspective((radius + edge * Math.cos(twist)) * Math.cos(theta), 8 * Math.sin(2 * theta) + edge * Math.sin(twist), (radius + edge * Math.cos(twist)) * Math.sin(theta), angle);
+  }
+  const mesh = [], rows = 10;
+  for (let i = 0; i < steps; i++) for (let j = 0; j < rows; j++) {
+    const s0 = (2 * Math.PI * i) / steps, s1 = (2 * Math.PI * (i + 1)) / steps;
+    const lo = (2 * j) / rows - 1, hi = (2 * (j + 1)) / rows - 1;
+    const pts = [pt(s0, lo), pt(s1, lo), pt(s1, hi), pt(s0, hi)];
+    const depth = pts.reduce((acc, p) => acc + p[2], 0) / 4;
+    const shine = Math.max(0, Math.min(0.7, 0.28 + 0.19 * Math.sin(s0 * 4 + j * 0.35) - depth / 1400));
+    const pal = j < 5 ? [191, 217, 245] : [163, 155, 213];
+    mesh.push({ pts, depth, fill: 'rgba(' + pal.join(',') + ',' + shine.toFixed(3) + ')' });
+  }
+  mesh.sort((a, b) => b.depth - a.depth);
+  for (const cell of mesh) artPath(ctx, cell.pts, cell.fill, 0.55, cell.fill);
+  for (const edge of [-1, 1]) {
+    artPath(ctx, Array.from({ length: steps + 1 }, (_, i) => pt((2 * Math.PI * i) / steps, edge)), edge < 0 ? '#bfd9f5db' : '#a39bd5e0', 1.5);
+  }
+  mods.forEach((m, i) => {
+    const theta = (2 * Math.PI * i) / count;
+    const color = primeColors[m.letters.at(0)] || '#dae6f5';
+    artPath(ctx, Array.from({ length: 13 }, (_, j) => pt(theta, j / 6 - 1)), color + 'd9', 1.2);
+    if (m.base === 3 && m.height < 3) { const [x, y] = pt(theta, 0); artDot(ctx, x, y, 5, '#d6ba73'); }
+  });
+}
+
+function drawPrimeRosette(ctx, st, angle, folds) {
+  const sector = Math.max(9, st.modules.length), n = folds * sector;
+  const nodes = Array.from({ length: n }, (_, i) => {
+    const ph = (2 * Math.PI * i) / n + angle, [x, y] = artOrbit(st, i % sector);
+    return { a: artRing(ph, 135 + 58 * x), b: artRing(-ph, 135 + 58 * (1 - y)) };
+  });
+  artPath(ctx, Array.from({ length: 145 }, (_, i) => artRing((i * Math.PI) / 72, 195)), '#759bcf52', 1);
+  for (let i = 0; i < n; i++) {
+    const mod = st.modules[(i % sector) % st.modules.length], node = nodes[i];
+    for (const pr of mod.letters) {
+      const p = Number(pr), tone = primeColors[pr];
+      artPath(ctx, [node.a, nodes[(i + p) % n].a], tone + '77', 1.1);
+      artPath(ctx, [node.b, nodes[(i - p + n) % n].b], tone + '6e', 1.05);
+      const across = (p * sector + mod.height) % n;
+      artPath(ctx, [node.a, nodes[(i + across) % n].a], tone + '60', 0.86);
+      artPath(ctx, [node.b, nodes[(i - across + n) % n].b], tone + '5a', 0.80);
+    }
+    if (mod.letters) {
+      const col = primeColors[mod.letters.at(-1)];
+      artPath(ctx, [node.a, nodes[(n - i) % n].b], col + '21', 0.75);
+      artDot(ctx, ...node.a, 2.5, col + 'f0'); artDot(ctx, ...node.b, 1.9, col + 'b0');
+    }
+  }
+}
+
+function drawFractureLoom(ctx, st, angle) {
+  const samples = 250, tilt = Math.sin(angle) * 0.28;
+  const ribs = Array.from({ length: samples }, (_, i) => {
+    const [x, y] = artOrbit(st, i), t = i / (samples - 1), err = Math.min(1, Math.abs(x + y - 1));
+    return {
+      left: 44 + 952 * t,
+      axis: 220 + 86 * Math.sin(2 * Math.PI * t + angle) + 37 * (x - y) + tilt * (t - 0.5) * 145,
+      error: err, gap: 130 * err, width: 58 + 32 * st.modules[i % st.modules.length].height, t,
+    };
+  });
+  const ext = Math.max(...ribs.map((r) => Math.abs(r.axis - 220) + r.gap + r.width));
+  const fit = Math.min(1, 201 / ext);
+  for (const r of ribs) { r.axis = 220 + fit * (r.axis - 220); r.gap *= fit; r.width *= fit; }
+  for (const side of [-1, 1]) {
+    const tint = side < 0 ? '#bfd9f5' : '#a39bd5';
+    for (let k = 0; k <= 24; k++) {
+      const t = k / 24;
+      artPath(ctx, ribs.map((r) => [r.left, r.axis + side * (r.gap + r.width * t * Math.sin(Math.PI * (0.16 + 0.68 * r.t)))]), k === 0 ? tint + 'f0' : tint + (k % 5 === 0 ? '8f' : '4d'), k === 0 ? 2.6 : 0.9);
+    }
+  }
+  for (let i = 3; i < ribs.length; i += 8) {
+    const r = ribs[i], mod = st.modules[i % st.modules.length], col = primeColors[mod.letters.at(-1)] || '#cadbf1';
+    const edge = r.width * Math.sin(Math.PI * (0.16 + 0.68 * r.t));
+    artPath(ctx, [[r.left, r.axis - r.gap - edge], [r.left, r.axis - r.gap]], col + '7e', 0.8);
+    artPath(ctx, [[r.left, r.axis + r.gap], [r.left, r.axis + r.gap + edge]], col + '6e', 0.8);
+    if (r.error > 0.35) artDot(ctx, r.left, r.axis, 1.5, col + 'b0');
+  }
+}
+
+function criticalGain(word) {
+  const lp = Math.log(word[0]);
+  if (word.length === 1) return 1 / (Math.E * lp);
+  const lq = Math.log(word[1]), target = Math.log(lp / lq);
+  let lo = 0.01, hi = 100;
+  for (let s = 0; s < 64; s++) {
+    const a = (lo + hi) / 2;
+    if (2 * Math.log(a) + a - 1 / a < target) lo = a; else hi = a;
+  }
+  const a = (lo + hi) / 2;
+  return (a * Math.exp(-1 / a)) / lp;
+}
+function gainBoundsForGallery() {
+  const c = byId('gain-center').value, s = byId('gain-sweep').value;
+  if (!c || !s) return null;
+  const lo = Number(c) - Number(s), hi = Number(c) + Number(s);
+  return Number.isFinite(lo + hi) && lo >= 0 && lo <= hi && hi <= 1 ? [lo, hi] : null;
+}
+function drawThresholdCrown(ctx, bounds, angle) {
+  if (!bounds) return;
+  const [lo, hi] = bounds, count = gainWords.length;
+  for (const rad of [51, 100, 152, 194]) {
+    artPath(ctx, Array.from({ length: 121 }, (_, i) => artRing((2 * Math.PI * i) / 120, rad)), rad === 51 ? '#a39bd562' : '#759bcf35', 1);
+  }
+  gainWords.forEach((word, idx) => {
+    const th = criticalGain(word), cross = lo < th && hi > th;
+    const theta = (2 * Math.PI * idx) / count + angle - Math.PI / 2;
+    const len = 92 + Math.min(100, th * 186);
+    const col = cross ? '#d6ba73' : galleryPalette[idx % galleryPalette.length];
+    for (const side of [-1, 1]) {
+      for (let j = 0; j <= 19; j++) {
+        const fan = j / 19;
+        const strand = Array.from({ length: 77 }, (_, k) => {
+          const t = k / 76, rad = 32 + len * t, split = cross ? 0.13 * t * t : 0;
+          return artRing(theta + side * (split + 0.31 * fan * Math.sin(Math.PI * t)), rad);
+        });
+        artPath(ctx, strand, col + (j % 5 === 0 ? 'bd' : '53'), cross ? 1.15 : 0.86);
+      }
+      if (cross) {
+        const [x, y] = artRing(theta + side * 0.13, 32 + len);
+        artDot(ctx, x, y, 5, col); artDot(ctx, x, y, 10, col + '40');
+      }
+    }
+    const [x, y] = artRing(theta, Math.min(201, len + 49));
+    ctx.fillStyle = col; ctx.font = '15px ui-monospace,monospace'; ctx.textAlign = 'center';
+    ctx.fillText(word.join('·'), x, y + 5);
+  });
+  artDot(ctx, 520, 220, 8, '#a39bd5cf'); artDot(ctx, 520, 220, 16, '#a39bd540');
+}
+
+function drawPrimeHelix(mods, pitch, breathing) {
+  const ctx = byId('helix-dna').getContext('2d');
+  ctx.clearRect(0, 0, 530, 220);
+  const spacing = 454 / Math.max(1, mods.length - 1);
+  let phase = 0;
+  const pts = mods.map((m, i) => {
+    const [p, cp] = breathing[i] || [0.5, 0.5];
+    const rA = 64 * (0.62 + 0.38 * p), rB = 64 * (0.62 + 0.38 * (1 - cp));
+    const x = mods.length === 1 ? 265 : 38 + i * spacing;
+    const pt = { x, a: 110 - rA * Math.cos(phase), b: 110 + rB * Math.cos(phase), ...m };
+    phase += (2 * Math.PI) / pitch + (m.height * Math.PI) / 2;
+    return pt;
+  });
+  ctx.lineWidth = 2;
+  for (const pt of pts) { ctx.strokeStyle = '#24365c'; ctx.beginPath(); ctx.moveTo(pt.x, pt.a); ctx.lineTo(pt.x, pt.b); ctx.stroke(); }
+  for (const [rail, col] of [['a', '#bfd9f5'], ['b', '#a39bd5']]) {
+    ctx.strokeStyle = col; ctx.beginPath();
+    pts.forEach((pt, i) => {
+      if (i === 0) ctx.moveTo(pt.x, pt[rail]);
+      else { const pr = pts[i - 1], mid = (pr.x + pt.x) / 2; ctx.bezierCurveTo(mid, pr[rail], mid, pt[rail], pt.x, pt[rail]); }
+    });
+    ctx.stroke();
+  }
+  const fs = Math.max(9, Math.min(15, Math.floor(spacing / 3.2)));
+  ctx.font = fs + 'px monospace'; ctx.textAlign = 'center';
+  for (const { x, a, b, letters, base, height } of pts) {
+    for (const [y, word] of [[a, letters], [b, [...letters].reverse().join('')]]) {
+      ctx.fillStyle = '#070d1a'; ctx.fillRect(x - fs, y - fs * 0.7, fs * 2, fs * 1.4);
+      if (!word) { ctx.fillStyle = '#9fb0cf'; ctx.fillText('·', x, y + fs / 3); }
+      [...word].forEach((ch, j) => { ctx.fillStyle = primeColors[ch]; ctx.fillText(ch, x + (j - (word.length - 1) / 2) * fs * 0.61, y + fs / 3); });
+    }
+    if (base === 3 && height < 3) { ctx.fillStyle = '#d6ba73'; ctx.fillText('•', x, 204); }
+  }
+}
+
+function drawForkOrbit(history) {
+  const ctx = byId('helix-orbit').getContext('2d');
+  ctx.clearRect(0, 0, 530, 220);
+  ctx.strokeStyle = '#24365c'; ctx.lineWidth = 1;
+  for (const v of [0, 0.5, 1]) {
+    const y = 198 - 176 * v;
+    ctx.beginPath(); ctx.moveTo(30, y); ctx.lineTo(509, y); ctx.stroke();
+    ctx.font = '12px monospace'; ctx.fillStyle = '#9fb0cf'; ctx.textAlign = 'left'; ctx.fillText(String(v), 4, y + 4);
+  }
+  const shown = history.slice(0, 49);
+  for (const [br, col] of [[0, '#bfd9f5'], [1, '#a39bd5']]) {
+    ctx.lineWidth = br === 0 ? 3 : 1.5; ctx.setLineDash(br === 0 ? [] : [4, 3]); ctx.strokeStyle = col;
+    ctx.beginPath();
+    shown.forEach((st, n) => {
+      const x = 30 + (n * 479) / (shown.length - 1), y = 198 - 176 * st[br];
+      if (n === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+  }
+  ctx.setLineDash([]);
+}
+
+for (const key of Object.keys(galleryForms)) {
+  const b = element('button', '', galleryForms[key].title);
+  b.type = 'button';
+  b.addEventListener('click', () => { galleryForm = key; paintGallery(); });
+  galleryPens.set(key, b);
+  byId('gallery-modes').append(b);
+}
+
+function paintGallery() {
+  const form = galleryForms[galleryForm], ctx = galleryCanvas.getContext('2d'), classic = galleryForm === 'helix';
+  byId('gallery-classic').hidden = !classic;
+  byId('gallery-frame').hidden = classic;
+  byId('gallery-angle-label').hidden = classic;
+  byId('gallery-pitch-label').hidden = !classic;
+  byId('gallery-loom-tools').hidden = galleryForm !== 'loom';
+  byId('gallery-knot-tools').hidden = galleryForm !== 'knot';
+  byId('gallery-folds-label').hidden = galleryForm !== 'rosette';
+  byId('gallery-gain-jump').hidden = galleryForm !== 'crown';
+  for (const [k, btn] of galleryPens) btn.setAttribute('aria-pressed', String(galleryForm === k));
+  const kR = Number(byId('gallery-knot-r').value), kE = Number(byId('gallery-knot-e').value), folds = Number(byId('gallery-folds').value);
+  byId('gallery-r-out').textContent = kR.toFixed(2);
+  byId('gallery-e-out').textContent = kE.toFixed(2);
+  let cap = form.caption;
+  const bounds = gainBoundsForGallery();
+  if (galleryForm === 'knot') {
+    const roots = knotAttractors(kR, kE);
+    cap += roots.length === 1 ? ' One attracting state at zero odd displacement.' : ' Attracting odd displacements: ±' + roots[1].toFixed(3) + '.';
+  }
+  byId('gallery-caption').textContent = cap;
+  if (classic || !galleryState) return;
+  const angle = (Number(byId('gallery-angle').value) * Math.PI) / 180;
+  const tint = { knot: '#a39bd5', ribbon: '#bfd9f5', rosette: '#6fb6c3', loom: '#a39bd5', crown: '#d6ba73' }[galleryForm];
+  galleryBackdrop(ctx, tint);
+  if (galleryForm === 'knot') drawOddKnot(ctx, kR, kE, angle);
+  if (galleryForm === 'ribbon') drawMirrorRibbon(ctx, galleryState, angle);
+  if (galleryForm === 'rosette') drawPrimeRosette(ctx, galleryState, angle, folds);
+  if (galleryForm === 'loom') drawFractureLoom(ctx, galleryState, angle);
+  if (galleryForm === 'crown') drawThresholdCrown(ctx, bounds, angle);
+  updateInvariants();
+}
+
+function renderHelix() {
+  const mode = byId('helix-mode').value, bias = byId('helix-bias').value;
+  const r = Number(byId('helix-r').value), seed = Number(byId('helix-seed').value);
+  const delta = mode !== 'split' ? 0 : bias === 'alpha' ? fineStructure : bias === 'proxy' ? alphaProxy : Number(byId('helix-delta').value);
+  const mods = forkModules();
+  byId('helix-seed-out').textContent = seed.toFixed(2);
+  byId('helix-bias-label').hidden = mode !== 'split';
+  byId('helix-delta-label').hidden = mode !== 'split' || bias !== 'custom';
+  byId('helix-word').textContent = mods.map((m) => m.letters || '·').join(' | ');
+  byId('helix-orbit-note').textContent = 'Ice blue: parent. Violet: R. The plot shows the first 48 updates.';
+  if (!Number.isFinite(r + delta) || r < 0 || r > 4 || r + delta < 0 || r + delta > 4) return;
+  const traj = runFork(r, delta, seed, mode, 4096);
+  drawPrimeHelix(mods, Number(byId('helix-pitch').value), traj);
+  drawForkOrbit(traj);
+  galleryState = { modules: mods, orbit: traj };
+  paintGallery();
+  const mirrored = mode === 'mirror' || mode === 'roundoff';
+  const gap = mirrored ? Math.abs(traj[1][0] + traj[1][1] - 1) : Math.abs(traj[1][0] - traj[1][1]);
+  const side = (v) => v <= 3 || v >= 3.5 ? 'outside window' : v < flipParameter ? 'below flip' : 'above flip';
+  const cells = [
+    ['Parent r', r.toFixed(9) + ' · ' + side(r)],
+    ['R parameter', (r + delta).toFixed(9) + ' · ' + side(r + delta)],
+    [mirrored ? 'First mirror error' : 'First branch gap', gap.toExponential(4)],
+    ['Detected periods', orbitPeriod(traj, 0) + ' / ' + orbitPeriod(traj, 1) + ' (finite run)'],
+  ];
+  byId('helix-results').replaceChildren(...cells.map(([l, v]) => {
+    const p = element('p', '', l + ' · '); p.append(element('span', '', v)); return p;
+  }));
+  const near = r + fineStructure, proxy = r + alphaProxy;
+  byId('helix-insight').textContent = mode === 'roundoff'
+    ? 'Independent floating-point mirror updates can diverge from y = 1 − x while remaining mathematically conjugate.'
+    : mode === 'merge' ? 'Complementary seeds give the exact same quadratic logistic output after one step.'
+    : mode === 'mirror' ? 'Conjugating the update by x → 1 − x preserves y = 1 − x at every step.'
+    : near < flipParameter && proxy > flipParameter
+      ? 'This r lies in the tiny α versus 1/137 interval: the two biases land on opposite sides of the analytic flip.'
+      : 'First gap is |Δr|·x₀(1 − x₀). Near r = 1 + √6 ≈ 3.449489743, a small bias selects a different asymptotic orbit.';
+}
+
+// ============================================================================
+// 5. TAB 4: UNIT TREE, TILES & OPTICAL PHASE MODEL ()
+// ============================================================================
+function tile(digit, index, recurring, raw, rule) {
+  const base = towerHeight(digit, raw);
+  const h = configuredHeight(digit, raw, rule);
+  const edited = h !== base;
+  const cls = (edited ? 'edited ' : '') + 'tile' + (recurring ? ' repeat' : '') + (digit === '8' ? ' overflow' : '');
+  const btn = element('button', cls);
+  btn.type = 'button';
+  const pos = index < 0 ? 'Integer place ' + (-index) + ' from point' : index === 0 ? 'Units place' : 'Fractional place ' + index;
+  const pieces = element('span', 'stack');
+  if (h === 0) pieces.append(element('i', 'zero', '·'));
+  for (let j = 0; j < h; j++) pieces.append(element('i', 'brick'));
+  btn.append(element('span', '', digit), pieces);
+  btn.addEventListener('click', () => {
+    byId('tiles').querySelector('.active')?.classList.remove('active');
+    btn.classList.add('active');
+    const fact = digit === '0' ? '0 is assigned height 0.' : digit === '1' ? '1 has no prime factors.' : digit + ' = ' + factors[digit] + '.';
+    byId('details').textContent = pos + ' · ' + fact + (digit === '8' && !raw ? ' The cap hides its third layer.' : '') + (edited ? ' Rule changes ' + base + ' → ' + h + '.' : '');
+  });
+  return btn;
+}
+
+function slotContribution(h, slot, harm, len) {
+  const a = (h * Math.PI) / 2 - (2 * Math.PI * harm * slot) / len;
+  return { real: Math.cos(a), imaginary: Math.sin(a) };
+}
+function spectrum(word) {
+  return harmonics.map((harm) => {
+    let real = 0, imaginary = 0;
+    for (let i = 0; i < word.length; i++) {
+      const s = slotContribution(word[i], i, harm, word.length);
+      real += s.real; imaginary += s.imaginary;
+    }
+    return { real, imaginary };
+  });
+}
+function linePower({ real, imaginary }, harm, len) {
+  const a = (Math.PI * harm) / len;
+  const env = a === 0 ? 1 : Math.sin(a) / a;
+  return (env ** 2 * (real ** 2 + imaginary ** 2)) / (len ** 2);
+}
+function applySlotChanges(base, changes, harm, len) {
+  let { real, imaginary } = base;
+  for (const { slot, from, to } of changes) {
+    const o = slotContribution(from, slot, harm, len);
+    const e = slotContribution(to, slot, harm, len);
+    real += e.real - o.real; imaginary += e.imaginary - o.imaginary;
+  }
+  return { real, imaginary };
+}
+function updateSlotOptions(digits, word, mode) {
+  byId('slot-field').hidden = mode !== 'slot';
+  if (mode !== 'slot') return;
+  const key = digits + '|' + word.join('');
+  if (key === slotOptionsKey) return;
+  slotOptionsKey = key;
+  const picker = byId('slot');
+  picker.replaceChildren(...word.map((h, i) => {
+    const opt = element('option', '', (i + 1) + ' · digit ' + digits[i] + ' · ' + (h * 90) + '°');
+    opt.value = String(i);
+    return opt;
+  }));
+  picker.value = String(Math.max(0, word.findIndex((h) => h % 2 === 1)));
+}
+function drawSpectrum() {
+  const unit = units.get(selected);
+  const digits = byId('drive').value === 'cycle' ? unit.cycle : visibleDigits;
+  const raw = byId('uncap').checked;
+  const mode = byId('mirror').value;
+  const word = [...digits].map((d) => towerHeight(d, raw));
+  const key = word.join('');
+  const len = word.length;
+  const spacing = Number(byId('rate').value) / len;
+  const rule = ruleConfig();
+  const edited = [...digits].map((d) => configuredHeight(d, raw, rule));
+  updateSlotOptions(digits, edited, mode);
+  const slot = Number(byId('slot').value) || 0;
+  if (mode === 'slot') edited[slot] = mirrorHeight(edited[slot]);
+  const changes = [];
+  for (let i = 0; i < len; i++) if (word[i] !== edited[i]) changes.push({ slot: i, from: word[i], to: edited[i] });
+  const cached = spectrumCache.has(key);
+  if (!cached) spectrumCache.set(key, spectrum(word));
+  const base = spectrumCache.get(key);
+  const powers = harmonics.map((harm, i) => {
+    const mir = mode === 'whole';
+    const src = mir ? harmonics.length - 1 - i : i;
+    return linePower(applySlotChanges(base[src], changes, mir ? -harm : harm, len), harm, len);
+  });
+  byId('spectrumSummary').replaceChildren(
+    element('span', '', len + ' phase slots'),
+    element('span', '', spacing.toLocaleString('en', { maximumSignificantDigits: 5 }) + ' MHz line spacing'),
+    element('span', '', (100 * powers[6]).toFixed(2) + '% carrier power'),
+  );
+  byId('work').textContent = (cached ? 'Reused base spectrum' : 'New base spectrum') + ' · ' + changes.length + ' of ' + len + ' slots modified' + (mode === 'whole' ? ' · Whole mirror reverses bin order' : '');
+  const plot = byId('plot');
+  plot.replaceChildren();
+  harmonics.forEach((harm, idx) => {
+    const pct = 100 * powers[idx];
+    const col = element('div', 'plot-col');
+    col.title = 'Harmonic ' + harm + ' · ' + pct.toFixed(4) + '%';
+    const space = element('div', 'bar-space');
+    const bar = element('div', 'bar');
+    bar.style.height = Math.min(100, pct) + '%';
+    space.append(bar);
+    col.append(space, element('span', '', String(harm)));
+    plot.append(col);
+  });
+}
+
+// ============================================================================
+// 6. TAB 5: GAIN LAB, RESEARCH CONTROLS & LIVING SPEC
+// ============================================================================
+function runGainProbe(word, g, count = 512, ceiling = 10) {
+  let x = 1.11, lim = Math.log(ceiling);
+  for (let s = 0; s < count; s++) {
+    const exp = g * Math.log(word[s % word.length]) * x;
+    if (exp > lim) return { step: s + 1, x: null };
+    x = Math.exp(exp);
+  }
+  return { step: null, x };
+}
+function renderGainProbe() {
+  const c = Number(byId('gain-center').value), s = Number(byId('gain-sweep').value);
+  const lo = c - s, hi = c + s, rows = byId('gain-probes');
+  rows.replaceChildren();
+  if (!Number.isFinite(lo + hi) || s < 0 || lo < 0 || hi > 1) return;
+  byId('gain-left').textContent = 'g = ' + lo.toFixed(5);
+  byId('gain-right').textContent = 'g = ' + hi.toFixed(5);
+  const marked = [];
+  for (const w of gainWords) {
+    const th = criticalGain(w), cross = lo < th && hi > th;
+    if (cross) marked.push(w.join(' → '));
+    const tr = element('tr', cross ? 'is-probe' : '');
+    const pL = runGainProbe(w, lo), pR = runGainProbe(w, hi);
+    tr.append(
+      element('th', '', w.join(' → ')),
+      element('td', '', th.toFixed(6)),
+      element('td', '', pL.step === null ? 'x=' + pL.x.toFixed(4) + ' at 512' : '>10 at ' + pL.step),
+      element('td', '', pR.step === null ? 'x=' + pR.x.toFixed(4) + ' at 512' : '>10 at ' + pR.step),
+    );
+    rows.append(tr);
+  }
+  byId('gain-insight').textContent = marked.length
+    ? 'The gain sweep brackets the analytic threshold of ' + marked.join(', ') + '.'
+    : 'This sweep brackets none of the listed thresholds.';
+  if (galleryForm === 'crown') paintGallery();
+  updateInvariants();
+}
+
+function crossingFraction(off, lo, hi) { return Math.max(0, Math.min(hi, flipParameter) - Math.max(lo, flipParameter - off)) / (hi - lo); }
+for (const [lbl, off] of [['0.0070', 0.007], ['α', fineStructure], ['1/137', alphaProxy], ['0.0075', 0.0075]]) {
+  const tr = element('tr', '');
+  tr.append(element('th', '', lbl), element('td', '', (100 * crossingFraction(off, 3.40, 3.49)).toFixed(5) + '%'));
+  byId('research-crossings').append(tr);
+}
+function renderResearchTower() {
+  const depth = Number(byId('research-depth').value), top = Number(byId('research-top').value), g = 0.1;
+  const r = depth === 2 ? { logA: 0, ph: g, eps: g / Math.log(3) } : (() => {
+    const a = Math.log(3) * Math.pow(5, top), b = g / a;
+    return { logA: -2 * a * Math.sin(b / 2) ** 2, ph: a * Math.sin(b), eps: b / Math.log(5) };
+  })();
+  byId('research-readout').replaceChildren(
+    element('div', '', 'ln |V| = ' + r.logA.toExponential(7)),
+    element('div', '', 'arg V = ' + r.ph.toPrecision(9) + ' rad'),
+    element('div', '', 'Mirror sum / 2 = ' + (Math.exp(r.logA) * Math.cos(r.ph)).toPrecision(9)),
+    element('div', '', 'Mirror difference / 2i = ' + (Math.exp(r.logA) * Math.sin(r.ph)).toPrecision(9)),
+    element('div', '', 'ε = ' + r.eps.toExponential(5)),
+  );
+  byId('research-tower-note').textContent = depth === 2
+    ? 'For 2^(3^z), V = exp(0.1i) for every real top u.'
+    : 'For 2^(3^(5^z)), log V = a(exp(0.1i/a) − 1), with a = ln(3)·5^u.';
+}
+
+function lambertW(g) {
+  let w = g < 1 ? g : Math.log(g + 1);
+  for (let i = 0; i < 60; i++) { const e = Math.exp(w); w -= (w * e - g) / (e * (w + 1)); }
+  return w;
+}
+const OMEGA = lambertW(1);
+const omegaLayer = (p, x) => OMEGA * Math.pow(p, OMEGA - x);
+const omegaRestCache = new Map();
+function omegaRun(p, q, count) {
+  let x = 1.11;
+  const out = [x];
+  for (let n = 0; n < count; n++) { x = omegaLayer(q, omegaLayer(p, x)); out.push(x); }
+  return out;
+}
+function omegaRest(p, q) {
+  const key = p + '>' + q;
+  if (!omegaRestCache.has(key)) omegaRestCache.set(key, omegaRun(p, q, 20000).at(-1));
+  return omegaRestCache.get(key);
+}
+function omegaFacts(p, q) {
+  const lp = Math.log(p), lq = Math.log(q);
+  return { multiplier: OMEGA * OMEGA * lp * lq, curvature: OMEGA * OMEGA * lp * lp * lq * (OMEGA * lq - 1) };
+}
+function omegaPair() { return byId('omega-pair').value.split(',').map(Number); }
+
+function drawOmegaPencil(p, q) {
+  const ctx = byId('omega-art').getContext('2d');
+  galleryBackdrop(ctx, '#d6ba73');
+  const X0 = 96, Y0 = 38, S = 364, top = 1.4;
+  const mx = (x) => X0 + (S * x) / top, my = (y) => Y0 + S - (S * y) / top;
+  const lime = '#bfd9f5', violet = '#a39bd5', hot = '#d6ba73', dim = '#9fb0cf';
+  ctx.font = '13px system-ui, sans-serif'; ctx.textAlign = 'left';
+  ctx.strokeStyle = '#24365c'; ctx.lineWidth = 1; ctx.strokeRect(X0, Y0, S, S);
+  artPath(ctx, [[mx(0), my(0)], [mx(top), my(top)]], '#759bcf66', 1);
+  ctx.save();
+  ctx.beginPath(); ctx.rect(X0, Y0, S, S); ctx.clip();
+  const curve = (prime) => Array.from({ length: 141 }, (_, i) => { const x = (top * i) / 140; return [mx(x), my(omegaLayer(prime, x))]; });
+  for (const prime of [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]) {
+    if (prime !== p && prime !== q) artPath(ctx, curve(prime), '#6fb6c33a', 0.8);
+  }
+  for (const [first, second, tone] of [[p, q, lime], [q, p, violet]]) {
+    let x = 1.11;
+    ctx.beginPath(); ctx.moveTo(mx(x), my(x));
+    for (let n = 0; n < 60; n++) {
+      const y = omegaLayer(n % 2 === 0 ? first : second, x);
+      ctx.lineTo(mx(x), my(y)); ctx.lineTo(mx(y), my(y));
+      x = y;
+    }
+    ctx.strokeStyle = tone + '80'; ctx.lineWidth = 0.9; ctx.stroke();
+  }
+  artPath(ctx, curve(p), lime, 2);
+  artPath(ctx, curve(q), violet, 2);
+  ctx.restore();
+  artDot(ctx, mx(OMEGA), my(OMEGA), 12, hot + '38');
+  artDot(ctx, mx(OMEGA), my(OMEGA), 4.5, hot);
+  artDot(ctx, mx(1.11), my(1.11), 3, '#ffffff');
+  ctx.fillStyle = hot; ctx.fillText('Ω', mx(OMEGA) + 14, my(OMEGA) - 10);
+  ctx.fillStyle = dim; ctx.fillText('1.11', mx(1.11) + 8, my(1.11) + 16);
+  ctx.fillText('x', X0 + S - 10, Y0 + S + 17); ctx.fillText('next x', X0, Y0 - 10);
+
+  const steps = 48, L = 570, R = 968;
+  const a = omegaRun(p, q, steps), b = omegaRun(q, p, steps);
+  const sx = (n) => L + ((R - L) * n) / steps;
+  const low = Math.min(OMEGA, ...a, ...b), high = Math.max(OMEGA, ...a, ...b);
+  const pad = 0.08 * (high - low || 1);
+  const sy = (v) => 216 - ((216 - 62) * (v - low + pad)) / (high - low + 2 * pad);
+  ctx.setLineDash([4, 4]);
+  artPath(ctx, [[L, sy(OMEGA)], [R, sy(OMEGA)]], hot + 'b0', 1);
+  ctx.setLineDash([]);
+  artPath(ctx, a.map((v, n) => [sx(n), sy(v)]), lime, 1.8);
+  artPath(ctx, b.map((v, n) => [sx(n), sy(v)]), violet, 1.8);
+  ctx.fillStyle = lime; ctx.fillText(p + ' → ' + q + ' first', L, 44);
+  ctx.fillStyle = violet; ctx.fillText(q + ' → ' + p + ' first', L + 112, 44);
+  ctx.fillStyle = hot; ctx.fillText('Ω', R + 8, sy(OMEGA) + 4);
+  const odd = a.map((v, n) => (v - b[n]) / 2);
+  const peak = Math.max(1e-12, ...odd.map(Math.abs));
+  const zero = 330, reach = 58;
+  artPath(ctx, [[L, zero], [R, zero]], '#24365c', 1);
+  for (const [n, v] of odd.entries()) {
+    const y = zero - (reach * v) / peak;
+    artPath(ctx, [[sx(n), zero], [sx(n), y]], '#6fb6c3c8', 1.4);
+    artDot(ctx, sx(n), y, 1.9, '#6fb6c3');
+  }
+  ctx.fillStyle = '#6fb6c3'; ctx.fillText('Half the difference, peak ' + peak.toPrecision(3), L, 256);
+  ctx.fillStyle = dim; ctx.fillText('double layers 0 to ' + steps, L, 410);
+}
+
+function renderOmega() {
+  const g = Number(byId('omega-gain').value), w = lambertW(g);
+  byId('omega-gain-out').textContent = g.toFixed(2);
+  let x = 0.5;
+  const pass = [x];
+  for (let n = 0; n < 4000; n++) { x = Math.exp(-g * x); if (n < 60) pass.push(x); }
+  const partner = Math.exp(-g * x);
+  const ctx = byId('omega-orbit').getContext('2d');
+  ctx.clearRect(0, 0, 530, 170);
+  const px = (n) => 16 + (498 * n) / 60, py = (v) => 156 - 140 * v;
+  ctx.setLineDash([4, 4]);
+  artPath(ctx, [[16, py(w / g)], [514, py(w / g)]], '#d6ba73', 1);
+  ctx.setLineDash([]);
+  ctx.beginPath();
+  pass.forEach((v, n) => (n ? ctx.lineTo(px(n), py(v)) : ctx.moveTo(px(n), py(v))));
+  ctx.shadowColor = '#bfd9f5'; ctx.shadowBlur = 10; ctx.strokeStyle = '#bfd9f5'; ctx.lineWidth = 1.8; ctx.stroke(); ctx.shadowBlur = 0;
+  const settled = Math.abs(x - partner) < 1e-9;
+  byId('omega-light-readout').replaceChildren(
+    element('div', '', 'Steady transmission W(g)/g = ' + ((100 * w) / g).toFixed(4) + '%'),
+    element('div', '', 'Multiplier −W(g) = ' + (-w).toFixed(6)),
+    element('div', '', settled ? 'After 4000 passes: ' + (100 * x).toFixed(4) + '%'
+      : 'After 4000 passes: alternates ' + (100 * Math.min(x, partner)).toFixed(3) + '% and ' + (100 * Math.max(x, partner)).toFixed(3) + '%'),
+  );
+  byId('omega-light-note').textContent = Math.abs(g - 1) < 0.005
+    ? 'At g = 1 the steady transmission is Ω itself, ' + OMEGA.toFixed(8) + '.'
+    : g < Math.E ? 'The loop settles while W(g) stays below 1, which holds for every gain below e ≈ 2.71828.'
+    : 'Past g = e the multiplier is beyond −1: the steady level still exists but the loop alternates between two transmissions around it.';
+
+  const [p, q] = omegaPair();
+  const rows = byId('omega-pairs');
+  rows.replaceChildren();
+  for (const option of byId('omega-pair').options) {
+    const [a, b] = option.value.split(',').map(Number);
+    const fwd = omegaFacts(a, b), back = omegaFacts(b, a);
+    const tr = element('tr', a === p && b === q ? 'is-probe' : '');
+    tr.append(element('th', '', a + ' → ' + b), element('td', '', fwd.multiplier.toFixed(6)),
+      element('td', '', fwd.curvature.toFixed(6)), element('td', '', back.curvature.toFixed(6)),
+      element('td', '', omegaRest(a, b).toFixed(6)), element('td', '', omegaRest(b, a).toFixed(6)));
+    rows.append(tr);
+  }
+  const A = omegaRun(p, q, 64), B = omegaRun(q, p, 64);
+  const restA = omegaRest(p, q), restB = omegaRest(q, p), mult = omegaFacts(p, q).multiplier;
+  byId('omega-kpi-omega').textContent = OMEGA.toFixed(10);
+  byId('omega-kpi-mult').textContent = mult.toFixed(6);
+  byId('omega-lbl-a').textContent = 'End reading ' + p + ' → ' + q;
+  byId('omega-lbl-b').textContent = 'End reading ' + q + ' → ' + p;
+  byId('omega-kpi-a').textContent = restA.toFixed(6);
+  byId('omega-kpi-b').textContent = restB.toFixed(6);
+  const line = (n) => 'after ' + n + ' double layers: average ' + ((A[n] + B[n]) / 2).toFixed(6) + ', half difference ' + ((A[n] - B[n]) / 2).toExponential(3);
+  byId('omega-channels').replaceChildren(...[1, 8, 64].map((n) => element('div', '', line(n))),
+    element('div', '', 'at step 20,000: average ' + ((restA + restB) / 2).toFixed(6) + ', half difference ' + ((restA - restB) / 2).toExponential(3)));
+  const stability = mult < 1 ? 'locally attracting' : mult > 1 ? 'locally repelling' : 'neutral in the linearization';
+  byId('omega-channel-note').textContent = 'Ω is ' + stability + ' in both orders (multiplier ' +
+    mult.toFixed(6) + '). The end readings shown here come from 20,000 double layers started at 1.11.';
+  drawOmegaPencil(p, q);
+  updateInvariants();
+}
+
+let lastInvariants = [];
+function updateInvariants() {
+  const kR = Number(byId('gallery-knot-r').value), kE = Number(byId('gallery-knot-e').value);
+  const roots = knotAttractors(kR, kE);
+  let fpErr = 0;
+  for (const rt of roots) fpErr = Math.max(fpErr, Math.abs(knotStep(0, rt, 0, kR, kE)[1] - rt));
+  const g2 = criticalGain([2]), g3 = criticalGain([3]), g5 = criticalGain([5]), g7 = criticalGain([7]);
+  const monoOk = g2 > g3 && g3 > g5 && g5 > g7;
+  const d = displayedDimension || dimensionState();
+  const hopfOk = Math.abs(d.radius * d.radius - Math.max(0, d.mu)) < 1e-12 && (d.hole === (d.visible && d.detector === 'iq'));
+  const u = units.get(selected);
+  const bigOk = u.n > 0n && u.d > 0n && gcd(u.n, u.d) === 1n;
+
+  lastInvariants = [
+    { name: 'Odd Knot Fixed-Point Residual', pass: fpErr < 1e-12, detail: (roots.length === 2 ? '±' + roots[1].toFixed(4) : '0') + ' · residual ' + fpErr.toExponential(1) },
+    { name: 'Critical Gain Monotonicity', pass: monoOk, detail: `g_c(2)=${g2.toFixed(4)} > g_c(3) > g_c(5) > g_c(7)=${g7.toFixed(4)}` },
+    { name: 'Hopf Detector Consistency', pass: hopfOk, detail: `R²=${(d.radius ** 2).toFixed(4)}, hole=${d.hole ? 1 : 0}, det=${d.detector}` },
+    { name: 'BigInt Unit Exactness', pass: bigOk, detail: `${u.label}: gcd(${u.n}, ${u.d}) = 1` },
+    { name: 'Ω Defining Identity', pass: Math.abs(OMEGA - Math.exp(-OMEGA)) < 1e-14, detail: `Ω=${OMEGA.toFixed(12)}, |Ω − e^(−Ω)|=${Math.abs(OMEGA - Math.exp(-OMEGA)).toExponential(1)}` },
+    { name: 'Ω Fixed by Every Prime Layer', pass: omegaLayerResidual() < 1e-14, detail: `max |T_p(Ω) − Ω| over p ≤ 31 = ${omegaLayerResidual().toExponential(1)}` },
+  ];
+  const tb = byId('spec-invariants');
+  tb.innerHTML = lastInvariants.map((inv, i) => `<tr><td class="mono">${i + 1}</td><td><strong>${inv.name}</strong></td><td><span class="badge ${inv.pass ? 'pass' : 'fail'}">${inv.pass ? 'PASS' : 'FAIL'}</span></td><td class="mono">${inv.detail}</td></tr>`).join('');
+}
+
+function omegaLayerResidual() {
+  return Math.max(...[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31].map((p) => Math.abs(omegaLayer(p, OMEGA) - OMEGA)));
+}
+
+function copySpecMarkdown(btn) {
+  const u = units.get(selected);
+  const sc = Number(byId('rg-scale').value);
+  const meta = RG_META[sc];
+  const md = [
+    '# Prime Forms settings', '',
+    '- Unit: ' + u.label,
+    '- Block size: ' + meta.block + ' × ' + meta.block,
+    '- Knot r and e: ' + byId('gallery-knot-r').value + ', ' + byId('gallery-knot-e').value,
+    '- Logistic r and mode: ' + byId('helix-r').value + ', ' + byId('helix-mode').value,
+    '- Gain sweep: ' + byId('gain-center').value + ' ± ' + byId('gain-sweep').value,
+    '- Ω prime pair: ' + omegaPair().join(' → '), '', '## Model checks',
+    ...lastInvariants.map(inv => '- ' + inv.name + ': ' + (inv.pass ? 'PASS' : 'FAIL') + ' (' + inv.detail + ')'),
+  ].join('\n');
+
+  const ta = document.createElement('textarea');
+  ta.value = md; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); } catch (_) {}
+  document.body.removeChild(ta);
+  const orig = btn.textContent;
+  btn.textContent = 'Copied!';
+  setTimeout(() => { btn.textContent = orig; }, 1600);
+}
+
+// ============================================================================
+// 7. MASTER RENDER, EVENT WIRING & ANIMATION LOOP
+// ============================================================================
+function render() {
+  for (const [id, v] of units) v.button.setAttribute('aria-pressed', String(id === selected));
+  topUnitSelect.value = selected;
+  dimUnitSelect.value = selected;
+
+  const unit = units.get(selected), count = Number(byId('precision').value), raw = byId('uncap').checked, rule = ruleConfig();
+  byId('rule-digit-field').hidden = rule.mode === 'off';
+  byId('rule-height-field').hidden = rule.mode !== 'set';
+  byId('rule-order-field').hidden = rule.mode === 'off';
+
+  const shown = fractionWindow(unit, count);
+  visibleDigits = unit.whole + shown;
+  byId('unit-name').textContent = unit.label;
+  byId('family-name').textContent = unit.family;
+  byId('value').textContent = unit.whole + (shown ? '.' + shown : '') + (unit.cycle || shown.length < unit.prefix.length ? '…' : '');
+  byId('exact').textContent = 'Exact coefficient ' + unit.n + (unit.d === 1n ? '' : ' / ' + unit.d);
+  byId('properties').replaceChildren(
+    property('Decimal', unit.cycle ? 'recurring' : 'terminating'),
+    property(unit.cycle ? 'Digits before repeat' : 'Fractional places', unit.prefix.length),
+    property('8s shown', [...visibleDigits].filter((d) => d === '8').length),
+  );
+  const tiles = byId('tiles');
+  tiles.replaceChildren(...[...unit.whole].map((d, i) => tile(d, i - unit.whole.length + 1, false, raw, rule)));
+  if (shown) tiles.append(element('span', 'radix', '.'));
+  tiles.append(...[...shown].map((d, i) => tile(d, i + 1, Boolean(unit.cycle && i >= unit.prefix.length), raw, rule)));
+  byId('details').textContent = 'Tap a tower to inspect its factors. A gold dot marks an 8.';
+  const cycleWord = [...unit.cycle].map((d) => configuredHeight(d, raw, rule)).join('');
+  byId('repeat').hidden = !unit.cycle;
+  byId('repeatText').textContent = cycleWord;
+  byId('repeatInfo').textContent = 'Decimal period ' + unit.cycle.length + ' · ' + (rule.mode === 'off' ? (raw ? 'Uncapped' : 'Capped') : 'Configured') + ' tower period ' + primitivePeriod(cycleWord) + '.';
+  byId('drive').options[1].disabled = !unit.cycle;
+  if (!unit.cycle && byId('drive').value === 'cycle') byId('drive').value = 'word';
+
+  drawSpectrum();
+  drawRG(animTime);
+  renderDimension();
+  renderHelix();
+  updateInvariants();
+}
+
+const header = document.querySelector('.topbar');
+function fitMenuOffset() {
+  document.documentElement.style.setProperty('--menu-height', header.offsetHeight + 'px');
+}
+if (typeof ResizeObserver === 'function') new ResizeObserver(fitMenuOffset).observe(header);
+fitMenuOffset();
+byId('gallery-gain-jump').addEventListener('click', () => { location.hash = 'gain-title'; });
+
+// Top Play/Pause & Copy SPEC
+byId('top-play').addEventListener('click', () => {
+  isPlaying = !isPlaying;
+  byId('top-play').setAttribute('aria-pressed', String(isPlaying));
+  byId('top-play-txt').textContent = isPlaying ? 'Pause' : 'Play';
+  byId('top-play-dot').className = 'dot' + (isPlaying ? '' : ' paused');
+});
+byId('top-copy-spec').addEventListener('click', (e) => copySpecMarkdown(e.currentTarget));
+byId('spec-copy-btn').addEventListener('click', (e) => copySpecMarkdown(e.currentTarget));
+
+// Tab 1 listeners
+byId('rg-scale').addEventListener('input', () => drawRG(animTime));
+byId('rg-save').addEventListener('click', () => saveCanvasPNG(byId('canvas-rg'), 'c32z-rg-layer-' + byId('rg-scale').value + '.png'));
+for (const id of ['dimension-view', 'dimension-drive', 'dimension-bias', 'dimension-floor']) byId(id).addEventListener('input', renderDimension);
+
+// Tab 3 listeners
+for (const id of ['gallery-angle', 'gallery-knot-r', 'gallery-knot-e', 'gallery-folds']) byId(id).addEventListener('input', paintGallery);
+byId('gallery-seal').addEventListener('click', () => { byId('helix-mode').value = 'mirror'; byId('helix-r').value = '3.91'; byId('helix-seed').value = '0.37'; renderHelix(); });
+byId('gallery-drift').addEventListener('click', () => { byId('helix-mode').value = 'roundoff'; byId('helix-r').value = '3.91'; byId('helix-seed').value = '0.37'; renderHelix(); });
+byId('gallery-save').addEventListener('click', () => saveCanvasPNG(galleryForm === 'helix' ? byId('helix-dna') : galleryCanvas, 'c32z-' + galleryForm + '.png'));
+for (const id of ['helix-mode', 'helix-r', 'helix-seed', 'helix-bias', 'helix-delta', 'helix-pitch']) byId(id).addEventListener('input', renderHelix);
+byId('helix-threshold').addEventListener('click', () => {
+  byId('helix-mode').value = 'split'; byId('helix-bias').value = 'alpha';
+  byId('helix-r').value = (flipParameter - (fineStructure + alphaProxy) / 2).toFixed(12);
+  renderHelix();
+});
+
+// Tab 4 & Tab 5 listeners
+for (const id of ['precision', 'uncap', 'rule', 'rule-digit', 'rule-height', 'rule-order']) byId(id).addEventListener('change', render);
+for (const id of ['drive', 'rate', 'mirror', 'slot']) byId(id).addEventListener('change', drawSpectrum);
+for (const id of ['gain-center', 'gain-sweep']) byId(id).addEventListener('input', renderGainProbe);
+for (const id of ['research-depth', 'research-top']) byId(id).addEventListener('input', renderResearchTower);
+byId('omega-pair').addEventListener('change', renderOmega);
+byId('omega-gain').addEventListener('input', renderOmega);
+byId('omega-gain-e').addEventListener('click', () => { byId('omega-gain').value = Math.E.toFixed(2); renderOmega(); });
+byId('omega-save').addEventListener('click', () => saveCanvasPNG(byId('omega-art'), 'c32z-omega-towers.png'));
+
+// Unified 60fps loop
+const animatedViews = new Map([
+  [byId('wrap-rg'), () => drawRG(animTime)],
+  [byId('dimension-canvas'), () => paintDimension(animTime * 1000)],
+]);
+const visibleViews = new Set(animatedViews.keys());
+if (typeof IntersectionObserver === 'function') {
+  const visibility = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        visibleViews.add(entry.target);
+        animatedViews.get(entry.target)();
+      } else {
+        visibleViews.delete(entry.target);
+      }
+    }
+  });
+  for (const panel of animatedViews.keys()) visibility.observe(panel);
+}
+
+let lastTs = 0;
+function loop(ts) {
+  if (!lastTs) lastTs = ts;
+  const dt = Math.min(0.05, (ts - lastTs) / 1000);
+  lastTs = ts;
+  if (isPlaying) {
+    animTime += dt;
+    for (const panel of visibleViews) animatedViews.get(panel)();
+  }
+  requestAnimationFrame(loop);
+}
+
+
+function initShowcase() {
+  const tour = byId('showcase');
+  const views = new Map([
+    ['unit-tree', ['Compare exact conversions and see how a unit changes the displayed digit towers.', () => byId('value').textContent + ' ' + units.get(selected).label]],
+    ['phase-slots', ['Each layer sets a quarter-turn. Compare the carrier and its sidebands after a mirror or a digit edit.', () => byId('spectrumSummary').textContent]],
+    ['prime-forms', ['The prime letters and paired orbits drive knots, ribbons and rosettes.', () => byId('gallery-caption').textContent, () => galleryForm === 'helix' ? 'helix-dna' : 'gallery-art']],
+    ['logistic-fork', ['Watch the two copies merge, stay exact mirrors, or follow different logistic parameters.', () => byId('helix-insight').textContent, () => 'helix-orbit']],
+    ['lattice', ['Rotate the height field, then average larger blocks to see what survives at lower resolution.', () => byId('rg-kpi-scale').textContent, () => 'canvas-rg']],
+    ['dimensions', ['Change the detector to see a loop, its projection, or a single point in the Hopf model.', () => byId('dimension-caption').textContent, () => 'dimension-canvas']],
+    ['gain-title', ['A shared gain drives every stage. Compare which tower thresholds the sweep crosses.', () => byId('gain-insight').textContent]],
+    ['research-controls', ['Check nearby offsets around the logistic flip and compare prime towers at matched gain.', () => byId('research-tower-note').textContent]],
+    ['omega-towers', ['Both prime orders fix Ω and have the same linear response there. Their finite trajectories can differ.', () => 'Pair multiplier ' + byId('omega-kpi-mult').textContent, () => 'omega-art']],
+    ['omega-light', ['Explore the ideal transmission feedback law x → exp(−g x).', () => byId('omega-light-note').textContent, () => 'omega-orbit']],
+    ['order-of-waves', ['Reverse the prime layers and the signed difference reverses. Its leading wave runs at twice the drive frequency.', () => '5 → 7  /  7 → 5', () => 'wave-plate-image']],
+    ['model-checks', ['Inspect the live checks and copy the settings for a repeatable run.', () => lastInvariants.filter(result => result.pass).length + ' of ' + lastInvariants.length + ' checks passing']],
+    ['thread-notes', ['Trace the original questions about digit towers, logistic mirrors, Catalan and CM vanishing through to the Ω wave plate.', () => 'Digit towers → quarter-turn → Catalan disk → Ω waves']],
+  ]);
+  const stops = Array.from(document.querySelectorAll('.lab-menu a')).map(link => ({
+    link, name: link.textContent, target: link.getAttribute('href').slice(1),
+  }));
+  const canvas = byId('showcase-canvas');
+  const ctx = canvas.getContext('2d');
+  const stage = byId('showcase-stage');
+  const open = byId('showcase-open');
+  const play = byId('showcase-play');
+  const linkedStop = stops.findIndex(stop => '#' + stop.target === location.hash);
+  let index = Math.max(0, linkedStop);
+  let timer;
+  let inView = true;
+  let playing = linkedStop < 0 && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function drawPreview(sourceId) {
+    const source = sourceId ? byId(sourceId()) : null;
+    const width = source?.naturalWidth ?? source?.width;
+    const height = source?.naturalHeight ?? source?.height;
+    canvas.hidden = !ctx || !width || !height;
+    if (canvas.hidden) return;
+    const scale = Math.min(canvas.width / width, canvas.height / height);
+    const displayWidth = width * scale;
+    const displayHeight = height * scale;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(source, (canvas.width - displayWidth) / 2, (canvas.height - displayHeight) / 2, displayWidth, displayHeight);
+  }
+
+  function show() {
+    const stop = stops[index];
+    const [description, detail, sourceId] = views.get(stop.target);
+    byId('showcase-count').textContent = (index + 1) + ' / ' + stops.length;
+    byId('showcase-screen').textContent = stop.name;
+    byId('showcase-description').textContent = description;
+    byId('showcase-detail').textContent = detail();
+    open.href = '#' + stop.target;
+    open.textContent = 'Open ' + stop.name;
+    for (const item of stops) item.link.toggleAttribute('data-showcase-current', item === stop);
+    drawPreview(sourceId);
+  }
+
+  function queue() {
+    clearTimeout(timer);
+    if (playing && inView && !document.hidden) {
+      timer = setTimeout(() => {
+        index = (index + 1) % stops.length;
+        show();
+        queue();
+      }, 6500);
+    }
+  }
+
+  function setPlaying(value) {
+    playing = value;
+    play.textContent = playing ? 'Pause tour' : 'Play tour';
+    stage.setAttribute('aria-live', playing ? 'off' : 'polite');
+    queue();
+  }
+
+  function move(delta) {
+    setPlaying(false);
+    index = (index + delta + stops.length) % stops.length;
+    show();
+  }
+
+  byId('showcase-prev').addEventListener('click', () => move(-1));
+  byId('showcase-next').addEventListener('click', () => move(1));
+  play.addEventListener('click', () => { show(); setPlaying(!playing); });
+  tour.addEventListener('focusin', event => { if (playing && event.target !== play) setPlaying(false); });
+  open.addEventListener('click', () => setPlaying(false));
+  stops.forEach((stop, position) => stop.link.addEventListener('click', () => {
+    setPlaying(false);
+    index = position;
+    show();
+  }));
+  byId('wave-plate-image').addEventListener('load', () => {
+    if (stops[index].target === 'order-of-waves') show();
+  });
+  document.addEventListener('visibilitychange', queue);
+  if (typeof IntersectionObserver === 'function') {
+    const observer = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      if (inView) show();
+      queue();
+    });
+    observer.observe(tour);
+  }
+  show();
+  setPlaying(playing);
+}
+
+window.onload = function () {
+  renderGainProbe();
+  renderResearchTower();
+  render();
+  renderOmega();
+  drawRG(animTime);
+  paintDimension(animTime * 1000);
+  initShowcase();
+  requestAnimationFrame(loop);
+};
+</script>
+</body>
+</html>

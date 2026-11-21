@@ -56,6 +56,15 @@ output{font-family:var(--mono);font-size:.8rem;color:var(--ink)}
 .gallery-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;margin-top:12px;font:.86rem var(--sans);color:var(--dim)}
 .gallery-case{display:inline-flex;flex-wrap:wrap;gap:8px 20px;align-items:center}
 
+/* printed plate */
+.wave-plate{display:grid;grid-template-columns:minmax(0,290px) minmax(0,1fr);gap:22px 40px;align-items:center;margin-top:30px;padding-top:26px;border-top:1px solid var(--rule)}
+.wave-plate img{display:block;width:100%;height:auto;border-radius:5px}
+.wave-plate h2{font-weight:400;font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.1}
+.wave-plate p{color:var(--dim);max-width:61ch;margin-top:8px}
+.wave-plate details{margin-top:13px}
+.wave-plate summary{cursor:pointer;font:.86rem var(--sans);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:620px){.wave-plate{grid-template-columns:minmax(0,1fr)}.wave-plate figure{max-width:290px}}
+
 /* strands */
 .strands{margin-top:40px;padding-top:26px;border-top:1px solid var(--ink)}
 .strands h2,.study summary h2{font-weight:400;font-size:1.55rem;letter-spacing:-.01em;line-height:1.2}
@@ -188,6 +197,24 @@ table.research-table{border-collapse:collapse;width:100%;margin:16px 0 6px;font:
 <label>Knot r <input id="gallery-knot-r" type="range" min="0.55" max="1.85" step="0.01" value="1.22"><output id="gallery-r-out"></output></label>
 <label>Knot e <input id="gallery-knot-e" type="range" min="0.25" max="2.25" step="0.01" value="0.70"><output id="gallery-e-out"></output></label>
 </span>
+</div>
+</section>
+
+<section class="wave-plate" id="order-of-waves" aria-labelledby="wave-plate-title">
+<figure>
+<a href="../assets/omega-tower-waves.png">
+<img src="../assets/omega-tower-waves.png" width="1400" height="1890" loading="lazy"
+     alt="The Order of Waves, a signed interference rosette with a mint sum trace and an amber difference trace at twice the leading frequency.">
+</a>
+</figure>
+<div>
+<h2 id="wave-plate-title">The Order of Waves</h2>
+<p>Two prime towers pass through the same point with the same slope. The mint trace keeps their shared wave. The amber trace reveals which prime went first.</p>
+<details open>
+<summary>Read the construction</summary>
+<p>Set Ω = W(1) and T<sub>p</sub>(x) = Ω p<sup>Ω−x</sup>. Feed the same small sinusoid around Ω into T<sub>7</sub> ∘ T<sub>5</sub> and T<sub>5</sub> ∘ T<sub>7</sub>. Their half-difference starts at quadratic order. After subtracting its mean, the leading oscillation is at twice the drive frequency. Reversing the layers flips its sign.</p>
+<p>The rosette uses the model outputs as phase masks. The two traces plot the computed sum and difference on separate vertical scales.</p>
+</details>
 </div>
 </section>
 
