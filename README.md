@@ -23,15 +23,17 @@ The same reading is carried through every unit system. Metric values end, US cus
 | [Optical phase slots](index.html#phase-slots) | Turn each tower height into quarter-turns of phase. Compare the carrier and sidebands in the ideal modulation model. |
 | [Prime Forms](index.html#prime-forms) and [logistic fork](index.html#logistic-fork) | Swap or bias the two strands. The knot, ribbon, rosette and loom respond to these controls. |
 | [3D lattice](index.html#lattice) and [Hopf detector](index.html#dimensions) | Orbit a digit-seeded height field and average adjacent cells. Then compare a loop, its detector projection, and the fixed point produced at a different pump setting. |
-| [Recamán walls](index.html#obs-recaman) and [photonic blockade](index.html#obs-photonic) | Click the number line to forbid a value and watch the Recamán arcs reroute. Then place blockade cavities in the path of light pulses and compare the two kinds of exclusion. |
 | [Gain sweep](index.html#gain-title) and [research controls](index.html#research-controls) | Change one shared gain for a family of exponential towers. Compare their thresholds, then compare nearby offsets and equal-gain mirror responses. |
 | [Ω towers](index.html#omega-towers), [light loop](index.html#omega-light) and [wave plate](index.html#order-of-waves) | Reverse two prime layers that share a fixed point and a slope. Their half-difference reveals the order through its leading second harmonic. |
-| [Wall trees](index.html#wall-trees) and [dedup scenarios](index.html#dedup) | See why each Recamán step turned back, then compare three rules that forbid repeated values. Send either map to the 3D lattice. |
 | [Model checks](index.html#model-checks) | Inspect the live residuals and copy the current settings. |
 | [From the original thread](index.html#thread-notes) | Follow the original digit, arithmetic, logistic, Catalan and CM questions into the experiments and artworks. |
 | [Who made what](index.html#authorship) | The author of every section. |
 
-The index opens as one page with a direct link to every screen, and its showcase cycles through all 21 stops by itself. For a local preview, open **index.html** in a browser. [Earlier Prime Forms gallery](pages/prime-forms.html) · [Dark neon version](pages/prime-forms-index-dark.html)
+The main showcase cycles through 17 stops. For a local preview, open **index.html** in a browser. [Earlier Prime Forms gallery](pages/prime-forms.html) · [Dark neon version](pages/prime-forms-index-dark.html)
+
+## Conjectural
+
+The [Recamán and exclusion models](index.html#conjectural) compare wall filters and rules for repeated values over finite runs. The counts apply to the selected rule and step count. A quantitative correspondence with the toy optical blockade remains an open question.
 
 ## Where the threads meet
 
