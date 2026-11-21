@@ -1,4 +1,4 @@
-# c3.2z · Prime power tower composition Forms and omega wave power towers
+# c3.2z ·  Power tower composition in physical constants like the speed of  light. Prime power tower composition Forms. Omega wave power towers
 
 <p align="center">
   <a href="https://encapsulatorp.github.io/c3.2z/">
