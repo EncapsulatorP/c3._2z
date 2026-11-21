@@ -157,7 +157,7 @@ main{max-width:1240px;padding:18px 18px 48px;margin:auto}
 .lab-menu{display:flex;flex-wrap:wrap;gap:6px 8px}
 .lab-menu a{display:inline-block;padding:5px 9px;border:1px solid var(--line);border-radius:6px;font:.79rem var(--sans);text-decoration:none;color:var(--ink)}
 .lab-menu a:is(:hover,:focus-visible){border-color:var(--gold);color:var(--gold)}
-main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-height,140px) + 16px)}
+main section[id],main [id].panel,main h2[id],#conjectural{scroll-margin-top:calc(var(--menu-height,140px) + 16px)}
 .lab-screen{margin-bottom:20px}
 .canvas-box{position:relative;width:100%;height:390px;background:var(--canvas);border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:crosshair}
 .canvas-box canvas{width:100%;height:100%;display:block}
@@ -183,6 +183,9 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
 .orbit-details{margin:10px 0 4px}
 .orbit-details summary{cursor:pointer;color:var(--mint);font-size:.88rem}
 .orbit-details figure{max-width:570px;margin:8px 0 0}
+.conjectural{padding:14px 18px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.conjectural > summary{cursor:pointer;font-weight:600;color:var(--ink)}
+.conjectural > .note{margin:10px 0 16px}
 .helix-word{
   margin-top:10px;overflow-wrap:anywhere;word-break:break-word;
   color:var(--mint);font:.83rem/1.6 var(--mono);
@@ -412,10 +415,6 @@ canvas{background:var(--plate)}
       <a href="#logistic-fork">Logistic fork</a>
       <a href="#lattice">3D lattice</a>
       <a href="#dimensions">Hopf detector</a>
-      <a href="#obs-recaman">Recamán walls</a>
-      <a href="#obs-photonic">Photonic blockade</a>
-      <a href="#wall-trees">Wall trees</a>
-      <a href="#dedup">Dedup scenarios</a>
       <a href="#omega-towers">Ω towers</a>
       <a href="#omega-light">Ω light loop</a>
       <a href="#order-of-waves">Wave plate</a>
@@ -424,6 +423,7 @@ canvas{background:var(--plate)}
       <a href="#research-controls">Controls</a>
       <a href="#model-checks">Model checks</a>
       <a href="#authorship">Who made what</a>
+      <a href="#conjectural" data-tour-exclude>Conjectural</a>
     </nav>
   </div>
 </header>
@@ -640,8 +640,10 @@ canvas{background:var(--plate)}
         <label class="mono" style="font-size:.83rem;color:var(--dim);display:inline-flex;gap:8px;align-items:center">Lattice source
           <select id="rg-source">
             <option value="primetower" selected>Digit towers (chosen unit)</option>
-            <option value="walltree">Wall tree codes</option>
-            <option value="dedup">Dedup collision map</option>
+            <optgroup label="Conjectural · Recamán inputs">
+              <option value="walltree">Wall tree codes</option>
+              <option value="dedup">Dedup collision map</option>
+            </optgroup>
           </select>
         </label>
         <div class="rg-slider-wrap">
@@ -700,162 +702,6 @@ canvas{background:var(--plate)}
       <p class="note">Normalized Hopf model. The attractor is a fixed point or a cycle. The dimension and hole shown by the detector depend on the chosen projection.</p>
     </div>
   </section>
-<section class="lab-screen" id="obstructions">
-    <div class="panel" id="obs-recaman">
-      <h2>Obstructions: Recamán walls</h2>
-      <p class="note">The Recamán sequence steps back by n when it can and forward when the landing spot is taken. Click the number line to add or remove a forbidden wall and watch every later arc reroute.</p>
-      <div class="controls">
-        <label>Terms n <input id="rec-n" type="range" min="20" max="250" step="1" value="90"><output id="rec-n-out" class="mono">90</output></label>
-        <button type="button" id="rec-inject" class="btn-gold">+ Inject random wall</button>
-        <button type="button" id="rec-clear" class="btn-coral">Reset walls</button>
-        <button type="button" id="rec-save">Save PNG</button>
-      </div>
-      <div class="canvas-box" id="wrap-rec"><canvas id="canvas-rec" role="img" aria-label="Recaman semicircular arcs and the strip of unvisited values"></canvas></div>
-      <p class="note">Ice-blue arcs below the line are free back-steps (aₙ₋₁ − n). Violet arcs above are obstructed forward steps (aₙ₋₁ + n). Orange pins are your walls. The lower strip marks every value not yet visited.</p>
-      <div class="kpi-grid">
-        <div class="kpi"><div class="kpi-lbl">Obstructed steps</div><div class="kpi-val violet" id="rec-rate">0%</div></div>
-        <div class="kpi"><div class="kpi-lbl">Smallest unvisited value</div><div class="kpi-val gold" id="rec-void">—</div></div>
-        <div class="kpi"><div class="kpi-lbl">Custom walls</div><div class="kpi-val coral" id="rec-walls">0</div></div>
-        <div class="kpi"><div class="kpi-lbl">Largest value reached</div><div class="kpi-val" id="rec-max">0</div></div>
-      </div>
-    </div>
-    <div class="panel" id="obs-photonic">
-      <h2>Obstructions: photonic blockade</h2>
-      <p class="note">A toy optical counterpart. Pulses travel one cell per tick along 45° rays and bounce off the waveguide walls. Click the lattice to place or remove a blockade cavity; the digit towers of the chosen unit set the bandgap layers. It is an analogue of the Recamán exclusion, not the same thing.</p>
-      <div class="controls">
-        <label>Anharmonicity <input id="pho-anh" type="range" min="0" max="1" step="0.02" value="0.80"><output id="pho-anh-out" class="mono">0.80</output></label>
-        <label><input id="pho-bg" type="checkbox" checked> Prime bandgap layers (<span id="pho-unit-txt" class="mono">m/s</span>)</label>
-        <button type="button" id="pho-clear" class="btn-coral">Clear cavities</button>
-        <button type="button" id="pho-save">Save PNG</button>
-      </div>
-      <div class="canvas-box" id="wrap-pho"><canvas id="canvas-pho" role="img" aria-label="Photon pulses on 45 degree rays meeting blockade cavities"></canvas></div>
-      <div class="kpi-grid">
-        <div class="kpi"><div class="kpi-lbl">Transmitted</div><div class="kpi-val" id="pho-trans">50%</div></div>
-        <div class="kpi"><div class="kpi-lbl">Reflected</div><div class="kpi-val violet" id="pho-refl">50%</div></div>
-        <div class="kpi"><div class="kpi-lbl">Shadow zone</div><div class="kpi-val coral" id="pho-shadow">0.0%</div></div>
-        <div class="kpi"><div class="kpi-lbl">Ray speed</div><div class="kpi-val gold">1 cell per tick</div></div>
-      </div>
-    </div>
-</section>
-<section class="lab-screen" id="obstruction-trees">
-    <!-- Panel 2.1 · Fast Hierarchical Wall Trees -> 1.1 Lattice -->
-    <div class="panel">
-      <div class="intro">
-        <div>
-          <h2 id="wall-trees">Wall trees: why each Recamán step turned back</h2>
-          <p class="note" style="margin-top:4px">TypedArray Recamán wall classifier (<code>Int32Array</code> / <code>Uint8Array</code>). Classifies every step into 4 hierarchical obstruction codes and maps one-to-one onto the 32×32 lattice.</p>
-        </div>
-        <div class="controls" style="margin:0">
-          <button type="button" id="wt-map-rg" class="btn-mint">Show on the 3D lattice</button>
-          <button type="button" id="wt-save">Save PNG</button>
-        </div>
-      </div>
-
-      <div class="controls">
-        <div class="preset-group" role="group" aria-label="Step count presets">
-          <span class="mono" style="font-size:.8rem;color:var(--dim);margin-right:4px">n:</span>
-          <button type="button" class="preset-btn" data-n="64" aria-pressed="false">64</button>
-          <button type="button" class="preset-btn" data-n="256" aria-pressed="false">256</button>
-          <button type="button" class="preset-btn" data-n="1024" aria-pressed="true">1024</button>
-          <button type="button" class="preset-btn" data-n="4096" aria-pressed="false">4096</button>
-          <button type="button" class="preset-btn" data-n="16384" aria-pressed="false">16384</button>
-        </div>
-        <label>Steps
-          <input id="wt-n-slider" type="range" min="32" max="16384" step="32" value="1024" style="width:130px">
-          <input id="wt-n-num" type="number" min="24" max="16384" step="1" value="1024" style="width:76px">
-        </label>
-        <label>Wall Filter
-          <select id="wt-filter">
-            <option value="none" selected>None (Pure Recamán)</option>
-            <option value="mod3">Mod 3 Forbidden</option>
-            <option value="mod5">Mod 5 Forbidden</option>
-            <option value="prime">Prime Forbidden</option>
-            <option value="custom">Click-to-Toggle Custom Walls</option>
-          </select>
-        </label>
-        <button type="button" id="wt-clear-walls" class="btn-coral" hidden>Clear Custom Walls</button>
-      </div>
-
-      <div class="wall-split">
-        <div>
-          <div class="wall-tree-box" id="wrap-wt">
-            <canvas id="canvas-wt" role="img" aria-label="Hierarchical wall tree breakdown and trajectory strip"></canvas>
-          </div>
-          <div class="legend-strip">
-            <span class="legend-item"><i class="sw" style="background:#bfd9f5"></i>0 · Free Down</span>
-            <span class="legend-item"><i class="sw" style="background:#d6ba73"></i>1 · Floor Boundary (&lt;0)</span>
-            <span class="legend-item"><i class="sw" style="background:#a39bd5"></i>2 · Memory Wall (in V)</span>
-            <span class="legend-item"><i class="sw" style="background:#ff8a3c"></i>3 · Filter/Custom Wall</span>
-          </div>
-        </div>
-        <div class="mini-lattice-card">
-          <canvas id="canvas-wt-lattice" width="240" height="240" role="img" aria-label="32 by 32 live lattice mapping of wall classes"></canvas>
-          <div class="mini-lattice-lbl" id="wt-lattice-lbl">Live lattice map (32×32 · 1:1)</div>
-        </div>
-      </div>
-
-      <div class="kpi-grid">
-        <div class="kpi"><div class="kpi-lbl">Compute Time</div><div class="kpi-val" id="wt-kpi-ms">0.00 ms</div></div>
-        <div class="kpi"><div class="kpi-lbl">Free Down (0)</div><div class="kpi-val" id="wt-kpi-free">0.0%</div></div>
-        <div class="kpi"><div class="kpi-lbl">Floor Walls (1)</div><div class="kpi-val gold" id="wt-kpi-floor">0.0%</div></div>
-        <div class="kpi"><div class="kpi-lbl">Memory Walls (2)</div><div class="kpi-val violet" id="wt-kpi-mem">0.0%</div></div>
-        <div class="kpi"><div class="kpi-lbl">Filter Walls (3)</div><div class="kpi-val coral" id="wt-kpi-filt">0.0%</div></div>
-        <div class="kpi"><div class="kpi-lbl">Longest Wall Streak</div><div class="kpi-val gold" id="wt-kpi-streak">0</div></div>
-        <div class="kpi"><div class="kpi-lbl">Minimal Unvisited Void</div><div class="kpi-val" id="wt-kpi-void">—</div></div>
-      </div>
-    </div>
-
-    <!-- Panel 2.2 · Duplication & Deduplication Scenarios -->
-    <div class="panel">
-      <div class="intro">
-        <div>
-          <h2 id="dedup">Duplicates, and three ways to forbid them</h2>
-          <p class="note" style="margin-top:4px">Compare Standard Recamán's unguarded up-step (which creates collision hubs like <code>a₂₀ = a₂₄ = 42</code>) against 3 deterministic deduplication protocols on the exact same <code>n</code>.</p>
-        </div>
-        <div class="controls" style="margin:0">
-          <button type="button" id="dd-map-rg" class="btn-mint">Show collisions on the 3D lattice</button>
-          <button type="button" id="dd-save">Save PNG</button>
-        </div>
-      </div>
-
-      <div class="controls">
-        <label>Active Comparison Scenario
-          <select id="dd-scenario">
-            <option value="strict" selected>Strict Dedup (Guarded Up-Step)</option>
-            <option value="voidfill">Void-Fill Dedup (Lowest Unvisited Fallback)</option>
-            <option value="capped">Capped Dedup (Max 2 Hits)</option>
-          </select>
-        </label>
-        <span id="dd-summary-note" class="mono" style="font-size:.8rem;color:var(--dim)"></span>
-      </div>
-
-      <div class="dedup-split">
-        <div class="dedup-canvas-box" id="wrap-dd-trace">
-          <canvas id="canvas-dd-trace" role="img" aria-label="Dual trace comparing standard Recaman with active deduplication scenario"></canvas>
-        </div>
-        <div class="dedup-canvas-box" id="wrap-dd-hist">
-          <canvas id="canvas-dd-hist" role="img" aria-label="Hit multiplicity histogram comparing standard and dedup protocols"></canvas>
-        </div>
-      </div>
-
-      <div class="table-wrap">
-        <table class="dedup-table">
-          <thead>
-            <tr>
-              <th>Protocol</th>
-              <th>Unique Values</th>
-              <th>Duplicate Collisions</th>
-              <th>Max Multiplicity</th>
-              <th>First Duplicate (Val @ n)</th>
-              <th>Min Unvisited Void</th>
-              <th>Compute (ms)</th>
-            </tr>
-          </thead>
-          <tbody id="dd-table-body"></tbody>
-        </table>
-      </div>
-    </div>
-</section>
 <section class="lab-screen" id="omega-towers">
     <div class="panel omega-lab">
       <h2>Ω towers: one fixed point, many stabilities</h2>
@@ -1003,6 +849,173 @@ canvas{background:var(--plate)}
     </table>
     <p class="lab-credit">Each section title carries its author. Where two names appear, the first made it and the second reworked it.</p>
   </section>
+  <details class="conjectural" id="conjectural">
+    <summary>Conjectural · Recamán and exclusion models</summary>
+    <p class="note">The tables and plots report finite runs for the selected rules. Can the arithmetic exclusion statistics predict anything about the toy optical blockade under a specified mapping? That correspondence is an open question.</p>
+<section class="lab-screen" id="obstructions">
+    <div class="panel" id="obs-recaman">
+      <h2>Obstructions: Recamán walls</h2>
+      <p class="note">The Recamán sequence steps back by n when it can and forward when the landing spot is taken. Click the number line to add or remove a forbidden wall and watch every later arc reroute.</p>
+      <div class="controls">
+        <label>Terms n <input id="rec-n" type="range" min="20" max="250" step="1" value="90"><output id="rec-n-out" class="mono">90</output></label>
+        <button type="button" id="rec-inject" class="btn-gold">+ Inject random wall</button>
+        <button type="button" id="rec-clear" class="btn-coral">Reset walls</button>
+        <button type="button" id="rec-save">Save PNG</button>
+      </div>
+      <div class="canvas-box" id="wrap-rec"><canvas id="canvas-rec" role="img" aria-label="Recaman semicircular arcs and the strip of unvisited values"></canvas></div>
+      <p class="note">Ice-blue arcs below the line are free back-steps (aₙ₋₁ − n). Violet arcs above are obstructed forward steps (aₙ₋₁ + n). Orange pins are your walls. The lower strip marks every value not yet visited.</p>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-lbl">Obstructed steps</div><div class="kpi-val violet" id="rec-rate">0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Smallest unvisited value</div><div class="kpi-val gold" id="rec-void">—</div></div>
+        <div class="kpi"><div class="kpi-lbl">Custom walls</div><div class="kpi-val coral" id="rec-walls">0</div></div>
+        <div class="kpi"><div class="kpi-lbl">Largest value reached</div><div class="kpi-val" id="rec-max">0</div></div>
+      </div>
+    </div>
+    <div class="panel" id="obs-photonic">
+      <h2>Obstructions: photonic blockade</h2>
+      <p class="note">Pulses in this toy model travel one cell per tick along 45° rays and bounce off the waveguide walls. Click the lattice to place or remove a blockade cavity. The digit towers of the chosen unit set the model’s bandgap layers.</p>
+      <div class="controls">
+        <label>Anharmonicity <input id="pho-anh" type="range" min="0" max="1" step="0.02" value="0.80"><output id="pho-anh-out" class="mono">0.80</output></label>
+        <label><input id="pho-bg" type="checkbox" checked> Prime bandgap layers (<span id="pho-unit-txt" class="mono">m/s</span>)</label>
+        <button type="button" id="pho-clear" class="btn-coral">Clear cavities</button>
+        <button type="button" id="pho-save">Save PNG</button>
+      </div>
+      <div class="canvas-box" id="wrap-pho"><canvas id="canvas-pho" role="img" aria-label="Photon pulses on 45 degree rays meeting blockade cavities"></canvas></div>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-lbl">Transmitted</div><div class="kpi-val" id="pho-trans">50%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Reflected</div><div class="kpi-val violet" id="pho-refl">50%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Shadow zone</div><div class="kpi-val coral" id="pho-shadow">0.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Ray speed</div><div class="kpi-val gold">1 cell per tick</div></div>
+      </div>
+    </div>
+</section>
+<section class="lab-screen" id="obstruction-trees">
+    <!-- Panel 2.1 · Fast Hierarchical Wall Trees -> 1.1 Lattice -->
+    <div class="panel">
+      <div class="intro">
+        <div>
+          <h2 id="wall-trees">Wall trees: why each Recamán step turned back</h2>
+          <p class="note" style="margin-top:4px">TypedArray Recamán wall classifier (<code>Int32Array</code> / <code>Uint8Array</code>). Classifies every step into 4 hierarchical obstruction codes and maps one-to-one onto the 32×32 lattice.</p>
+        </div>
+        <div class="controls" style="margin:0">
+          <button type="button" id="wt-map-rg" class="btn-mint">Show on the 3D lattice</button>
+          <button type="button" id="wt-save">Save PNG</button>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="preset-group" role="group" aria-label="Step count presets">
+          <span class="mono" style="font-size:.8rem;color:var(--dim);margin-right:4px">n:</span>
+          <button type="button" class="preset-btn" data-n="64" aria-pressed="false">64</button>
+          <button type="button" class="preset-btn" data-n="256" aria-pressed="false">256</button>
+          <button type="button" class="preset-btn" data-n="1024" aria-pressed="true">1024</button>
+          <button type="button" class="preset-btn" data-n="4096" aria-pressed="false">4096</button>
+          <button type="button" class="preset-btn" data-n="16384" aria-pressed="false">16384</button>
+        </div>
+        <label>Steps
+          <input id="wt-n-slider" type="range" min="32" max="16384" step="32" value="1024" style="width:130px">
+          <input id="wt-n-num" type="number" min="24" max="16384" step="1" value="1024" style="width:76px">
+        </label>
+        <label>Wall Filter
+          <select id="wt-filter">
+            <option value="none" selected>None (Pure Recamán)</option>
+            <option value="mod3">Mod 3 Forbidden</option>
+            <option value="mod5">Mod 5 Forbidden</option>
+            <option value="prime">Prime Forbidden</option>
+            <option value="custom">Click-to-Toggle Custom Walls</option>
+          </select>
+        </label>
+        <button type="button" id="wt-clear-walls" class="btn-coral" hidden>Clear Custom Walls</button>
+      </div>
+
+      <div class="wall-split">
+        <div>
+          <div class="wall-tree-box" id="wrap-wt">
+            <canvas id="canvas-wt" role="img" aria-label="Hierarchical wall tree breakdown and trajectory strip"></canvas>
+          </div>
+          <div class="legend-strip">
+            <span class="legend-item"><i class="sw" style="background:#bfd9f5"></i>0 · Free Down</span>
+            <span class="legend-item"><i class="sw" style="background:#d6ba73"></i>1 · Floor Boundary (&lt;0)</span>
+            <span class="legend-item"><i class="sw" style="background:#a39bd5"></i>2 · Memory Wall (in V)</span>
+            <span class="legend-item"><i class="sw" style="background:#ff8a3c"></i>3 · Filter/Custom Wall</span>
+          </div>
+        </div>
+        <div class="mini-lattice-card">
+          <canvas id="canvas-wt-lattice" width="240" height="240" role="img" aria-label="32 by 32 live lattice mapping of wall classes"></canvas>
+          <div class="mini-lattice-lbl" id="wt-lattice-lbl">Live lattice map (32×32 · 1:1)</div>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-lbl">Compute Time</div><div class="kpi-val" id="wt-kpi-ms">0.00 ms</div></div>
+        <div class="kpi"><div class="kpi-lbl">Free Down (0)</div><div class="kpi-val" id="wt-kpi-free">0.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Floor Walls (1)</div><div class="kpi-val gold" id="wt-kpi-floor">0.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Memory Walls (2)</div><div class="kpi-val violet" id="wt-kpi-mem">0.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Filter Walls (3)</div><div class="kpi-val coral" id="wt-kpi-filt">0.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Longest Wall Streak</div><div class="kpi-val gold" id="wt-kpi-streak">0</div></div>
+        <div class="kpi"><div class="kpi-lbl">Minimal Unvisited Void</div><div class="kpi-val" id="wt-kpi-void">—</div></div>
+      </div>
+    </div>
+
+    <!-- Panel 2.2 · Duplication & Deduplication Scenarios -->
+    <div class="panel">
+      <div class="intro">
+        <div>
+          <h2 id="dedup">Duplicates and three ways to constrain them</h2>
+          <p class="note" style="margin-top:4px">Compare Standard Recamán's unguarded up-step (which creates collision hubs like <code>a₂₀ = a₂₄ = 42</code>) against 3 deterministic deduplication protocols on the exact same <code>n</code>.</p>
+        </div>
+        <div class="controls" style="margin:0">
+          <button type="button" id="dd-map-rg" class="btn-mint">Show collisions on the 3D lattice</button>
+          <button type="button" id="dd-save">Save PNG</button>
+        </div>
+      </div>
+
+      <div class="controls">
+        <label>Active Comparison Scenario
+          <select id="dd-scenario">
+            <option value="strict" selected>Strict Dedup (Guarded Up-Step)</option>
+            <option value="voidfill">Void-Fill Dedup (Lowest Unvisited Fallback)</option>
+            <option value="capped">Capped Dedup (Max 2 Hits)</option>
+          </select>
+        </label>
+        <span id="dd-summary-note" class="mono" style="font-size:.8rem;color:var(--dim)"></span>
+      </div>
+
+      <div class="dedup-split">
+        <div class="dedup-canvas-box" id="wrap-dd-trace">
+          <canvas id="canvas-dd-trace" role="img" aria-label="Dual trace comparing standard Recaman with active deduplication scenario"></canvas>
+        </div>
+        <div class="dedup-canvas-box" id="wrap-dd-hist">
+          <canvas id="canvas-dd-hist" role="img" aria-label="Hit multiplicity histogram comparing standard and dedup protocols"></canvas>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="dedup-table">
+          <thead>
+            <tr>
+              <th>Protocol</th>
+              <th>Unique Values</th>
+              <th>Duplicate Collisions</th>
+              <th>Max Multiplicity</th>
+              <th>First Duplicate (Val @ n)</th>
+              <th>Min Unvisited Void</th>
+              <th>Compute (ms)</th>
+            </tr>
+          </thead>
+          <tbody id="dd-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+</section>
+    <div class="panel" id="conjectural-checks">
+      <h2>Finite-run checks</h2>
+      <table class="research-table">
+        <thead><tr><th>#</th><th>Check</th><th>Status</th><th>Live Measurement</th></tr></thead>
+        <tbody id="conjectural-invariants"></tbody>
+      </table>
+    </div>
+  </details>
 </main>
 
 <script>
@@ -2214,6 +2227,7 @@ function chainChecks() {
 }
 
 let lastInvariants = [];
+let lastConjecturalChecks = [];
 function updateInvariants() {
   const kR = Number(byId('gallery-knot-r').value), kE = Number(byId('gallery-knot-e').value);
   const roots = knotAttractors(kR, kE);
@@ -2235,13 +2249,19 @@ function updateInvariants() {
     { name: 'Critical Gain Monotonicity', pass: monoOk, detail: `g_c(2)=${g2.toFixed(4)} > g_c(3) > g_c(5) > g_c(7)=${g7.toFixed(4)}` },
     { name: 'Hopf Detector Consistency', pass: hopfOk, detail: `R²=${(d.radius ** 2).toFixed(4)}, hole=${d.hole ? 1 : 0}, det=${d.detector}` },
     { name: 'BigInt Unit Exactness', pass: bigOk, detail: `${u.label}: gcd(${u.n}, ${u.d}) = 1` },
-    { name: 'Recamán First Duplicate', pass: Boolean(ddState.standard && ddState.standard.seq.length > 24 && ddState.standard.seq[20] === 42 && ddState.standard.seq[24] === 42), detail: ddState.standard ? `a₂₀=${ddState.standard.seq[20]}, a₂₄=${ddState.standard.seq[24]}` : 'pending' },
-    { name: 'Strict Dedup Has No Collisions', pass: Boolean(ddState.protocols[1] && ddState.protocols[1].dupCollisions === 0), detail: ddState.protocols[1] ? `duplicates = ${ddState.protocols[1].dupCollisions} (n=${wtState.n})` : 'pending' },
     { name: 'Ω Defining Identity', pass: Math.abs(OMEGA - Math.exp(-OMEGA)) < 1e-14, detail: `Ω=${OMEGA.toFixed(12)}, |Ω − e^(−Ω)|=${Math.abs(OMEGA - Math.exp(-OMEGA)).toExponential(1)}` },
     { name: 'Ω Fixed by Every Prime Layer', pass: omegaLayerResidual() < 1e-14, detail: `max |T_p(Ω) − Ω| over p ≤ 31 = ${omegaLayerResidual().toExponential(1)}` },
   ];
-  const tb = byId('spec-invariants');
-  tb.innerHTML = lastInvariants.map((inv, i) => `<tr><td class="mono">${i + 1}</td><td><strong>${inv.name}</strong></td><td><span class="badge ${inv.pass ? 'pass' : 'fail'}">${inv.pass ? 'PASS' : 'FAIL'}</span></td><td class="mono">${inv.detail}</td></tr>`).join('');
+  lastConjecturalChecks = [
+    { name: 'Standard Recamán repeats 42', pass: ddState.standard?.seq[20] === 42 && ddState.standard?.seq[24] === 42, detail: ddState.standard ? `a₂₀=${ddState.standard.seq[20]}, a₂₄=${ddState.standard.seq[24]}` : 'pending' },
+    { name: 'Strict dedup has zero repeats in this run', pass: ddState.protocols[1]?.dupCollisions === 0, detail: ddState.protocols[1] ? `duplicates = ${ddState.protocols[1].dupCollisions} (n=${wtState.n})` : 'pending' },
+  ];
+  renderChecks('spec-invariants', lastInvariants);
+  renderChecks('conjectural-invariants', lastConjecturalChecks);
+}
+
+function renderChecks(id, checks) {
+  byId(id).innerHTML = checks.map((inv, i) => `<tr><td class="mono">${i + 1}</td><td><strong>${inv.name}</strong></td><td><span class="badge ${inv.pass ? 'pass' : 'fail'}">${inv.pass ? 'PASS' : 'FAIL'}</span></td><td class="mono">${inv.detail}</td></tr>`).join('');
 }
 
 function omegaLayerResidual() {
@@ -2252,6 +2272,7 @@ function copySpecMarkdown(btn) {
   const u = units.get(selected);
   const sc = Number(byId('rg-scale').value);
   const meta = RG_META[sc];
+  const checkLine = inv => '- ' + inv.name + ': ' + (inv.pass ? 'PASS' : 'FAIL') + ' (' + inv.detail + ')';
   const md = [
     '# Prime Forms settings', '',
     '- Unit: ' + u.label,
@@ -2260,7 +2281,8 @@ function copySpecMarkdown(btn) {
     '- Logistic r and mode: ' + byId('helix-r').value + ', ' + byId('helix-mode').value,
     '- Gain sweep: ' + byId('gain-center').value + ' ± ' + byId('gain-sweep').value,
     '- Ω prime pair: ' + omegaPair().join(' → '), '', '## Model checks',
-    ...lastInvariants.map(inv => '- ' + inv.name + ': ' + (inv.pass ? 'PASS' : 'FAIL') + ' (' + inv.detail + ')'),
+    ...lastInvariants.map(checkLine), '', '## Conjectural · Recamán finite-run checks',
+    ...lastConjecturalChecks.map(checkLine),
   ].join('\n');
 
   const ta = document.createElement('textarea');
@@ -3207,14 +3229,10 @@ function initShowcase() {
     ['chain', ['Every digit of c is a prime raised to a power. Three layers come apart and rebuild the number.', () => byId('chain-rebuild').textContent]],
     ['units-compared', ['The same reading in all 14 units, with the modular reason each one ends or repeats.', () => 'metric ends · US customary repeats every 42 · nautical every 154']],
     ['modular-cycle', ['The long-division remainders as a loop, and the same fraction as an exact cycle of the logistic map.', () => byId('cycle-note').textContent, () => 'cycle-art']],
-    ['obs-recaman', ['Click the number line to forbid a value and watch the Recamán arcs reroute.', () => 'Obstructed steps ' + byId('rec-rate').textContent, () => 'canvas-rec']],
-    ['obs-photonic', ['Place blockade cavities in the path of light pulses.', () => 'Transmitted ' + byId('pho-trans').textContent, () => 'canvas-pho']],
-    ['wall-trees', ['Every Recamán step is free, stopped by the floor, stopped by memory, or stopped by a wall you chose.', () => 'Longest wall streak ' + byId('wt-kpi-streak').textContent, () => 'canvas-wt']],
-    ['dedup', ['Standard Recamán repeats values. Three guarded rules are compared on the same run.', () => byId('dd-summary-note').textContent, () => 'canvas-dd-trace']],
     ['authorship', ['Who made which part of this page.', () => 'Zolton Farkas · GPT and Codex · Gemini (Neon) · Claude']],
     ['thread-notes', ['Trace the original questions about digit towers, logistic mirrors, Catalan and CM vanishing through to the Ω wave plate.', () => 'Digit towers → quarter-turn → Catalan disk → Ω waves']],
   ]);
-  const stops = Array.from(document.querySelectorAll('.lab-menu a')).map(link => ({
+  const stops = Array.from(document.querySelectorAll('.lab-menu a:not([data-tour-exclude])')).map(link => ({
     link, name: link.textContent, target: link.getAttribute('href').slice(1),
   }));
   const canvas = byId('showcase-canvas');
@@ -3226,7 +3244,7 @@ function initShowcase() {
   let index = Math.max(0, linkedStop);
   let timer;
   let inView = true;
-  let playing = linkedStop < 0 && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let playing = !location.hash && !matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function drawPreview(sourceId) {
     const source = sourceId ? byId(sourceId()) : null;
@@ -3283,6 +3301,7 @@ function initShowcase() {
   play.addEventListener('click', () => { show(); setPlaying(!playing); });
   tour.addEventListener('focusin', event => { if (playing && event.target !== play) setPlaying(false); });
   open.addEventListener('click', () => setPlaying(false));
+  document.querySelector('.lab-menu a[data-tour-exclude]').addEventListener('click', () => setPlaying(false));
   stops.forEach((stop, position) => stop.link.addEventListener('click', () => {
     setPlaying(false);
     index = position;
@@ -3311,7 +3330,7 @@ function markAuthors() {
     'Prime Forms showcase': 'GPT and Codex', 'Top-level configuration': 'GPT', 'Unit tree': 'GPT', 'Logistic fork': 'GPT',
     'Lattice coarse-graining': 'Gemini · Claude', 'When does the hole disappear?': 'GPT · Gemini',
     'Obstructions: Recamán walls': 'Gemini', 'Obstructions: photonic blockade': 'Gemini',
-    'Wall trees: why each Recamán step turned back': 'Gemini', 'Duplicates, and three ways to forbid them': 'Gemini',
+    'Wall trees: why each Recamán step turned back': 'Gemini', 'Duplicates and three ways to constrain them': 'Gemini',
     'Ω towers: one fixed point, many stabilities': 'GPT · Claude', 'Ω in a beam of light, and in the letters': 'GPT · Claude',
     'The Order of Waves': 'Codex', 'From the original thread': 'Codex', 'One gain, many towers': 'GPT',
     'Controls: which part is doing the work?': 'GPT', 'Model checks': 'Gemini · Claude',
@@ -3345,17 +3364,21 @@ function setMinimized(entry, min, quiet) {
 }
 function markView() {
   const closed = new Set(minPanels.filter((m) => m.panel.classList.contains('is-min')).map((m) => m.title));
-  const state = closed.size === 0 ? 'all' : closed.size === minPanels.length ? 'none'
-    : closed.size === referenceTitles.length && referenceTitles.every((t) => closed.has(t)) ? 'cool' : '';
+  const expanded = byId('conjectural').open;
+  const state = expanded && closed.size === 0 ? 'all' : !expanded && closed.size === minPanels.length ? 'none'
+    : !expanded && closed.size === referenceTitles.length && referenceTitles.every((t) => closed.has(t)) ? 'cool' : '';
   for (const b of document.querySelectorAll('.view-bar button')) b.setAttribute('aria-pressed', String(b.dataset.view === state));
 }
 function applyView(view) {
+  byId('conjectural').open = view === 'all';
   for (const m of minPanels) setMinimized(m, view === 'none' || (view === 'cool' && referenceTitles.includes(m.title)), true);
   redrawAll(); saveMinimized(); markView();
 }
 function revealSection(id) {
   const target = byId(id);
   if (!target) return;
+  const conjectural = target.closest('#conjectural');
+  if (conjectural) conjectural.open = true;
   const own = target.closest('.panel, .showcase');
   const panels = own ? [own] : [...target.querySelectorAll('.panel')];
   let changed = false;
@@ -3378,8 +3401,8 @@ function initMinimizers() {
       'Unit tree': 'Pick the unit: metric, US customary, nautical or normalized. Every other section follows it.',
       'Digit towers and phase slots': 'The digits as factor towers, the optical phase model they drive, and the read-back of the word from its spectrum.',
       'Prime Forms and the logistic fork': 'Six drawings made from the prime letters and two mirrored logistic orbits, with the controls that shape them.',
-      'Prime Forms showcase': 'A tour that steps through all 21 sections by itself, with live previews.',
-      'Model checks': 'Eleven live checks on the chain, the cycles, the spectrum, the knot, the gains, Recamán and Ω.',
+      'Prime Forms showcase': 'An automatic tour of the main sections, with live previews.',
+      'Model checks': 'Live checks on the chain, the cycles, the spectrum, the knot, the gains and Ω.',
       'Who made what': 'The author of every section: Zolton Farkas, GPT and Codex, Gemini (Neon), Claude.',
     }[title];
     const note = blurb ? { textContent: blurb } : panel.querySelector('.lead-note, .note, .thread-intro, td');
@@ -3405,6 +3428,10 @@ function initMinimizers() {
   const closed = Array.isArray(stored) ? stored : referenceTitles;
   for (const m of minPanels) setMinimized(m, closed.includes(m.title), true);
   markView();
+  byId('conjectural').addEventListener('toggle', event => {
+    if (event.currentTarget.open) redrawAll();
+    markView();
+  });
   for (const b of document.querySelectorAll('.view-bar button')) b.addEventListener('click', () => applyView(b.dataset.view));
   document.addEventListener('click', (event) => {
     const link = event.target.closest?.('a[href^="#"]');
