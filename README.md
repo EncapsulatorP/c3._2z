@@ -67,3 +67,9 @@ The [Recamán lab](index.html#conjectural) compares wall filters, duplicate coun
 ## Authorship
 
 Zolton Farkas is the author of the project and signs every section of [index.html](index.html): the original questions, the tower idea and months of work on it. [Catalan at the centre](index.html#catalan) and the thread were made with GPT and Codex; the lattice, the obstruction models, the walkthrough and the forms with Gemini (Neon); the chain, unit-system and cycle sections, the 3D relief and the Ω pencil with Claude. The page lists [who made what](index.html#authorship) section by section.
+
+## Redacted superposed coincident dagger
+
+[![Catalan at the centre: zeros of β on the rim of the disk w = (s − 2)/(s + 1), and the entry and trace near a β zero](assets/catalan-critical-disk.png)](index.html#catalan)
+
+Zolton Farkas with GPT.
