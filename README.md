@@ -1,46 +1,65 @@
-# c3._2z · The speed of light as a power tower
+# c3.2z ·  Power tower composition in physical constants like the speed of  light. Prime power tower composition Forms. Omega wave power towers
 
-**This repository reads the speed of light as a power tower, digit by digit.** Every digit is a prime raised to a power, so $c = 299\,792\,458$ splits into three layers that rebuild it exactly:
+This project studies **how perturbations travel through power towers and what survives a change of representation**. The analytic framework uses iterated logarithms to measure how a perturbation at the output of a tower propagates back through its layers. Prime Forms extends that inquiry by changing the units used to write the speed of light and reversing the order of prime-indexed maps.
 
-| Layer | In m/s |
+<p align="center">
+  <img src="assets/omega-readme-banner.svg" alt="Omega Stability" width="50%">
+</p>
+
+## Analytic tower framework
+
+Start with the seed $u=2z$ and the depth-three tower $c^{c^{c^u}}$. Taking a logarithm transfers an additive perturbation back one layer. For a layer with base $b$ and unperturbed output $x$, the update is exact wherever both logarithms are defined.
+
+$$
+\log_b(x+\delta)-\log_b(x)=\frac{\ln(1+\delta/x)}{\ln b}.
+$$
+
+The script applies this update through the tower to recover the perturbation at the seed. It also sweeps the base to ask whether the response selects an interior minimum. In the recorded sweep at $z=1$, over $1.01\le c\le 2.5$, the smallest absolute remainder was at the upper endpoint. [Sweep results and validation](outputs/omega_stability/conclusions.md)
+
+The earlier work also uses $L_2(x)=\ln\ln x$ as a coordinate for numerical optimization and root-finding. The [research archive](RESEARCH_ARCHIVE.md) preserves the original README, experiment inventory, and null models.
+
+## Two constructions in Prime Forms
+
+**A change of units changes the digit tower.** Write the vacuum speed of light as `299792458` in metres per second. Counting prime factors with multiplicity in each digit gives `122121213`. Capping each count at two gives `122121212`. The only change is the third factor of $2$ in $8=2^3$. You can reproduce the calculation with the unit selector and tower controls. The speed is the same physical quantity throughout, and the encoding depends on the displayed number.
+
+**Reversing two layers preserves the slope and changes the wave.** Let $\Omega=W(1)$ and set $T_p(x)=\Omega p^{\Omega-x}$ for prime $p$. Both compositions $T_q\circ T_p$ and $T_p\circ T_q$ fix $\Omega$ and have derivative $\Omega^2\ln p\ln q$ there. For distinct primes their second derivatives differ. With a small sinusoidal input around $\Omega$, the mean-subtracted half-difference of the two outputs therefore has a leading second harmonic. The Ω towers screen computes the comparison, and [The Order of Waves](assets/omega-tower-waves.png) draws it.
+
+## Explore the implementation
+
+Open [index.html](index.html) in a browser from a local checkout to run Prime Lab. The gallery combines a draggable lattice, prime forms, and feedback experiments. Neo developed the visual layout and the helper that exports the current settings and live checks as a Markdown specification. The main tour cycles through 17 stops, including [From the original thread](index.html#thread-notes).
+
+| Screen | What you can examine |
 | --- | --- |
-| Digits of c | 299792458 |
-| Prime layer | 233732252 |
-| Exponent layer | 122121213 (122121212 with the cap at 2) |
-| Top layer | 111111111 |
+| [Optical phase slots](index.html#phase-slots) | An ideal phase-modulation spectrum driven by digit-factor layers |
+| [Logistic fork](index.html#logistic-fork) | Even and odd mirror responses as the strands are swapped or biased |
+| [Hopf detector](index.html#dimensions) | Projecting an orbit to a detector and varying the pump setting |
+| [Gain sweep](index.html#gain-title) | Stability thresholds across a family of towers driven by one gain |
 
-The same reading is carried through every unit system. Metric values end, US customary values repeat every 42 digits ($10^{42}\equiv1 \bmod 127$) and nautical values every 154 ($10^{154}\equiv1 \bmod 463$). The page draws those cycles, maps them onto the logistic map, and reads the tower word back from its optical spectrum.
+<p align="center">
+  <a href="assets/c32z-walkthrough.png">
+    <img src="assets/c32z-walkthrough.svg" alt="Five scenes from Prime Lab" width="50%">
+  </a>
+</p>
 
-[![An animated tour of exact units, prime towers, phase slots, and reversed Omega layers](assets/prime-forms-walkthrough.png)](index.html)
+[Animated walkthrough (APNG)](assets/c32z-walkthrough.png)
 
-[Open the main index](index.html) · [Still preview](assets/prime-forms-walkthrough-still.png) · [Animated SVG source](assets/prime-forms-walkthrough.svg)
+## Reproduce the analytic sweep
 
-## Follow the implementation
+```bash
+python -m pip install numpy matplotlib
+python omega_stability_tests.py --output-dir /tmp/omega-stability
+```
 
-| Start here | What to try |
-| --- | --- |
-| [Unit tree](index.html#unit-tree) | Compare exact unit conversions. In m/s the final digit is $8=2^3$. Toggle the cap or edit a digit rule and watch the stack change. |
-| [Optical phase slots](index.html#phase-slots) | Turn each tower height into quarter-turns of phase. Compare the carrier and sidebands in the ideal modulation model. |
-| [Prime Forms](index.html#prime-forms) and [logistic fork](index.html#logistic-fork) | Swap or bias the two strands. The knot, ribbon, rosette and loom respond to these controls. |
-| [3D lattice](index.html#lattice) and [Hopf detector](index.html#dimensions) | Orbit a digit-seeded height field and average adjacent cells. Then compare a loop, its detector projection, and the fixed point produced at a different pump setting. |
-| [Gain sweep](index.html#gain-title) and [research controls](index.html#research-controls) | Change one shared gain for a family of exponential towers. Compare their thresholds, then compare nearby offsets and equal-gain mirror responses. |
-| [Ω towers](index.html#omega-towers), [light loop](index.html#omega-light) and [wave plate](index.html#order-of-waves) | Reverse two prime layers that share a fixed point and a slope. Their half-difference reveals the order through its leading second harmonic. |
-| [Model checks](index.html#model-checks) | Inspect the live residuals and copy the current settings. |
-| [From the original thread](index.html#thread-notes) | Follow the original digit, arithmetic, logistic, Catalan and CM questions into the experiments and artworks. |
-| [Who made what](index.html#authorship) | The author of every section. |
+The [reference outputs](outputs/omega_stability/) include the base sweep, the perturbation profiles, and a comparison against direct evaluation. The [applications](applications/) show the double-log coordinate in optimization and root-finding.
 
-The main showcase cycles through 17 stops. For a local preview, open **index.html** in a browser. [Earlier Prime Forms gallery](pages/prime-forms.html) · [Dark neon version](pages/prime-forms-index-dark.html)
+## From the original thread
 
-## Conjectural
+The project grew from Zolton’s question about which patterns in the digits of the speed of light could survive a change in representation. The [original walkthrough](index.html#thread-notes) follows that question through the Goldbach and Collatz examples, the logistic quarter-turn, Catalan’s disk, and the prime-layer wave experiment.
 
-The [Recamán and exclusion models](index.html#conjectural) compare wall filters and rules for repeated values over finite runs. The counts apply to the selected rule and step count. A quantitative correspondence with the toy optical blockade remains an open question.
+[![Animated walkthrough of the unit tree, prime towers, and Ω wave plate](assets/prime-forms-walkthrough.png)](assets/prime-forms-walkthrough.png)
 
-## Where the threads meet
+[Still preview](assets/prime-forms-walkthrough-still.png) · [Animated SVG](assets/prime-forms-walkthrough.svg) · [Earlier gallery](pages/prime-forms.html)
 
-The speed-of-light thread supplies the input, $c=299\,792\,458\ \mathrm{m/s}$, and the exact unit comparisons. The digit rule supplies the prime letters. Mirrors and logistic forks then turn those letters into paired signals, and the coarse-graining view adds a way to see what survives averaging.
+## Conjectural · Recamán and exclusion models
 
-The earlier Catalan and CM discussion supplied the quarter-turn motif. At the logistic two-cycle flip, the linearized two-phase map squares to $-I$. Reading one coordinate gives $\chi_4(n)=\sin(\pi n/2)$. Summing those signs with weights $1/n^2$ gives Catalan’s constant. At odd primes with $\chi_4(p)=-1$, the Gaussian CM curve $y^2=x^3-x$ has vanishing Frobenius trace.
-
-The implemented Ω study asks a different cancellation question. Let $\Omega=W(1)$ and $T_p(x)=\Omega p^{\Omega-x}$. The compositions $T_7\circ T_5$ and $T_5\circ T_7$ have the same slope at $\Omega$. Their difference starts at second order, which is the amber trace in [The Order of Waves](index.html#order-of-waves).
-
-**Authorship.** Zolton Farkas brought the original questions and the tower idea. GPT and Codex built the unit tree, digit towers, phase slots, Prime Forms drawings, logistic fork, gain sweep and controls, worked through the Ω calculations, drew The Order of Waves, and made the showcase tour, the thread notes and the walkthrough. Gemini (Neon) contributed the Living SPEC workspace and neon visual study, the RG lattice with the Hopf detector, the obstructions lab, the wall trees and dedup scenarios, and the model checks. Claude added the white page and blue plates, the 3D relief, the chain, unit-system and cycle sections, the spectral read-back and the Omega pencil. The [research archive](RESEARCH_ARCHIVE.md) preserves the earlier notebook and links to its scripts and results.
+The [Recamán lab](index.html#conjectural) compares wall filters, duplicate counts, and alternative step rules over finite runs. Each count refers to the selected rule and step count. A quantitative correspondence with the toy optical blockade remains an open question.
