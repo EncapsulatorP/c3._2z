@@ -1,5 +1,37 @@
 # c3._2z · Omega Stability
 
+# c3.2z · Prime Forms
+
+<p align="center">
+  <a href="https://encapsulatorp.github.io/c3.2z/">
+    <img src="assets/c32z-walkthrough.svg" alt="c3.2z 5-Scene Interactive Walkthrough" width="100%">
+  </a>
+</p>
+
+<p align="center">
+  <strong><a href="https://encapsulatorp.github.io/c3.2z/">Launch Interactive Lab →</a></strong>
+  &nbsp;·&nbsp;
+  <code>0 Dependencies</code>
+  &nbsp;·&nbsp;
+  <code>TypedArray Wall &amp; Dedup Kernels</code>
+  &nbsp;·&nbsp;
+  <code>8 Live Invariants</code>
+</p>
+
+<details>
+<summary><strong>Technical Basics &amp; Non-Claims Contract (Click to expand)</strong></summary>
+
+- **01 · 3D Coarse-Graining Lattice:** 32×32 RG relief averaging discrete prime-factor heights and Recamán wall densities.
+- **02 · Recamán Wall Trees &amp; Dedup:** O(1) prime-sieve wall classifier comparing standard collisions (`a₂₀ = a₂₄ = 42`) against Strict Dedup (`0` duplicates).
+- **03 · Odd Mirror Knot &amp; Prime Rosette:** Antisymmetric cubic map `r·ξ − e·ξ³` paired with a 5-fold prime-letter rosette.
+- **04 · Ω = W(1) Prime Layers &amp; Optical Loop:** Prime pencil `Tₚ(x) = Ω·p^(Ω−x)` and Beer–Lambert feedback `xₙ₊₁ = exp(−xₙ)`.
+- **05 · Hopf Detector:** Supercritical limit cycle across IQ, Coherent Mirror Sum, and Power-only projections.
+- **Non-Claims:** Decimal digits of `c = 299,792,458 m/s` serve strictly as a deterministic symbolic test alphabet, not a physical derivation of `c`.
+
+</details>
+
+
+
 ![Omega Stability](assets/omega-readme-banner.svg)
 
 This project studies **how perturbations travel through power towers and what survives a change of representation**. The analytic framework uses iterated logarithms to measure how a perturbation at the output of a tower propagates back through its layers. Prime Forms extends that inquiry by changing the units used to write the speed of light and reversing the order of prime-indexed maps.
