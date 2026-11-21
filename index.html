@@ -3,32 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>c3.2z · Prime Forms</title>
+<title>c3.2z · The speed of light as a power tower</title>
 <style>
 :root{
-  color-scheme:dark;
-  --bg:#0a1222;
-  --panel:#0e1830;
-  --canvas:#070d1a;
-  --rg-bg:#070d1a;
-  --line:#24365c;
-  --line-soft:#172443;
-  --ink:#f4f7fc;
-  --dim:#9fb0cf;
-  --mint:#bfd9f5;
-  --violet:#a39bd5;
-  --gold:#d6ba73;
-  --sky:#6fb6c3;
-  --coral:#ff8a3c;
-  --pass:#3fd0bd;
+  color-scheme:light;
+  --bg:#F4F7FC; --panel:#FFFFFF; --canvas:#FFFFFF; --plate:#0f2d55; --rg-bg:#0f2d55;
+  --line:#c9d5ea; --line-soft:#dfe7f5; --ink:#101B32; --dim:#465570;
+  --mint:#2a55c0; --violet:#6b52d0; --gold:#9a6a00; --sky:#0c7f8f; --coral:#c95a00; --pass:#0c9a89;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
   --prism:linear-gradient(90deg,#A39BD5,#948AC8,#6FB6C3,#9BC8D8);
   font:15px/1.55 "IBM Plex Sans",system-ui,-apple-system,sans-serif;
 }
 *{box-sizing:border-box}
 body{
   margin:0;
-  background:radial-gradient(ellipse at 85% 0,#13254a 0,transparent 36rem),var(--bg);
+  background:radial-gradient(ellipse at 85% 0,#e7edf8 0,transparent 36rem),var(--bg);
   color:var(--ink);
   overflow-x:hidden;
 }
@@ -41,14 +31,14 @@ a{color:var(--mint);text-underline-offset:3px}
 strong{color:var(--ink)}
 code,.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 button,select,input[type=number]{
-  background:#12203d;
+  background:#ffffff;
   color:var(--ink);
   border:1px solid var(--line);
   border-radius:8px;
   font:inherit;
 }
 button{cursor:pointer;padding:6px 10px}
-button:hover{background:#1a2c52}
+button:hover{background:#e7edf8}
 button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{
   outline:2px solid var(--gold);
   outline-offset:2px;
@@ -60,7 +50,7 @@ input[type=range]{accent-color:var(--mint);cursor:pointer}
 /* Sticky Top Navigation & Shared State Bar */
 .topbar{
   position:sticky;top:0;z-index:40;
-  background:rgba(10,18,34,.9);
+  background:rgba(244,247,252,.9);
   backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);
   padding:10px 18px;
@@ -70,8 +60,8 @@ input[type=range]{accent-color:var(--mint);cursor:pointer}
 .brand{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .brand-pill{
   font:700 11px/1 var(--mono);color:var(--mint);
-  background:rgba(191,217,245,.11);
-  border:1px solid rgba(191,217,245,.4);
+  background:rgba(42,85,192,.11);
+  border:1px solid rgba(42,85,192,.4);
   padding:4px 8px;border-radius:6px;
 }
 .status-strip{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:.82rem}
@@ -87,10 +77,10 @@ input[type=range]{accent-color:var(--mint);cursor:pointer}
 }
 .unit-pill select option{background:var(--panel);color:var(--ink)}
 .btn-mint{
-  background:rgba(191,217,245,.14);border-color:rgba(191,217,245,.5);
+  background:rgba(42,85,192,.14);border-color:rgba(42,85,192,.5);
   color:var(--mint);font:700 .8rem var(--mono);
 }
-.btn-mint:hover{background:rgba(191,217,245,.24)}
+.btn-mint:hover{background:rgba(42,85,192,.24)}
 .btn-play{display:inline-flex;align-items:center;gap:6px;font:600 .8rem var(--mono)}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--pass);box-shadow:0 0 8px var(--pass)}
 .dot.paused{background:var(--dim);box-shadow:none}
@@ -120,8 +110,8 @@ main{max-width:1240px;padding:18px 18px 48px;margin:auto}
 .kpi-lbl{font:600 10px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin-bottom:3px}
 .kpi-val{font:700 .95rem var(--mono);color:var(--mint)}
 .kpi-val.violet{color:var(--violet)}.kpi-val.gold{color:var(--gold)}.kpi-val.coral{color:var(--coral)}
-.btn-coral{background:rgba(255,138,60,.14);border-color:rgba(255,138,60,.5);color:var(--coral);font:600 .8rem var(--mono)}
-.btn-gold{background:rgba(214,186,115,.14);border-color:rgba(214,186,115,.5);color:var(--gold);font:600 .8rem var(--mono)}
+.btn-coral{background:rgba(201,90,0,.14);border-color:rgba(201,90,0,.5);color:var(--coral);font:600 .8rem var(--mono)}
+.btn-gold{background:rgba(154,106,0,.14);border-color:rgba(154,106,0,.5);color:var(--gold);font:600 .8rem var(--mono)}
 
 /* TAB 1: RG Precision Instrument & Hopf Lab */
 .rg-header{
@@ -180,8 +170,8 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
 .prime-gallery{margin:0 0 14px}
 .gallery-modes{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px}
 .gallery-modes button{font-size:.84rem;padding:6px 10px}
-.gallery-modes button[aria-pressed=true]{border-color:#a39bd5;background:#1d2a55;color:#eef3ff}
-.gallery-stage{margin:0;border:1px solid #24365c;border-radius:13px;overflow:hidden;background:var(--canvas)}
+.gallery-modes button[aria-pressed=true]{border-color:#6b52d0;background:#dfe9fb;color:#101b32}
+.gallery-stage{margin:0;border:1px solid #c9d5ea;border-radius:13px;overflow:hidden;background:var(--canvas)}
 .gallery-stage canvas{width:100%;height:auto;display:block}
 .gallery-stage #helix-dna{max-width:650px;margin:auto}
 .gallery-stage[hidden],.gallery-toolbar [hidden]{display:none}
@@ -217,8 +207,8 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
   display:flex;justify-content:space-between;align-items:center;text-align:left;
   width:100%;padding:5px 8px;border-color:transparent;background:transparent;gap:6px;
 }
-.leaves button:hover{background:#1a2c52}
-.leaves button[aria-pressed=true]{border-color:#bfd9f5;color:var(--mint);background:#16305a}
+.leaves button:hover{background:#e7edf8}
+.leaves button[aria-pressed=true]{border-color:#2a55c0;color:var(--mint);background:#dfe9fb}
 .period{color:var(--dim);font:.73rem var(--mono);white-space:nowrap}
 .intro,.properties{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;justify-content:space-between}
 .intro{margin-bottom:10px}
@@ -233,9 +223,9 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
 .tile{
   width:26px;height:44px;display:grid;grid-template-rows:19px 1fr;
   justify-items:center;align-items:center;border:1px solid var(--line);
-  border-radius:5px;background:#101c36;font:.74rem var(--mono);position:relative;padding:0;
+  border-radius:5px;background:#ffffff;font:.74rem var(--mono);position:relative;padding:0;
 }
-.tile.repeat{background:#14223f;border-bottom-color:#bfd9f5}
+.tile.repeat{background:#eef3fb;border-bottom-color:#2a55c0}
 .tile.active{border-color:var(--gold)}
 .tile.edited{box-shadow:inset 0 -2px var(--violet)}
 .tile.overflow::after{
@@ -255,9 +245,9 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
 .plot{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:4px;height:96px;align-items:end;margin-top:8px}
 .plot-col{height:100%;display:grid;grid-template-rows:1fr 17px;text-align:center;font:.62rem var(--mono);color:var(--dim);align-items:end}
 .bar-space{height:100%;display:flex;align-items:end;border-bottom:1px solid var(--line)}
-.bar{width:100%;background:#bfd9f5;border-radius:3px 3px 0 0}
+.bar{width:100%;background:#2a55c0;border-radius:3px 3px 0 0}
 .plot-col:nth-child(7) .bar{background:var(--gold)}
-.plot-col:nth-child(n+8) .bar{background:#a39bd5}
+.plot-col:nth-child(n+8) .bar{background:#6b52d0}
 
 /* TAB 5: Gain, Research & SPEC */
 .research-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
@@ -268,8 +258,8 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
 .gain-lab .research-table tr.is-probe th{color:var(--mint)}
 .gain-lab .research-table tr.is-probe th::after{content:" ·";color:var(--gold)}
 .badge{display:inline-block;font:700 10.5px/1 var(--mono);padding:4px 7px;border-radius:5px}
-.badge.pass{background:rgba(63,208,189,.14);color:var(--pass);border:1px solid rgba(63,208,189,.45)}
-.badge.fail{background:rgba(255,138,60,.16);color:var(--coral);border:1px solid rgba(255,138,60,.5)}
+.badge.pass{background:rgba(12,154,137,.14);color:var(--pass);border:1px solid rgba(12,154,137,.45)}
+.badge.fail{background:rgba(201,90,0,.16);color:var(--coral);border:1px solid rgba(201,90,0,.5)}
 
 @media(max-width:820px){
   .layout,.dimension-layout,.research-grid{grid-template-columns:minmax(0,1fr)}
@@ -278,33 +268,49 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
   .rg-readout-block{text-align:left}
 }
 
-/* ---- Neon layer: glass tubes on black. Website palette: ice blue = parent strand, violet = mirror, gold = thresholds. ---- */
+/* ---- Light layer: white page, blue plates. Drawings keep their ice-blue, violet and gold inks on the plate. ---- */
 [hidden]{display:none!important}
-body{background:radial-gradient(ellipse at 78% -6%,#1b3566 0,transparent 38rem),radial-gradient(ellipse at 0 100%,#102a4a 0,transparent 32rem),var(--bg)}
-h1,h2{font-family:"Fraunces","Iowan Old Style",Palatino,Georgia,serif;letter-spacing:-.02em}
-h1{font-weight:700;color:#fff;text-shadow:0 0 14px rgba(191,217,245,.55),0 0 38px rgba(85,124,219,.6)}
-h1 em{font-style:italic;font-weight:500;background:var(--prism);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 0 10px rgba(163,155,213,.75))}
-h2{font-weight:700;color:#fff;text-shadow:0 0 10px rgba(163,155,213,.75),0 0 28px rgba(85,124,219,.45)}
-h3{color:#fff;text-shadow:0 0 10px rgba(111,182,195,.6)}
-.topbar{border-bottom:3px solid transparent;border-image:var(--prism) 1;box-shadow:0 6px 30px -8px rgba(111,182,195,.45)}
-.brand-pill{box-shadow:0 0 12px rgba(191,217,245,.5),inset 0 0 8px rgba(191,217,245,.25);text-shadow:0 0 8px var(--mint)}
-#research .panel{overflow-x:auto}
-.panel{border-color:rgba(163,155,213,.3);box-shadow:0 0 44px -18px rgba(163,155,213,.6)}
-.rg-stage,.canvas-box,.gallery-stage,.phase-frame{border-color:rgba(111,182,195,.34);box-shadow:inset 0 0 44px rgba(111,182,195,.06),0 0 28px -12px rgba(111,182,195,.65)}
-.kpi{border-color:rgba(163,155,213,.24)}
-.kpi-val,.rg-readout-val.mint,.btn-mint,.btn-gold,.btn-coral,.badge{text-shadow:0 0 9px currentColor}
-button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
-.gallery-modes button[aria-pressed=true]{box-shadow:0 0 14px rgba(163,155,213,.5);text-shadow:0 0 8px var(--violet)}
-.leaves button[aria-pressed=true]{box-shadow:0 0 12px rgba(191,217,245,.35)}
-.brick{box-shadow:0 0 6px var(--mint)}.brick:nth-child(2){box-shadow:0 0 6px var(--violet)}.brick:nth-child(3){box-shadow:0 0 6px var(--gold)}
-.bar{box-shadow:0 0 10px var(--mint)}.plot-col:nth-child(7) .bar{box-shadow:0 0 12px var(--gold)}.plot-col:nth-child(n+8) .bar{box-shadow:0 0 10px var(--violet)}
-.helix-word,.repeat-text,.summary,.value{text-shadow:0 0 9px rgba(191,217,245,.45)}
+html{scroll-behavior:smooth;scroll-padding-top:150px}
+body{background:var(--bg);color:var(--ink)}
+h1,h2{font-family:"Fraunces","Iowan Old Style",Palatino,Georgia,serif;letter-spacing:-.02em;color:var(--ink)}
+h1{font-weight:700}
+h1 em{font-style:italic;font-weight:500;color:var(--mint)}
+h2{font-weight:700}
+.topbar{background:rgba(244,247,252,.95);border-bottom:3px solid transparent;border-image:var(--prism) 1}
+.panel{box-shadow:0 16px 36px -28px rgba(16,27,50,.5)}
+canvas{background:var(--plate)}
+.rg-stage,.canvas-box,.gallery-stage{background:var(--plate);border-color:var(--plate)}
+.phase-frame canvas{border-radius:8px}
+.lab-menu a{background:#fff}
+.lab-menu a:is(:hover,:focus-visible){border-color:var(--mint);color:var(--mint)}
 .rg-stage canvas{cursor:grab;touch-action:none}.rg-stage canvas:active{cursor:grabbing}
-.omega-readout{font:.84rem/1.75 var(--mono);color:var(--mint);margin-top:12px;text-shadow:0 0 8px rgba(191,217,245,.4);overflow-wrap:anywhere}
+.omega-readout{font:.84rem/1.75 var(--mono);color:var(--ink);margin-top:12px;overflow-wrap:anywhere;border-left:2px solid var(--mint);padding-left:12px}
 .omega-lab .research-table td{font-family:var(--mono);text-align:left;white-space:nowrap}
-.omega-lab .research-table tr.is-probe :is(th,td){color:var(--gold);text-shadow:0 0 8px rgba(214,186,115,.6)}
+.omega-lab .research-table tr.is-probe :is(th,td){color:var(--coral);font-weight:600}
 .omega-lab .phase-frame{overflow-x:auto}
 .omega-lab .phase-frame canvas{margin:10px 0}
+#research .panel,#chain .panel{overflow-x:auto}
+/* the chain */
+.lead-note{font-size:1.08rem;color:var(--ink);max-width:70ch;margin-top:8px}
+.chain-rows{display:flex;gap:6px;margin:18px 0 6px;overflow-x:auto;padding-bottom:4px}
+.chain-col{display:grid;grid-template-rows:repeat(4,2.5rem);justify-items:center;align-items:center;min-width:2.5rem;font-family:var(--mono)}
+.chain-col.labels{justify-items:start;min-width:8.5rem;font:600 .8rem var(--sans);color:var(--dim)}
+.chain-col span{display:grid;place-items:center;width:100%;height:2.2rem;border-radius:6px}
+.chain-col .d{font-size:1.5rem;font-weight:600;color:#fff;background:var(--plate)}
+.chain-col .p{font-size:1.05rem;color:var(--mint);background:#e7edf8}
+.chain-col .e{font-size:1.05rem;color:var(--violet);background:#eeeafb}
+.chain-col .t{font-size:1.05rem;color:var(--gold);background:#f6efdc}
+.chain-col.radix span{background:none;color:var(--dim)}
+.chain-col.radix{min-width:.8rem}
+.chain-col.capped .e{outline:2px solid var(--coral)}
+.chain-words{font:.9rem/1.9 var(--mono);margin-top:10px;overflow-wrap:anywhere}
+.chain-words b{font:600 .8rem var(--sans);color:var(--dim);display:inline-block;min-width:8.5rem}
+.chain-table td{font-family:var(--mono);font-size:.8rem;text-align:left!important;white-space:nowrap}
+.chain-table tbody tr{cursor:pointer}
+.chain-table tbody tr:hover{background:#eef3fb}
+.chain-table tbody tr.is-probe{background:#dfe9fb}
+.chain-table tbody tr.is-probe th{color:var(--mint)}
+.chain-table .family td{font:600 .8rem var(--sans);color:var(--dim);cursor:default;background:none;padding-top:14px}
 </style>
 </head>
 <body>
@@ -315,7 +321,7 @@ button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
     <div class="top-row">
       <div class="brand">
         <span class="brand-pill">c3.2z</span>
-        <h1><em>Prime Forms</em></h1>
+        <h1>The speed of light, <em>three layers deep</em></h1>
       </div>
       <div class="status-strip">
         <label class="unit-pill" for="top-unit-select">
@@ -330,26 +336,58 @@ button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
       </div>
     </div>
     <nav class="lab-menu" aria-label="Main menu">
+      <a href="#chain">What it does</a>
+      <a href="#units-compared">Every unit system</a>
+      <a href="#modular-cycle">Cycle behind the digits</a>
       <a href="#unit-tree">Unit tree</a>
-      <a href="#phase-slots">Optical phase slots</a>
+      <a href="#phase-slots">Phase slots and read-back</a>
       <a href="#prime-forms">Prime Forms</a>
       <a href="#logistic-fork">Logistic fork</a>
       <a href="#lattice">3D lattice</a>
       <a href="#dimensions">Hopf detector</a>
       <a href="#obs-recaman">Recamán walls</a>
       <a href="#obs-photonic">Photonic blockade</a>
-      <a href="#gain-title">Gain sweep</a>
-      <a href="#research-controls">Research controls</a>
       <a href="#omega-towers">Ω towers</a>
       <a href="#omega-light">Ω light loop</a>
       <a href="#order-of-waves">Wave plate</a>
+      <a href="#gain-title">Gain sweep</a>
+      <a href="#research-controls">Controls</a>
       <a href="#model-checks">Model checks</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <p class="note">Start with the exact unit conversion. Use its digit towers to drive the drawings, then compare their dynamics and Ω layers.</p>
+<section class="lab-screen" id="chain">
+    <div class="panel">
+      <h2>What this repository does</h2>
+      <p class="lead-note">It reads the speed of light as a power tower, digit by digit. Every digit is a prime raised to a power, so the number splits into three layers: the primes, their exponents, and the top. The layers rebuild the number exactly.</p>
+      <div class="chain-rows" id="chain-rows" aria-label="The digits of c and their three layers"></div>
+      <div class="chain-words" id="chain-words"></div>
+      <p class="note" id="chain-rebuild" style="color:var(--ink)" aria-live="polite"></p>
+      <p class="note">The rule: 4 = 2², 8 = 2³, 9 = 3²; a prime is itself to the power 1; 6 = 2·3 keeps both primes at power 1; 0 and 1 carry no prime. The cap holds every exponent at 2 or less. <a href="#tower-configuration">Change the cap or the unit</a>.</p>
+    </div>
+    <div class="panel" id="units-compared">
+      <h2>The same speed in every unit system</h2>
+      <p class="note">Changing the unit changes the digits and the layers. Each unit system leaves its own modular signature: metric values end, US customary values repeat every 42 digits, nautical values every 154. Click a row to carry that unit through the whole page.</p>
+      <table class="research-table chain-table">
+        <thead><tr><th>Unit</th><th>c in that unit</th><th>Repeats every</th><th>Because</th><th>Prime layer</th><th>Exponent layer</th></tr></thead>
+        <tbody id="chain-units"></tbody>
+      </table>
+    </div>
+    <div class="panel" id="modular-cycle">
+      <h2>The cycle behind the digits</h2>
+      <p class="note">Long division makes each digit from a remainder. Left: the decimal remainders, r → 10·r mod d, joined in order around a circle. Right: the same fraction under doubling, θ → 2θ mod 1, which is the logistic map x → 4x(1−x) seen through x = sin²(πθ). Both are computed exactly with whole numbers. Gold is the run-in, ice blue and violet are the cycle.</p>
+      <figure class="gallery-stage"><canvas id="cycle-art" width="2080" height="880" role="img" aria-label="Remainder cycle on a circle and the matching cycle of the logistic map"></canvas></figure>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-lbl">Reduced denominator d</div><div class="kpi-val" id="cycle-d"></div></div>
+        <div class="kpi"><div class="kpi-lbl">Decimal cycle length</div><div class="kpi-val" id="cycle-ten"></div></div>
+        <div class="kpi"><div class="kpi-lbl">Logistic cycle length</div><div class="kpi-val violet" id="cycle-two"></div></div>
+        <div class="kpi"><div class="kpi-lbl">Run-in steps (decimal / doubling)</div><div class="kpi-val gold" id="cycle-pre"></div></div>
+      </div>
+      <p class="note" id="cycle-note" style="color:var(--ink)" aria-live="polite"></p>
+    </div>
+</section>
 <section class="lab-screen" id="unit-tree">
     <div class="panel" id="tower-configuration">
       <h2>Top-level configuration</h2>
@@ -401,6 +439,7 @@ button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
           </div>
           <div id="spectrumSummary" class="summary" aria-live="polite"></div>
           <p id="work" class="work"></p>
+          <p id="readback" class="note" style="color:var(--ink)" aria-live="polite"></p>
           <div id="plot" class="plot" role="group" aria-label="Carrier and six sidebands on either side"></div>
         </section>
       </section>
@@ -591,56 +630,6 @@ button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
       </div>
     </div>
 </section>
-<section class="lab-screen" id="research">
-    <div class="panel gain-lab">
-      <h2 id="gain-title">One gain, many towers</h2>
-      <p class="note">Idealized analog circuit. Each step is an exponential amplifier: x_next = exp(g · ln(p) · x). Repeat a row to build a tower; bracketed thresholds sync with the Threshold crown drawing in <a href="#prime-forms">Prime Forms</a>.</p>
-      <div class="controls">
-        <label>Center gain <input id="gain-center" type="number" min="0" max="1" step="any" value="0.189"></label>
-        <label>Mirror sweep ± <input id="gain-sweep" type="number" min="0" max="1" step="any" value="0.003"></label>
-      </div>
-      <table class="research-table">
-        <thead><tr><th>Repeating primes</th><th>Critical gain</th><th id="gain-left"></th><th id="gain-right"></th></tr></thead>
-        <tbody id="gain-probes"></tbody>
-      </table>
-      <p class="note" id="gain-insight" aria-live="polite"></p>
-    </div>
-
-    <div class="panel">
-      <h2 id="research-controls">Which part is doing the work?</h2>
-      <div class="research-grid">
-        <section class="phase-frame">
-          <h3>Does α win the flip test?</h3>
-          <p class="note">Uniform parent r ∈ [3.40, 3.49]. Fraction below r = 1 + √6 whose R copy crosses above it:</p>
-          <table class="research-table">
-            <thead><tr><th>R offset</th><th>Crossing probability</th></tr></thead>
-            <tbody id="research-crossings"></tbody>
-          </table>
-        </section>
-        <section class="phase-frame">
-          <h3>Does the repunit top survive equal gain?</h3>
-          <p class="note">Analytic log ratio V = L(u + iε)/L(u) matched to first-order phase gain 0.1:</p>
-          <div class="controls">
-            <label>Tower depth <select id="research-depth"><option value="2">2 primes</option><option value="3" selected>3 primes</option></select></label>
-            <label>Top u <select id="research-top"><option>1.10</option><option selected>1.11</option><option>1.12</option><option>11</option></select></label>
-          </div>
-          <div id="research-readout" class="mono" style="font-size:.83rem;color:var(--mint)" aria-live="polite"></div>
-          <p class="note" id="research-tower-note"></p>
-        </section>
-      </div>
-    </div>
-
-    <div class="panel">
-      <div class="intro">
-        <h2 id="model-checks">Model checks</h2>
-        <button type="button" id="spec-copy-btn" class="btn-mint">Copy settings</button>
-      </div>
-      <table class="research-table">
-        <thead><tr><th>#</th><th>Invariant</th><th>Status</th><th>Live Measurement</th></tr></thead>
-        <tbody id="spec-invariants"></tbody>
-      </table>
-    </div>
-  </section>
 <section class="lab-screen" id="omega-towers">
     <div class="panel omega-lab">
       <h2>Ω towers: one fixed point, many stabilities</h2>
@@ -695,7 +684,57 @@ button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
       <p class="note">The rosette uses the computed tower outputs as phase masks. The two plotted signals use separate vertical scales.</p>
     </div>
   </section>
-  <p class="lab-credit">Neon (Gemini) contributed the visual design, the RG lattice, the Hopf detector and the obstructions lab. Prime Forms builds on the shared tower and mirror experiments.</p>
+<section class="lab-screen" id="research">
+    <div class="panel gain-lab">
+      <h2 id="gain-title">One gain, many towers</h2>
+      <p class="note">Idealized analog circuit. Each step is an exponential amplifier: x_next = exp(g · ln(p) · x). Repeat a row to build a tower; bracketed thresholds sync with the Threshold crown drawing in <a href="#prime-forms">Prime Forms</a>.</p>
+      <div class="controls">
+        <label>Center gain <input id="gain-center" type="number" min="0" max="1" step="any" value="0.189"></label>
+        <label>Mirror sweep ± <input id="gain-sweep" type="number" min="0" max="1" step="any" value="0.003"></label>
+      </div>
+      <table class="research-table">
+        <thead><tr><th>Repeating primes</th><th>Critical gain</th><th id="gain-left"></th><th id="gain-right"></th></tr></thead>
+        <tbody id="gain-probes"></tbody>
+      </table>
+      <p class="note" id="gain-insight" aria-live="polite"></p>
+    </div>
+
+    <div class="panel">
+      <h2 id="research-controls">Controls: which part is doing the work?</h2>
+      <div class="research-grid">
+        <section class="phase-frame">
+          <h3>Does α win the flip test?</h3>
+          <p class="note">Uniform parent r ∈ [3.40, 3.49]. Fraction below r = 1 + √6 whose R copy crosses above it:</p>
+          <table class="research-table">
+            <thead><tr><th>R offset</th><th>Crossing probability</th></tr></thead>
+            <tbody id="research-crossings"></tbody>
+          </table>
+        </section>
+        <section class="phase-frame">
+          <h3>Does the repunit top survive equal gain?</h3>
+          <p class="note">Analytic log ratio V = L(u + iε)/L(u) matched to first-order phase gain 0.1:</p>
+          <div class="controls">
+            <label>Tower depth <select id="research-depth"><option value="2">2 primes</option><option value="3" selected>3 primes</option></select></label>
+            <label>Top u <select id="research-top"><option>1.10</option><option selected>1.11</option><option>1.12</option><option>11</option></select></label>
+          </div>
+          <div id="research-readout" class="mono" style="font-size:.83rem;color:var(--mint)" aria-live="polite"></div>
+          <p class="note" id="research-tower-note"></p>
+        </section>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="intro">
+        <h2 id="model-checks">Model checks</h2>
+        <button type="button" id="spec-copy-btn" class="btn-mint">Copy settings</button>
+      </div>
+      <table class="research-table">
+        <thead><tr><th>#</th><th>Invariant</th><th>Status</th><th>Live Measurement</th></tr></thead>
+        <tbody id="spec-invariants"></tbody>
+      </table>
+    </div>
+  </section>
+  <p class="lab-credit">Neon (Gemini) contributed the RG lattice, the Hopf detector, the obstructions lab and the neon visual study, kept as <a href="pages/prime-forms-index-dark.html">the dark version of this page</a>. Prime Forms builds on the shared tower and mirror experiments.</p>
 </main>
 
 <script>
@@ -876,7 +915,7 @@ function drawRG(t) {
   const ctx = c.getContext('2d');
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
-  ctx.fillStyle = '#070d1a';
+  ctx.fillStyle = '#0f2d55';
   ctx.fillRect(0, 0, w, h);
 
   const sc = Number(byId('rg-scale').value);
@@ -1048,7 +1087,7 @@ function paintDimension(timeMs) {
   const { radius, visible, detector, resolved } = displayedDimension;
   const x = 320, y = 122, angle = 0.0022 * timeMs + 0.66, px = radius * 88;
   ctx.clearRect(0, 0, 640, 244);
-  ctx.strokeStyle = '#24365c'; ctx.lineWidth = 1;
+  ctx.strokeStyle = '#3d5f96'; ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(55, y); ctx.lineTo(585, y); ctx.moveTo(x, 19); ctx.lineTo(x, 225); ctx.stroke();
   ctx.font = '14px system-ui'; ctx.fillStyle = '#9fb0cf';
   ctx.fillText(detector === 'power' ? 'Power' : detector === 'sum' ? 'Real field sum' : 'In-phase field', 493, 145);
@@ -1114,9 +1153,9 @@ function artRing(a, r, x = 520, y = 220) { return [x + r * Math.cos(a), y + r * 
 function galleryBackdrop(ctx, tint) {
   ctx.setTransform(2, 0, 0, 2, 0, 0);
   ctx.shadowBlur = 0; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-  ctx.fillStyle = '#070d1a'; ctx.fillRect(0, 0, 1040, 440);
+  ctx.fillStyle = '#0f2d55'; ctx.fillRect(0, 0, 1040, 440);
   const wash = ctx.createRadialGradient(520, 220, 10, 520, 220, 560);
-  wash.addColorStop(0, tint + '2e'); wash.addColorStop(1, '#070d1a00');
+  wash.addColorStop(0, tint + '2e'); wash.addColorStop(1, '#0f2d5500');
   ctx.fillStyle = wash; ctx.fillRect(0, 0, 1040, 440);
 }
 function perspective(x, y, z, angle) {
@@ -1321,7 +1360,7 @@ function drawPrimeHelix(mods, pitch, breathing) {
     return pt;
   });
   ctx.lineWidth = 2;
-  for (const pt of pts) { ctx.strokeStyle = '#24365c'; ctx.beginPath(); ctx.moveTo(pt.x, pt.a); ctx.lineTo(pt.x, pt.b); ctx.stroke(); }
+  for (const pt of pts) { ctx.strokeStyle = '#3d5f96'; ctx.beginPath(); ctx.moveTo(pt.x, pt.a); ctx.lineTo(pt.x, pt.b); ctx.stroke(); }
   for (const [rail, col] of [['a', '#bfd9f5'], ['b', '#a39bd5']]) {
     ctx.strokeStyle = col; ctx.beginPath();
     pts.forEach((pt, i) => {
@@ -1334,7 +1373,7 @@ function drawPrimeHelix(mods, pitch, breathing) {
   ctx.font = fs + 'px monospace'; ctx.textAlign = 'center';
   for (const { x, a, b, letters, base, height } of pts) {
     for (const [y, word] of [[a, letters], [b, [...letters].reverse().join('')]]) {
-      ctx.fillStyle = '#070d1a'; ctx.fillRect(x - fs, y - fs * 0.7, fs * 2, fs * 1.4);
+      ctx.fillStyle = '#0f2d55'; ctx.fillRect(x - fs, y - fs * 0.7, fs * 2, fs * 1.4);
       if (!word) { ctx.fillStyle = '#9fb0cf'; ctx.fillText('·', x, y + fs / 3); }
       [...word].forEach((ch, j) => { ctx.fillStyle = primeColors[ch]; ctx.fillText(ch, x + (j - (word.length - 1) / 2) * fs * 0.61, y + fs / 3); });
     }
@@ -1345,7 +1384,7 @@ function drawPrimeHelix(mods, pitch, breathing) {
 function drawForkOrbit(history) {
   const ctx = byId('helix-orbit').getContext('2d');
   ctx.clearRect(0, 0, 530, 220);
-  ctx.strokeStyle = '#24365c'; ctx.lineWidth = 1;
+  ctx.strokeStyle = '#3d5f96'; ctx.lineWidth = 1;
   for (const v of [0, 0.5, 1]) {
     const y = 198 - 176 * v;
     ctx.beginPath(); ctx.moveTo(30, y); ctx.lineTo(509, y); ctx.stroke();
@@ -1509,6 +1548,7 @@ function updateSlotOptions(digits, word, mode) {
   }));
   picker.value = String(Math.max(0, word.findIndex((h) => h % 2 === 1)));
 }
+let spectrumReadsBack = true;
 function drawSpectrum() {
   const unit = units.get(selected);
   const digits = byId('drive').value === 'cycle' ? unit.cycle : visibleDigits;
@@ -1539,6 +1579,19 @@ function drawSpectrum() {
     element('span', '', (100 * powers[6]).toFixed(2) + '% carrier power'),
   );
   byId('work').textContent = (cached ? 'Reused base spectrum' : 'New base spectrum') + ' · ' + changes.length + ' of ' + len + ' slots modified' + (mode === 'whole' ? ' · Whole mirror reverses bin order' : '');
+  // read the word back from its full spectrum (all len lines, amplitude and phase)
+  const full = Array.from({ length: len }, (_, k) => {
+    let re = 0, im = 0;
+    for (let j = 0; j < len; j++) { const a = (edited[j] * Math.PI) / 2 - (2 * Math.PI * k * j) / len; re += Math.cos(a); im += Math.sin(a); }
+    return [re, im];
+  });
+  const back = Array.from({ length: len }, (_, j) => {
+    let re = 0, im = 0;
+    for (let k = 0; k < len; k++) { const a = (2 * Math.PI * k * j) / len; re += full[k][0] * Math.cos(a) - full[k][1] * Math.sin(a); im += full[k][0] * Math.sin(a) + full[k][1] * Math.cos(a); }
+    return ((Math.round(Math.atan2(im, re) / (Math.PI / 2)) % 4) + 4) % 4;
+  });
+  spectrumReadsBack = back.join('') === edited.join('');
+  byId('readback').textContent = 'Read back from the ' + len + ' spectral lines: ' + back.join('') + (spectrumReadsBack ? ', the same word that drove the modulator.' : ', which does not match the driving word.') + ' The read-back uses each line\'s amplitude and phase; the powers in the bars are not enough by themselves.';
   const plot = byId('plot');
   plot.replaceChildren();
   harmonics.forEach((harm, idx) => {
@@ -1650,7 +1703,7 @@ function drawOmegaPencil(p, q) {
   const mx = (x) => X0 + (S * x) / top, my = (y) => Y0 + S - (S * y) / top;
   const lime = '#bfd9f5', violet = '#a39bd5', hot = '#d6ba73', dim = '#9fb0cf';
   ctx.font = '13px system-ui, sans-serif'; ctx.textAlign = 'left';
-  ctx.strokeStyle = '#24365c'; ctx.lineWidth = 1; ctx.strokeRect(X0, Y0, S, S);
+  ctx.strokeStyle = '#3d5f96'; ctx.lineWidth = 1; ctx.strokeRect(X0, Y0, S, S);
   artPath(ctx, [[mx(0), my(0)], [mx(top), my(top)]], '#759bcf66', 1);
   ctx.save();
   ctx.beginPath(); ctx.rect(X0, Y0, S, S); ctx.clip();
@@ -1695,7 +1748,7 @@ function drawOmegaPencil(p, q) {
   const odd = a.map((v, n) => (v - b[n]) / 2);
   const peak = Math.max(1e-12, ...odd.map(Math.abs));
   const zero = 330, reach = 58;
-  artPath(ctx, [[L, zero], [R, zero]], '#24365c', 1);
+  artPath(ctx, [[L, zero], [R, zero]], '#3d5f96', 1);
   for (const [n, v] of odd.entries()) {
     const y = zero - (reach * v) / peak;
     artPath(ctx, [[sx(n), zero], [sx(n), y]], '#6fb6c3c8', 1.4);
@@ -1763,6 +1816,133 @@ function renderOmega() {
   updateInvariants();
 }
 
+// ---- The chain: digits -> primes -> exponents -> top ----
+const digitBases = ['', '', '2', '3', '2', '5', '2·3', '7', '2', '3'];
+const digitExponent = [0, 0, 1, 1, 2, 1, 1, 1, 3, 2];
+function chainLayers(digits, raw) {
+  return [...digits].map((d) => {
+    const full = digitExponent[d], exp = raw ? full : Math.min(2, full);
+    const rebuilt = d === '6' ? 6 : digitBases[d] ? Number(digitBases[d]) ** exp : Number(d);
+    return { digit: d, base: digitBases[d] || '·', exp: full ? String(exp) : '·', top: full ? '1' : '·', rebuilt: String(rebuilt), capped: exp !== full };
+  });
+}
+function withPoint(text, whole) { return text.length > whole ? text.slice(0, whole) + '.' + text.slice(whole) : text; }
+function coprimeToTen(d) { while (d % 2n === 0n) d /= 2n; while (d % 5n === 0n) d /= 5n; return d; }
+function orderOf(base, q) {
+  if (q === 1n) return 0;
+  let x = base % q, n = 1;
+  while (x !== 1n && n < 200000) { x = (x * base) % q; n++; }
+  return n;
+}
+function remainderOrbit(n, d, mult) {
+  const seen = new Map(), path = [];
+  let r = n % d;
+  while (!seen.has(r) && path.length < 20000) { seen.set(r, path.length); path.push(r); r = (r * mult) % d; }
+  const start = seen.get(r) ?? path.length;
+  const fixedAtZero = path.length - start === 1 && path[start] === 0n;
+  return { path, start, length: fixedAtZero ? 0 : path.length - start, fixedAtZero };
+}
+function renderChain() {
+  const unit = units.get(selected), raw = byId('uncap').checked;
+  const shown = visibleDigits.slice(0, 24), whole = unit.whole.length;
+  const layers = chainLayers(shown, raw);
+  const rows = byId('chain-rows');
+  const labels = element('div', 'chain-col labels');
+  for (const text of ['Digits of c', 'Prime layer', 'Exponent layer', 'Top layer']) labels.append(element('span', '', text));
+  rows.replaceChildren(labels);
+  layers.forEach((cell, i) => {
+    if (i === whole) { const dot = element('div', 'chain-col radix'); dot.append(element('span', '', '.')); rows.append(dot); }
+    const col = element('div', 'chain-col' + (cell.capped ? ' capped' : ''));
+    col.append(element('span', 'd', cell.digit), element('span', 'p', cell.base), element('span', 'e', cell.exp), element('span', 't', cell.top));
+    col.title = cell.base === '·' ? cell.digit + ' carries no prime' : cell.digit + ' = ' + cell.base + ' to the power ' + digitExponent[cell.digit];
+    rows.append(col);
+  });
+  const word = (key) => layers.map((c) => c[key]).join(key === 'base' && layers.some((c) => c.base.length > 1) ? ' ' : '');
+  const lines = [['Digits of c', withPoint(shown, whole)], ['Prime layer', word('base')], ['Exponent layer', word('exp')], ['Top layer', word('top')]];
+  byId('chain-words').replaceChildren(...lines.map(([label, text]) => { const div = element('div', ''); div.append(element('b', '', label), document.createTextNode(text)); return div; }));
+  const rebuilt = layers.map((c) => c.rebuilt).join('');
+  const lost = layers.filter((c) => c.capped).length;
+  byId('chain-rebuild').textContent = (rebuilt === shown
+    ? 'Rebuilt from the layers: ' + withPoint(rebuilt, whole) + ', identical to the input' + (visibleDigits.length > 24 ? ' (first 24 digits shown).' : '.')
+    : 'With the cap on, the layers rebuild ' + withPoint(rebuilt, whole) + ': ' + lost + (lost === 1 ? ' digit 8 loses its third layer and reads as 4.' : ' digits 8 lose their third layer and read as 4.') + ' Restore the third layer to rebuild c exactly.')
+    + ' Unit: ' + unit.label + '.';
+
+  const body = byId('chain-units');
+  body.replaceChildren();
+  let family = '';
+  for (const [id, u] of units) {
+    if (u.family !== family) { family = u.family; const head = element('tr', 'family'); const td = element('td', '', family); td.colSpan = 6; head.append(td); body.append(head); }
+    const frac = fractionWindow(u, 6), digits = u.whole + frac, q = coprimeToTen(u.d);
+    const cells = chainLayers(digits, true);
+    const tr = element('tr', id === selected ? 'is-probe' : '');
+    tr.append(element('th', '', u.label), element('td', '', withPoint(digits, u.whole.length) + (u.cycle || frac.length < u.prefix.length ? '…' : '')),
+      element('td', '', u.cycle ? u.cycle.length + ' digits' : 'ends'),
+      element('td', '', u.d === 1n ? 'whole number' : q === 1n ? 'denominator ' + u.d + ' has only 2s and 5s' : '10^' + orderOf(10n, q) + ' ≡ 1 (mod ' + q + ')'),
+      element('td', '', cells.map((c) => c.base).join(cells.some((c) => c.base.length > 1) ? ' ' : '')), element('td', '', cells.map((c) => c.exp).join('')));
+    tr.addEventListener('click', () => { selected = id; render(); });
+    body.append(tr);
+  }
+  drawCycle(unit);
+}
+function drawCycle(unit) {
+  const ctx = byId('cycle-art').getContext('2d');
+  galleryBackdrop(ctx, '#6fb6c3');
+  const ten = remainderOrbit(unit.n, unit.d, 10n), two = remainderOrbit(unit.n, unit.d, 2n);
+  const D = Number(unit.d), ice = '#bfd9f5', violet = '#a39bd5', gold = '#d6ba73', dim = '#9fb0cf';
+  ctx.font = '13px system-ui, sans-serif'; ctx.textAlign = 'left';
+  // left: remainders on a circle
+  const cx = 280, cy = 222, R = 172;
+  artPath(ctx, Array.from({ length: 181 }, (_, i) => [cx + R * Math.cos((i * Math.PI) / 90), cy + R * Math.sin((i * Math.PI) / 90)]), '#3d5f96', 1);
+  const at = (r) => { const a = (2 * Math.PI * Number(r)) / D - Math.PI / 2; return [cx + R * Math.cos(a), cy + R * Math.sin(a)]; };
+  const closed = [...ten.path, ten.path[ten.start]];
+  ctx.beginPath(); closed.slice(0, ten.start + 1).forEach((r, i) => (i ? ctx.lineTo(...at(r)) : ctx.moveTo(...at(r))));
+  ctx.strokeStyle = gold; ctx.lineWidth = 1.4; ctx.stroke();
+  ctx.beginPath(); closed.slice(ten.start).forEach((r, i) => (i ? ctx.lineTo(...at(r)) : ctx.moveTo(...at(r))));
+  ctx.strokeStyle = ice + (ten.length > 60 ? '90' : 'd0'); ctx.lineWidth = ten.length > 60 ? 0.8 : 1.2; ctx.stroke();
+  for (const r of ten.path.slice(ten.start)) artDot(ctx, ...at(r), ten.length > 60 ? 1.6 : 2.6, ice);
+  artDot(ctx, ...at(ten.path[0]), 4, gold);
+  artDot(ctx, cx, cy - R, 3, '#ffffff');
+  ctx.fillStyle = dim; ctx.fillText('0', cx - 3, cy - R - 10);
+  ctx.fillStyle = ice; ctx.fillText('remainders, r → 10·r mod ' + unit.d, 62, 428);
+  // right: the logistic map at r = 4
+  const X0 = 600, Y0 = 44, S = 356;
+  const mx = (x) => X0 + S * x, my = (y) => Y0 + S - S * y;
+  ctx.strokeStyle = '#3d5f96'; ctx.lineWidth = 1; ctx.strokeRect(X0, Y0, S, S);
+  artPath(ctx, [[mx(0), my(0)], [mx(1), my(1)]], '#759bcf80', 1);
+  artPath(ctx, Array.from({ length: 121 }, (_, i) => { const x = i / 120; return [mx(x), my(4 * x * (1 - x))]; }), '#ffffff', 1.6);
+  const xs = two.path.map((r) => Math.sin((Math.PI * Number(r)) / D) ** 2);
+  const web = (from, to, color, width) => {
+    ctx.beginPath(); ctx.moveTo(mx(xs[from]), my(xs[from]));
+    for (let i = from; i < to; i++) {
+      const next = xs[i + 1 < xs.length ? i + 1 : two.start];
+      ctx.lineTo(mx(xs[i]), my(next)); ctx.lineTo(mx(next), my(next));
+    }
+    ctx.strokeStyle = color; ctx.lineWidth = width; ctx.stroke();
+  };
+  web(0, two.start, gold, 1.3);
+  web(two.start, xs.length, violet + (two.length > 60 ? '90' : 'e0'), two.length > 60 ? 0.8 : 1.3);
+  for (let i = two.start; i < xs.length; i++) artDot(ctx, mx(xs[i]), my(4 * xs[i] * (1 - xs[i])), two.length > 60 ? 1.6 : 2.8, violet);
+  artDot(ctx, mx(xs[0]), my(xs[0]), 4, gold);
+  ctx.fillStyle = violet; ctx.fillText('logistic map x → 4x(1 − x), from θ → 2θ mod 1', X0, 428);
+  ctx.fillStyle = dim; ctx.fillText('x', X0 + S + 8, Y0 + S + 4); ctx.fillText('next x', X0, Y0 - 12);
+
+  byId('cycle-d').textContent = String(unit.d);
+  byId('cycle-ten').textContent = ten.length ? ten.length + ' remainders' : 'none: ends at 0';
+  byId('cycle-two').textContent = two.length ? two.length + ' points' : 'none: rests at 0';
+  byId('cycle-pre').textContent = ten.start + ' / ' + two.start;
+  byId('cycle-note').textContent = unit.d === 1n
+    ? unit.label + ' is a whole number of units, so nothing is left to divide: both pictures sit on the single point 0. Pick a US customary or nautical unit to see a cycle.'
+    : (ten.length ? 'In ' + unit.label + ' the decimal remainders close into a loop of ' + ten.length + ', which is why the digits repeat every ' + ten.length + '.' : 'In ' + unit.label + ' the decimal remainders reach 0 after ' + ten.start + (ten.start === 1 ? ' step' : ' steps') + ', so the decimal ends.')
+      + (two.length ? ' Under doubling the same fraction lands on an exact ' + two.length + '-point cycle of the logistic map.' : ' Under doubling it falls onto the fixed point 0 of the logistic map.');
+}
+function chainChecks() {
+  const ms = units.get('ms');
+  const rebuilt = chainLayers(ms.whole, true).map((c) => c.rebuilt).join('');
+  let periods = true;
+  for (const u of units.values()) { const q = coprimeToTen(u.d); if ((q === 1n ? 0 : orderOf(10n, q)) !== u.cycle.length) periods = false; }
+  return { rebuilt, periods };
+}
+
 let lastInvariants = [];
 function updateInvariants() {
   const kR = Number(byId('gallery-knot-r').value), kE = Number(byId('gallery-knot-e').value);
@@ -1776,7 +1956,11 @@ function updateInvariants() {
   const u = units.get(selected);
   const bigOk = u.n > 0n && u.d > 0n && gcd(u.n, u.d) === 1n;
 
+  const chain = chainChecks();
   lastInvariants = [
+    { name: 'Layers Rebuild c Exactly', pass: chain.rebuilt === '299792458', detail: `2·3²·3²·7·3²·2·2²·5·2³ read digit by digit → ${chain.rebuilt}` },
+    { name: 'Decimal Period = Order of 10 mod d', pass: chain.periods, detail: 'all 14 units agree: 42 where 127 divides d, 154 for 463, none when d has only 2s and 5s' },
+    { name: 'Spectrum Reads Back the Word', pass: spectrumReadsBack, detail: 'inverse transform of the full line spectrum equals the driving word' },
     { name: 'Odd Knot Fixed-Point Residual', pass: fpErr < 1e-12, detail: (roots.length === 2 ? '±' + roots[1].toFixed(4) : '0') + ' · residual ' + fpErr.toExponential(1) },
     { name: 'Critical Gain Monotonicity', pass: monoOk, detail: `g_c(2)=${g2.toFixed(4)} > g_c(3) > g_c(5) > g_c(7)=${g7.toFixed(4)}` },
     { name: 'Hopf Detector Consistency', pass: hopfOk, detail: `R²=${(d.radius ** 2).toFixed(4)}, hole=${d.hole ? 1 : 0}, det=${d.detector}` },
@@ -1853,6 +2037,7 @@ function render() {
   byId('drive').options[1].disabled = !unit.cycle;
   if (!unit.cycle && byId('drive').value === 'cycle') byId('drive').value = 'word';
 
+  renderChain();
   drawSpectrum();
   drawRG(animTime);
   renderDimension();
@@ -1938,12 +2123,12 @@ function drawRecaman(t) {
   const w = wrap.clientWidth || 720, h = wrap.clientHeight || 390;
   if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
   const ctx = c.getContext('2d');
-  ctx.fillStyle = '#070d1a'; ctx.fillRect(0, 0, w, h);
+  ctx.fillStyle = '#0f2d55'; ctx.fillRect(0, 0, w, h);
   const pad = 28, axisY = Math.round(h * 0.45), stripY = Math.round(h * 0.78), stripH = Math.round(h * 0.14);
   const maxV = Math.max(10, recData.maxVal);
   const xFor = (v) => pad + (v / maxV) * (w - pad * 2);
 
-  ctx.strokeStyle = '#24365c'; ctx.lineWidth = 1.4;
+  ctx.strokeStyle = '#3d5f96'; ctx.lineWidth = 1.4;
   ctx.beginPath(); ctx.moveTo(pad, axisY); ctx.lineTo(w - pad, axisY); ctx.stroke();
 
   const maxR = Math.min(axisY - 16, stripY - axisY - 18);
@@ -1975,7 +2160,7 @@ function drawRecaman(t) {
     ctx.fillText('W:' + wall, x, 12);
   }
 
-  ctx.fillStyle = '#0e1830'; ctx.strokeStyle = '#24365c'; ctx.lineWidth = 1;
+  ctx.fillStyle = '#0b2447'; ctx.strokeStyle = '#3d5f96'; ctx.lineWidth = 1;
   ctx.fillRect(pad, stripY, w - pad * 2, stripH); ctx.strokeRect(pad, stripY, w - pad * 2, stripH);
   const tw = Math.max(1.5, Math.min(4, ((w - pad * 2) / maxV) * 0.65));
   for (const v of recData.voids) {
@@ -1995,7 +2180,7 @@ function drawPhotonic(dt) {
   const w = wrap.clientWidth || 720, h = wrap.clientHeight || 390;
   if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
   const ctx = c.getContext('2d');
-  ctx.fillStyle = '#070d1a'; ctx.fillRect(0, 0, w, h);
+  ctx.fillStyle = '#0f2d55'; ctx.fillRect(0, 0, w, h);
 
   const anh = Number(byId('pho-anh').value);
   const useBg = byId('pho-bg').checked;
@@ -2047,7 +2232,7 @@ function drawPhotonic(dt) {
   }
 
   // 45° null light-cone lattice
-  ctx.strokeStyle = 'rgba(36,54,92,0.24)'; ctx.lineWidth = 1; ctx.beginPath();
+  ctx.strokeStyle = 'rgba(120,150,205,0.24)'; ctx.lineWidth = 1; ctx.beginPath();
   for (let d = -h; d < w + h; d += 44) { ctx.moveTo(d, 0); ctx.lineTo(d + h, h); ctx.moveTo(d, h); ctx.lineTo(d + h, 0); }
   ctx.stroke();
 

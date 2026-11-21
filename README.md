@@ -1,6 +1,15 @@
-# c3._2z · Prime Forms
+# c3._2z · The speed of light as a power tower
 
-**What can you build from the digits of the speed of light?** Start with the exact vacuum speed in a chosen unit, factor its displayed digits, then use the resulting heights to drive a geometric form or a phase-slot model.
+**This repository reads the speed of light as a power tower, digit by digit.** Every digit is a prime raised to a power, so $c = 299\,792\,458$ splits into three layers that rebuild it exactly:
+
+| Layer | In m/s |
+| --- | --- |
+| Digits of c | 299792458 |
+| Prime layer | 233732252 |
+| Exponent layer | 122121213 (122121212 with the cap at 2) |
+| Top layer | 111111111 |
+
+The same reading is carried through every unit system. Metric values end, US customary values repeat every 42 digits ($10^{42}\equiv1 \bmod 127$) and nautical values every 154 ($10^{154}\equiv1 \bmod 463$). The page draws those cycles, maps them onto the logistic map, and reads the tower word back from its optical spectrum.
 
 [![An animated tour of exact units, prime towers, phase slots, and reversed Omega layers](assets/prime-forms-walkthrough.png)](index.html)
 
@@ -19,7 +28,7 @@
 | [Ω towers](index.html#omega-towers), [light loop](index.html#omega-light) and [wave plate](index.html#order-of-waves) | Reverse two prime layers that share a fixed point and a slope. Their half-difference reveals the order through its leading second harmonic. |
 | [Model checks](index.html#model-checks) | Inspect the live residuals and copy the current settings. |
 
-The index opens as one page with a direct link to every screen. For a local preview, open **index.html** in a browser. [Earlier Prime Forms gallery](pages/prime-forms.html)
+The index opens as one page with a direct link to every screen. For a local preview, open **index.html** in a browser. [Earlier Prime Forms gallery](pages/prime-forms.html) · [Dark neon version](pages/prime-forms-index-dark.html)
 
 ## Where the threads meet
 
