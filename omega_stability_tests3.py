@@ -367,7 +367,7 @@ def build_summary(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Blind-spot diagnostics for the x=8 dyadic alignment claim.")
+    parser = argparse.ArgumentParser(description="Blind-spot probes for the x=8 dyadic alignment claim.")
     parser.add_argument("--bases", type=float, nargs="+", default=list(DEFAULT_BASES), help="bases to compare")
     parser.add_argument("--target-x", type=float, default=DEFAULT_TARGET, help="dyadic target value")
     parser.add_argument("--target-depth", type=float, default=DEFAULT_TARGET_DEPTH, help="depth used in omega3(c, x)=log_c(x)-depth")
