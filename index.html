@@ -270,7 +270,7 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
 
 /* ---- Light layer: white page, blue plates. Drawings keep their ice-blue, violet and gold inks on the plate. ---- */
 [hidden]{display:none!important}
-html{scroll-behavior:smooth;scroll-padding-top:150px}
+html{scroll-behavior:smooth;scroll-padding-top:190px}
 body{background:var(--bg);color:var(--ink)}
 h1,h2{font-family:"Fraunces","Iowan Old Style",Palatino,Georgia,serif;letter-spacing:-.02em;color:var(--ink)}
 h1{font-weight:700}
@@ -290,6 +290,57 @@ canvas{background:var(--plate)}
 .omega-lab .phase-frame{overflow-x:auto}
 .omega-lab .phase-frame canvas{margin:10px 0}
 #research .panel,#chain .panel{overflow-x:auto}
+.by{display:inline-block;margin-left:10px;padding:2px 8px;border:1px solid var(--line);border-radius:999px;font:500 .72rem var(--sans);letter-spacing:0;color:var(--dim);background:#fff;vertical-align:middle}
+.gallery-modes .by{margin-left:auto;align-self:center}
+.author-table th{white-space:nowrap;vertical-align:top;padding-right:18px}
+.author-table td{font-family:var(--sans)!important;text-align:left!important;white-space:normal!important}
+/* showcase and thread notes (GPT and Codex) */
+.showcase{margin:0 0 20px;padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--panel);box-shadow:0 16px 36px -28px rgba(16,27,50,.5)}
+.showcase-header,.showcase-controls{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.showcase-header{margin-bottom:13px}
+.showcase-count{color:var(--dim);font:.8rem var(--mono)}
+.showcase-stage{min-height:200px;display:grid;grid-template-columns:minmax(12rem,1fr) minmax(0,1.6fr);gap:18px;align-items:center;padding:16px;background:#eef3fb;border-radius:10px}
+.showcase-stage h3{margin:0 0 7px;font:600 1.25rem var(--sans)}
+.showcase-stage p{margin:6px 0;color:var(--dim)}
+.showcase-stage .showcase-detail{display:block;color:var(--mint);font:600 .86rem/1.5 var(--mono);overflow-wrap:anywhere}
+.showcase-stage canvas{display:block;width:100%;max-height:230px;object-fit:contain;border-radius:8px}
+.showcase-stage:has(canvas[hidden]){grid-template-columns:1fr}
+.showcase-controls{margin-top:12px}
+.showcase-controls .actions{display:flex;flex-wrap:wrap;gap:7px}
+.lab-menu a[data-showcase-current]{border-color:var(--mint);color:var(--mint);background:#dfe9fb}
+.thread-intro{max-width:68ch;color:var(--dim)}
+.thread-notes{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}
+.thread-notes li{padding:13px 0;border-top:1px solid var(--line)}
+.thread-notes h3{margin:0 0 6px;font:600 1.04rem var(--sans)}
+.thread-notes p{max-width:76ch;margin:0 0 8px}
+.thread-links{font:.82rem var(--sans);color:var(--dim)}
+.thread-notes code{overflow-wrap:anywhere}
+/* wall trees and dedup (Gemini) */
+#obstruction-trees .controls label{flex-wrap:wrap;max-width:100%}
+#obstruction-trees select{max-width:100%}
+.preset-group{display:inline-flex;flex-wrap:wrap;gap:4px;align-items:center}
+.preset-btn{padding:4px 8px;font:600 .78rem var(--mono)}
+.preset-btn[aria-pressed=true]{background:#dfe9fb;border-color:var(--mint);color:var(--mint)}
+.wall-split{display:grid;grid-template-columns:minmax(0,1fr) 256px;gap:14px;align-items:start;margin-top:10px}
+.wall-tree-box{position:relative;width:100%;height:300px;background:var(--plate);border-radius:12px;overflow:hidden;cursor:crosshair}
+.wall-tree-box canvas,.dedup-canvas-box canvas{width:100%;height:100%;display:block}
+.mini-lattice-card{background:var(--plate);border-radius:12px;padding:8px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.mini-lattice-card canvas{width:240px;height:240px;display:block;border-radius:6px}
+.mini-lattice-lbl{font:600 10.5px var(--mono);color:#c9d9f2;text-align:center}
+.legend-strip{display:flex;flex-wrap:wrap;gap:10px 16px;font:600 .78rem var(--mono);margin-top:8px;color:var(--dim)}
+.legend-item{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block;border:1px solid var(--plate)}
+.dedup-split{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(240px,1fr);gap:14px;margin-top:10px}
+.dedup-canvas-box{position:relative;width:100%;height:260px;background:var(--plate);border-radius:12px;overflow:hidden}
+.table-wrap{overflow-x:auto;margin-top:12px}
+.dedup-table{border-collapse:collapse;width:100%;font-size:.82rem}
+.dedup-table th,.dedup-table td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.dedup-table th:first-child,.dedup-table td:first-child{text-align:left}
+.dedup-table td{font-family:var(--mono)}
+.dedup-table tr.is-active-proto{background:#eeeafb}
+.dedup-table tr.is-active-proto td:first-child{color:var(--violet);font-weight:700}
+@media(max-width:820px){.wall-split,.dedup-split,.showcase-stage{grid-template-columns:minmax(0,1fr)}.mini-lattice-card canvas{width:min(240px,100%);height:auto;aspect-ratio:1/1}}
+@media(max-width:900px){.topbar{position:static}html{scroll-padding-top:12px}}
 /* the chain */
 .lead-note{font-size:1.08rem;color:var(--ink);max-width:70ch;margin-top:8px}
 .chain-rows{display:flex;gap:6px;margin:18px 0 6px;overflow-x:auto;padding-bottom:4px}
@@ -347,12 +398,16 @@ canvas{background:var(--plate)}
       <a href="#dimensions">Hopf detector</a>
       <a href="#obs-recaman">Recamán walls</a>
       <a href="#obs-photonic">Photonic blockade</a>
+      <a href="#wall-trees">Wall trees</a>
+      <a href="#dedup">Dedup scenarios</a>
       <a href="#omega-towers">Ω towers</a>
       <a href="#omega-light">Ω light loop</a>
       <a href="#order-of-waves">Wave plate</a>
+      <a href="#thread-notes">From the thread</a>
       <a href="#gain-title">Gain sweep</a>
       <a href="#research-controls">Controls</a>
       <a href="#model-checks">Model checks</a>
+      <a href="#authorship">Who made what</a>
     </nav>
   </div>
 </header>
@@ -388,6 +443,28 @@ canvas{background:var(--plate)}
       <p class="note" id="cycle-note" style="color:var(--ink)" aria-live="polite"></p>
     </div>
 </section>
+  <section class="showcase" id="showcase" aria-labelledby="showcase-title">
+    <div class="showcase-header">
+      <h2 id="showcase-title">Prime Forms showcase</h2>
+      <span class="showcase-count" id="showcase-count"></span>
+    </div>
+    <div class="showcase-stage" id="showcase-stage" aria-live="off">
+      <div>
+        <h3 id="showcase-screen">Unit tree</h3>
+        <p id="showcase-description">See the same vacuum speed in several units.</p>
+        <p class="showcase-detail" id="showcase-detail"></p>
+      </div>
+      <canvas id="showcase-canvas" width="800" height="320" aria-hidden="true" hidden></canvas>
+    </div>
+    <div class="showcase-controls">
+      <div class="actions" aria-label="Showcase playback">
+        <button type="button" id="showcase-prev">Previous</button>
+        <button type="button" id="showcase-play">Pause tour</button>
+        <button type="button" id="showcase-next">Next</button>
+      </div>
+      <a id="showcase-open" href="#unit-tree">Open Unit tree</a>
+    </div>
+  </section>
 <section class="lab-screen" id="unit-tree">
     <div class="panel" id="tower-configuration">
       <h2>Top-level configuration</h2>
@@ -537,6 +614,13 @@ canvas{background:var(--plate)}
       </div>
 
       <div class="rg-bar">
+        <label class="mono" style="font-size:.83rem;color:var(--dim);display:inline-flex;gap:8px;align-items:center">Lattice source
+          <select id="rg-source">
+            <option value="primetower" selected>Digit towers (chosen unit)</option>
+            <option value="walltree">Wall tree codes</option>
+            <option value="dedup">Dedup collision map</option>
+          </select>
+        </label>
         <div class="rg-slider-wrap">
           <label for="rg-scale" class="mono" style="font-size:.83rem;color:var(--dim)">Coarse-Graining Layer</label>
           <input id="rg-scale" type="range" min="0" max="3" step="1" value="0">
@@ -630,6 +714,125 @@ canvas{background:var(--plate)}
       </div>
     </div>
 </section>
+<section class="lab-screen" id="obstruction-trees">
+    <!-- Panel 2.1 · Fast Hierarchical Wall Trees -> 1.1 Lattice -->
+    <div class="panel">
+      <div class="intro">
+        <div>
+          <h2 id="wall-trees">Wall trees: why each Recamán step turned back</h2>
+          <p class="note" style="margin-top:4px">TypedArray Recamán wall classifier (<code>Int32Array</code> / <code>Uint8Array</code>). Classifies every step into 4 hierarchical obstruction codes and maps one-to-one onto the 32×32 lattice.</p>
+        </div>
+        <div class="controls" style="margin:0">
+          <button type="button" id="wt-map-rg" class="btn-mint">Show on the 3D lattice</button>
+          <button type="button" id="wt-save">Save PNG</button>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="preset-group" role="group" aria-label="Step count presets">
+          <span class="mono" style="font-size:.8rem;color:var(--dim);margin-right:4px">n:</span>
+          <button type="button" class="preset-btn" data-n="64" aria-pressed="false">64</button>
+          <button type="button" class="preset-btn" data-n="256" aria-pressed="false">256</button>
+          <button type="button" class="preset-btn" data-n="1024" aria-pressed="true">1024</button>
+          <button type="button" class="preset-btn" data-n="4096" aria-pressed="false">4096</button>
+          <button type="button" class="preset-btn" data-n="16384" aria-pressed="false">16384</button>
+        </div>
+        <label>Steps
+          <input id="wt-n-slider" type="range" min="32" max="16384" step="32" value="1024" style="width:130px">
+          <input id="wt-n-num" type="number" min="24" max="16384" step="1" value="1024" style="width:76px">
+        </label>
+        <label>Wall Filter
+          <select id="wt-filter">
+            <option value="none" selected>None (Pure Recamán)</option>
+            <option value="mod3">Mod 3 Forbidden</option>
+            <option value="mod5">Mod 5 Forbidden</option>
+            <option value="prime">Prime Forbidden</option>
+            <option value="custom">Click-to-Toggle Custom Walls</option>
+          </select>
+        </label>
+        <button type="button" id="wt-clear-walls" class="btn-coral" hidden>Clear Custom Walls</button>
+      </div>
+
+      <div class="wall-split">
+        <div>
+          <div class="wall-tree-box" id="wrap-wt">
+            <canvas id="canvas-wt" role="img" aria-label="Hierarchical wall tree breakdown and trajectory strip"></canvas>
+          </div>
+          <div class="legend-strip">
+            <span class="legend-item"><i class="sw" style="background:#bfd9f5"></i>0 · Free Down</span>
+            <span class="legend-item"><i class="sw" style="background:#d6ba73"></i>1 · Floor Boundary (&lt;0)</span>
+            <span class="legend-item"><i class="sw" style="background:#a39bd5"></i>2 · Memory Wall (in V)</span>
+            <span class="legend-item"><i class="sw" style="background:#ff8a3c"></i>3 · Filter/Custom Wall</span>
+          </div>
+        </div>
+        <div class="mini-lattice-card">
+          <canvas id="canvas-wt-lattice" width="240" height="240" role="img" aria-label="32 by 32 live lattice mapping of wall classes"></canvas>
+          <div class="mini-lattice-lbl" id="wt-lattice-lbl">Live lattice map (32×32 · 1:1)</div>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-lbl">Compute Time</div><div class="kpi-val" id="wt-kpi-ms">0.00 ms</div></div>
+        <div class="kpi"><div class="kpi-lbl">Free Down (0)</div><div class="kpi-val" id="wt-kpi-free">0.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Floor Walls (1)</div><div class="kpi-val gold" id="wt-kpi-floor">0.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Memory Walls (2)</div><div class="kpi-val violet" id="wt-kpi-mem">0.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Filter Walls (3)</div><div class="kpi-val coral" id="wt-kpi-filt">0.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Longest Wall Streak</div><div class="kpi-val gold" id="wt-kpi-streak">0</div></div>
+        <div class="kpi"><div class="kpi-lbl">Minimal Unvisited Void</div><div class="kpi-val" id="wt-kpi-void">—</div></div>
+      </div>
+    </div>
+
+    <!-- Panel 2.2 · Duplication & Deduplication Scenarios -->
+    <div class="panel">
+      <div class="intro">
+        <div>
+          <h2 id="dedup">Duplicates, and three ways to forbid them</h2>
+          <p class="note" style="margin-top:4px">Compare Standard Recamán's unguarded up-step (which creates collision hubs like <code>a₂₀ = a₂₄ = 42</code>) against 3 deterministic deduplication protocols on the exact same <code>n</code>.</p>
+        </div>
+        <div class="controls" style="margin:0">
+          <button type="button" id="dd-map-rg" class="btn-mint">Show collisions on the 3D lattice</button>
+          <button type="button" id="dd-save">Save PNG</button>
+        </div>
+      </div>
+
+      <div class="controls">
+        <label>Active Comparison Scenario
+          <select id="dd-scenario">
+            <option value="strict" selected>Strict Dedup (Guarded Up-Step)</option>
+            <option value="voidfill">Void-Fill Dedup (Lowest Unvisited Fallback)</option>
+            <option value="capped">Capped Dedup (Max 2 Hits)</option>
+          </select>
+        </label>
+        <span id="dd-summary-note" class="mono" style="font-size:.8rem;color:var(--dim)"></span>
+      </div>
+
+      <div class="dedup-split">
+        <div class="dedup-canvas-box" id="wrap-dd-trace">
+          <canvas id="canvas-dd-trace" role="img" aria-label="Dual trace comparing standard Recaman with active deduplication scenario"></canvas>
+        </div>
+        <div class="dedup-canvas-box" id="wrap-dd-hist">
+          <canvas id="canvas-dd-hist" role="img" aria-label="Hit multiplicity histogram comparing standard and dedup protocols"></canvas>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="dedup-table">
+          <thead>
+            <tr>
+              <th>Protocol</th>
+              <th>Unique Values</th>
+              <th>Duplicate Collisions</th>
+              <th>Max Multiplicity</th>
+              <th>First Duplicate (Val @ n)</th>
+              <th>Min Unvisited Void</th>
+              <th>Compute (ms)</th>
+            </tr>
+          </thead>
+          <tbody id="dd-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+</section>
 <section class="lab-screen" id="omega-towers">
     <div class="panel omega-lab">
       <h2>Ω towers: one fixed point, many stabilities</h2>
@@ -678,11 +881,41 @@ canvas{background:var(--plate)}
     </div>
   </section>
   <section class="panel wave-plate" id="order-of-waves" aria-labelledby="wave-plate-title">
-    <figure><a href="assets/omega-tower-waves.png"><img src="assets/omega-tower-waves.png" width="1400" height="1890" loading="lazy" alt="Signed interference rosette with a mint sum trace and an amber difference trace."></a></figure>
+    <figure><a href="assets/omega-tower-waves.png"><img id="wave-plate-image" src="assets/omega-tower-waves.png" width="1400" height="1890" loading="lazy" alt="Signed interference rosette with a mint sum trace and an amber difference trace."></a></figure>
     <div><h2 id="wave-plate-title">The Order of Waves</h2>
       <p class="note">The 5 → 7 and 7 → 5 layers share Ω and the same first derivative. Under a small sinusoidal drive their half-difference starts at quadratic order. Subtract its mean to see a leading oscillation at twice the drive frequency. Reversing the layers reverses its sign.</p>
       <p class="note">The rosette uses the computed tower outputs as phase masks. The two plotted signals use separate vertical scales.</p>
     </div>
+  </section>
+  <section id="thread-notes" class="panel" aria-labelledby="thread-title">
+    <h2 id="thread-title">From the original thread</h2>
+    <p class="thread-intro">The project began with a question about patterns that survive a change of representation. These are the steps that led from the first number-theory experiments to the Prime Forms screens.</p>
+    <ol class="thread-notes">
+      <li>
+        <h3>Start with a digit and ask what survives</h3>
+        <p>In the m/s spelling <code>299792458</code>, counting prime factors with multiplicity gives <code>122121213</code>. Capping each height at two gives <code>122121212</code>. The whole difference is the third factor of 2 in the final digit, <strong>8 = 2³</strong>. That became the gold layer. Changing units re-encodes the number, which gave us a control for the mirror patterns.</p>
+        <p class="thread-links"><a href="#unit-tree">Open the unit tree</a> · <a href="#phase-slots">Open the phase slots</a></p>
+      </li>
+      <li>
+        <h3>Use the arithmetic as a control</h3>
+        <p>Our Goldbach picture used a centre <em>m</em> and a half-gap <em>d</em>. Goldbach varies <em>d</em>; the twin-prime slice fixes <em>d</em> = 1. At centres <em>m</em> = 2<sup>k</sup>, <em>k</em> ≥ 1, an admissible pair with both primes above 3 requires <em>d</em> ≡ 3 (mod 6). The twin slice hits this spine at 3 + 5, where the prime 3 is the exception. The Collatz question furnished a second exact check. For the shortcut map, the first <em>j</em> steps from 2<sup>k</sup> − 1 give 3<sup>j</sup>2<sup>k−j</sup> − 1 for 0 ≤ <em>j</em> ≤ <em>k</em>. These are finite identities from the discussion.</p>
+      </li>
+      <li>
+        <h3>Get the quarter-turn from a logistic orbit</h3>
+        <p>At <em>r</em> = 1 + √6, the logistic two-cycle has multiplier −1. Following a tangent perturbation on its two phases gives a matrix whose square is −<em>I</em>. In an adapted basis, reading the second coordinate gives <code>0,+1,0,−1</code>, the values of χ₄. On the Gaussian CM curve <em>y</em>² = <em>x</em>³ − <em>x</em>, the negative sign selects the odd primes with vanishing Frobenius trace. The even steps are zeros of the sequence itself.</p>
+        <p class="thread-links"><a href="#logistic-fork">Open the logistic fork</a> · <a href="https://personalpages.manchester.ac.uk/staff/yanghong.huang/ads/html/maps-log.html">Logistic bifurcations</a> · <a href="https://math.bu.edu/people/drhast/Notes/Math844-elliptic-curves-notes.pdf">CM curve notes</a></p>
+      </li>
+      <li>
+        <h3>Put Catalan at the centre</h3>
+        <p>Use <em>w</em> = (<em>s</em> − 2)/(<em>s</em> + 1) to put the critical line on the rim. The Dirichlet beta function evaluated at the centre gives Catalan’s constant; at <em>w</em> = −½ it gives π/4. Damping the quarter-turn sequence by exp(−<em>nt</em>) gives the kernel 1/(2 cosh <em>t</em>). The weighted Gauss inverse branches give β(<em>s</em>) when applied once to the constant function and evaluated at zero. Green–Tao’s relative-density result lets us find arbitrarily long prime progressions within either odd remainder class modulo 4. For example, 3, 7, 11 contribute with the same negative sign to Catalan’s series.</p>
+        <p class="thread-links"><a href="https://mathworld.wolfram.com/DirichletBetaFunction.html">Dirichlet beta</a> · <a href="https://annals.math.princeton.edu/2008/167-2/p03">Green–Tao</a></p>
+      </li>
+      <li>
+        <h3>Reverse two layers and listen for the difference</h3>
+        <p>The odd/even studies compare what changes sign under a swap with what survives the swap. The Ω study uses a separate exponential rule, <code>Tₚ(x) = Ω p^(Ω−x)</code>, with Ω = <em>W</em>(1). The two orders 5 → 7 and 7 → 5 share a fixed point and a slope. Their half-difference starts at quadratic order, so a small sinusoidal drive leaves a leading second harmonic after its mean is removed. That is the amber trace in the signed plate. A separate gain control models the effect of changing a calibrated parameter in every stage.</p>
+        <p class="thread-links"><a href="#omega-towers">Open Ω towers</a> · <a href="#order-of-waves">View the signed wave plate</a> · <a href="#gain-title">Open the shared gain sweep</a></p>
+      </li>
+    </ol>
   </section>
 <section class="lab-screen" id="research">
     <div class="panel gain-lab">
@@ -734,7 +967,19 @@ canvas{background:var(--plate)}
       </table>
     </div>
   </section>
-  <p class="lab-credit">Neon (Gemini) contributed the RG lattice, the Hopf detector, the obstructions lab and the neon visual study, kept as <a href="pages/prime-forms-index-dark.html">the dark version of this page</a>. Prime Forms builds on the shared tower and mirror experiments.</p>
+  <section class="panel" id="authorship" aria-labelledby="authorship-title">
+    <h2 id="authorship-title">Who made what</h2>
+    <table class="research-table author-table">
+      <thead><tr><th>Author</th><th>Contribution</th></tr></thead>
+      <tbody>
+        <tr><th>Zolton Farkas</th><td>The original questions and the tower idea: c read as primes, exponents and top, across unit systems.</td></tr>
+        <tr><th>GPT and Codex</th><td>Unit tree and exact conversions, digit towers, optical phase slots, the Prime Forms drawings and logistic fork, the first Hopf detector, gain sweep and controls, the Ω tower composition and its calculations, The Order of Waves plate, the showcase tour, the thread notes, the README walkthrough and the one-page layout.</td></tr>
+        <tr><th>Gemini (Neon)</th><td>The Living SPEC workspace and neon visual study, the RG lattice with the Hopf detector beside it, the obstructions lab (Recamán walls, photonic blockade), wall trees and dedup scenarios, the lattice sources, and the model checks. The neon study is kept as <a href="pages/prime-forms-index-dark.html">the dark version of this page</a>.</td></tr>
+        <tr><th>Claude</th><td>The white page and blue plates, the 3D relief of the lattice, the chain, unit-system and cycle sections, the spectral read-back, the Omega pencil drawing with its rest levels, and the assembly of the parts.</td></tr>
+      </tbody>
+    </table>
+    <p class="lab-credit">Each section title carries its author. Where two names appear, the first made it and the second reworked it.</p>
+  </section>
 </main>
 
 <script>
@@ -929,14 +1174,16 @@ function drawRG(t) {
   const roots = knotAttractors(kR, kE);
   const knotAmp = roots.length === 2 ? roots[1] : 0.25;
 
-  // 32x32 Layer 0 micro-field (unchanged rule)
+  const rgSrc = byId('rg-source').value;
+  // 32x32 Layer 0 micro-field: digit towers, or the wall-tree / dedup codes as four height bands
   let s0 = 0, sq0 = 0;
   for (let y = 0; y < 32; y++) {
     for (let x = 0; x < 32; x++) {
       const hA = digs[(x + y * 3) % dLen];
       const hB = digs[(x * 5 + y * 7) % dLen];
       const wave = 0.5 + 0.5 * Math.sin(t * 1.15 + x * 0.42 - y * 0.37 + knotAmp * Math.cos(t * 0.8 + ((x * 7) ^ (y * 11)) * 0.22));
-      const v = Math.max(0, Math.min(1, 0.42 * hA + 0.22 * hB + 0.36 * wave));
+      const code = rgSrc === 'walltree' ? wtState.lattice[y * 32 + x] : rgSrc === 'dedup' ? ddState.collisionLattice[y * 32 + x] : -1;
+      const v = code < 0 ? Math.max(0, Math.min(1, 0.42 * hA + 0.22 * hB + 0.36 * wave)) : Math.max(0, Math.min(1, (code + 0.5) / 4 + 0.07 * (wave - 0.5)));
       microField[y * 32 + x] = v;
       s0 += v; sq0 += v * v;
     }
@@ -1965,6 +2212,8 @@ function updateInvariants() {
     { name: 'Critical Gain Monotonicity', pass: monoOk, detail: `g_c(2)=${g2.toFixed(4)} > g_c(3) > g_c(5) > g_c(7)=${g7.toFixed(4)}` },
     { name: 'Hopf Detector Consistency', pass: hopfOk, detail: `R²=${(d.radius ** 2).toFixed(4)}, hole=${d.hole ? 1 : 0}, det=${d.detector}` },
     { name: 'BigInt Unit Exactness', pass: bigOk, detail: `${u.label}: gcd(${u.n}, ${u.d}) = 1` },
+    { name: 'Recamán First Duplicate', pass: Boolean(ddState.standard && ddState.standard.seq.length > 24 && ddState.standard.seq[20] === 42 && ddState.standard.seq[24] === 42), detail: ddState.standard ? `a₂₀=${ddState.standard.seq[20]}, a₂₄=${ddState.standard.seq[24]}` : 'pending' },
+    { name: 'Strict Dedup Has No Collisions', pass: Boolean(ddState.protocols[1] && ddState.protocols[1].dupCollisions === 0), detail: ddState.protocols[1] ? `duplicates = ${ddState.protocols[1].dupCollisions} (n=${wtState.n})` : 'pending' },
     { name: 'Ω Defining Identity', pass: Math.abs(OMEGA - Math.exp(-OMEGA)) < 1e-14, detail: `Ω=${OMEGA.toFixed(12)}, |Ω − e^(−Ω)|=${Math.abs(OMEGA - Math.exp(-OMEGA)).toExponential(1)}` },
     { name: 'Ω Fixed by Every Prime Layer', pass: omegaLayerResidual() < 1e-14, detail: `max |T_p(Ω) − Ω| over p ≤ 31 = ${omegaLayerResidual().toExponential(1)}` },
   ];
@@ -2065,6 +2314,7 @@ byId('spec-copy-btn').addEventListener('click', (e) => copySpecMarkdown(e.curren
 
 // Lattice and Hopf listeners
 byId('rg-scale').addEventListener('input', () => drawRG(animTime));
+byId('rg-source').addEventListener('change', () => drawRG(animTime));
 byId('rg-save').addEventListener('click', () => saveCanvasPNG(byId('canvas-rg'), 'c32z-rg-layer-' + byId('rg-scale').value + '.png'));
 for (const id of ['dimension-view', 'dimension-drive', 'dimension-bias', 'dimension-floor']) byId(id).addEventListener('input', renderDimension);
 
@@ -2290,6 +2540,767 @@ byId('canvas-pho').addEventListener('click', (e) => {
 });
 
 
+// Wall trees and dedup scenarios (Gemini)
+// Precompute fast prime sieve up to 400,000 for O(1) Prime Forbidden wall checks
+const SIEVE_MAX = 400000;
+const isPrimeArr = new Uint8Array(SIEVE_MAX);
+(function buildPrimeSieve() {
+  isPrimeArr.fill(1);
+  isPrimeArr[0] = 0; isPrimeArr[1] = 0;
+  for (let p = 2; p * p < SIEVE_MAX; p++) {
+    if (isPrimeArr[p]) {
+      for (let m = p * p; m < SIEVE_MAX; m += p) isPrimeArr[m] = 0;
+    }
+  }
+})();
+
+const wtWalls = new Set([12, 27, 42]);
+const wtState = {
+  n: 1024,
+  filter: 'none',
+  seq: new Int32Array(1025),
+  codes: new Uint8Array(1025),
+  counts: [0, 0, 0, 0],
+  maxStreak: 0,
+  minVoid: 0,
+  maxVal: 1,
+  ms: 0,
+  lattice: new Uint8Array(1024),
+};
+
+const ddState = {
+  protocols: [],
+  standard: null,
+  active: null,
+  collisionLattice: new Uint8Array(1024),
+};
+
+function isFilterWalled(v, filterMode) {
+  if (v < 0) return false;
+  if (filterMode === 'mod3') return v % 3 === 0 && v > 0;
+  if (filterMode === 'mod5') return v % 5 === 0 && v > 0;
+  if (filterMode === 'prime') return v < SIEVE_MAX ? isPrimeArr[v] === 1 : false;
+  if (filterMode === 'custom') return wtWalls.has(v);
+  return false;
+}
+
+// Panel 2.1 Kernel: Ultra-fast TypedArray Recamán Hierarchical Wall Tree
+function computeWallTree() {
+  const t0 = performance.now();
+  const n = wtState.n;
+  const filter = wtState.filter;
+  const seq = new Int32Array(n + 1);
+  const codes = new Uint8Array(n + 1);
+
+  let cap = Math.max(65536, n * 16);
+  let visited = new Uint8Array(cap);
+  const ensureCap = (val) => {
+    if (val >= cap) {
+      let nextCap = cap;
+      while (val >= nextCap) nextCap <<= 1;
+      const grown = new Uint8Array(nextCap);
+      grown.set(visited);
+      visited = grown;
+      cap = nextCap;
+    }
+  };
+
+  seq[0] = 0;
+  visited[0] = 1;
+  let c0 = 0, c1 = 0, c2 = 0, c3 = 0;
+  let streak = 0, maxStreak = 0, maxVal = 0;
+
+  for (let i = 1; i <= n; i++) {
+    const prev = seq[i - 1];
+    const down = prev - i;
+    let code = 0;
+    let next = down;
+
+    if (down < 0) {
+      code = 1; // Floor Boundary Wall
+      next = prev + i;
+    } else if (isFilterWalled(down, filter)) {
+      code = 3; // Custom/Filter Wall
+      next = prev + i;
+    } else if (down < cap && visited[down]) {
+      code = 2; // History Memory Wall
+      next = prev + i;
+    } else {
+      code = 0; // Free Down-Step
+    }
+
+    if (code !== 0 && filter === 'custom') {
+      while (wtWalls.has(next)) next++;
+    }
+
+    ensureCap(next);
+    seq[i] = next;
+    codes[i] = code;
+    visited[next] = 1;
+    if (next > maxVal) maxVal = next;
+
+    if (code === 0) { c0++; streak = 0; }
+    else {
+      if (code === 1) c1++; else if (code === 2) c2++; else c3++;
+      streak++;
+      if (streak > maxStreak) maxStreak = streak;
+    }
+  }
+
+  let minVoid = 0;
+  while (minVoid < cap && visited[minVoid]) minVoid++;
+
+  // Map 1-to-1 (or stride-sampled when n > 1024) onto the 32x32 = 1024 lattice
+  const lattice = wtState.lattice;
+  const stride = n > 1024 ? n / 1024 : 1;
+  for (let k = 0; k < 1024; k++) {
+    const idx = n >= 1024 ? Math.min(n, 1 + Math.floor(k * stride)) : 1 + (k % n);
+    lattice[k] = codes[idx];
+  }
+
+  wtState.seq = seq;
+  wtState.codes = codes;
+  wtState.counts = [c0, c1, c2, c3];
+  wtState.maxStreak = maxStreak;
+  wtState.minVoid = minVoid;
+  wtState.maxVal = Math.max(1, maxVal);
+  wtState.ms = performance.now() - t0;
+
+  const inv = 100 / n;
+  byId('wt-kpi-ms').textContent = wtState.ms.toFixed(2) + ' ms';
+  byId('wt-kpi-free').textContent = (c0 * inv).toFixed(1) + '%';
+  byId('wt-kpi-floor').textContent = (c1 * inv).toFixed(1) + '%';
+  byId('wt-kpi-mem').textContent = (c2 * inv).toFixed(1) + '%';
+  byId('wt-kpi-filt').textContent = (c3 * inv).toFixed(1) + '%';
+  byId('wt-kpi-streak').textContent = String(maxStreak);
+  byId('wt-kpi-void').textContent = String(minVoid);
+  byId('wt-lattice-lbl').textContent = n === 1024 ? 'Live lattice map (32×32 · 1:1)'
+    : n > 1024 ? `Live lattice map (stride ${(n / 1024).toFixed(0)}×)`
+    : `Live lattice map (tiled n=${n})`;
+
+  drawWallTree();
+  drawMiniLattice();
+}
+
+function drawWallTree() {
+  const c = byId('canvas-wt'), wrap = byId('wrap-wt');
+  const w = wrap.clientWidth || 680, h = wrap.clientHeight || 300;
+  if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#0f2d55';
+  ctx.fillRect(0, 0, w, h);
+
+  const n = wtState.n;
+  const counts = wtState.counts;
+  const treeH = Math.round(h * 0.56);
+  const rootX = w * 0.5, rootY = 26;
+  const labels = ['0 · Free Down', '1 · Floor (<0)', '2 · Memory (V)', '3 · Filter/Wall'];
+  const colors = ['#bfd9f5', '#d6ba73', '#a39bd5', '#ff8a3c'];
+
+  // Draw hierarchical root -> 4 wall class branches
+  const colW = (w - 40) / 4;
+  for (let i = 0; i < 4; i++) {
+    const frac = counts[i] / n;
+    const tx = 20 + colW * (i + 0.5);
+    const ty = treeH - 32;
+    const lw = Math.max(1.5, Math.min(20, frac * 34));
+
+    ctx.strokeStyle = colors[i];
+    ctx.globalAlpha = frac > 0 ? 0.78 : 0.18;
+    ctx.lineWidth = lw;
+    ctx.beginPath();
+    ctx.moveTo(rootX, rootY + 8);
+    ctx.bezierCurveTo(rootX, rootY + 52, tx, ty - 48, tx, ty);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    // Leaf node badge
+    ctx.fillStyle = '#0b2447';
+    ctx.strokeStyle = colors[i];
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.arc(tx, ty, 7, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+
+    ctx.fillStyle = colors[i];
+    ctx.font = '700 11px ui-monospace,monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(`${counts[i]} (${(frac * 100).toFixed(1)}%)`, tx, ty + 20);
+    ctx.fillStyle = '#9fb0cf';
+    ctx.font = '10px ui-monospace,monospace';
+    ctx.fillText(labels[i], tx, ty + 33);
+  }
+
+  // Root pill
+  ctx.fillStyle = '#0b2447'; ctx.strokeStyle = '#bfd9f5'; ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.roundRect ? ctx.roundRect(rootX - 66, rootY - 11, 132, 22, 6) : ctx.rect(rootX - 66, rootY - 11, 132, 22);
+  ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#f4f7fc'; ctx.font = '700 11px ui-monospace,monospace'; ctx.textAlign = 'center';
+  ctx.fillText(`Step Stream n=${n}`, rootX, rootY + 4);
+
+  // Compact trajectory / arc strip underneath (switches cleanly to dense strip when n > 200)
+  const stripTop = treeH + 14;
+  const stripH = h - stripTop - 14;
+  const padX = 18, stripW = w - padX * 2;
+  ctx.fillStyle = '#0b2447';
+  ctx.strokeStyle = '#3d5f96';
+  ctx.lineWidth = 1;
+  ctx.fillRect(padX, stripTop, stripW, stripH);
+  ctx.strokeRect(padX, stripTop, stripW, stripH);
+
+  const seq = wtState.seq, codes = wtState.codes, maxV = wtState.maxVal;
+  if (n <= 200) {
+    // Crisp arc strip for small n
+    const axisY = stripTop + stripH * 0.54;
+    ctx.strokeStyle = '#3d5f96';
+    ctx.beginPath(); ctx.moveTo(padX, axisY); ctx.lineTo(padX + stripW, axisY); ctx.stroke();
+    const xFor = (v) => padX + 6 + (v / maxV) * (stripW - 12);
+    const maxR = stripH * 0.42;
+    for (let i = 1; i <= n; i++) {
+      const x1 = xFor(seq[i - 1]), x2 = xFor(seq[i]);
+      const cx = (x1 + x2) * 0.5, rx = Math.abs(x2 - x1) * 0.5;
+      if (rx < 0.4) continue;
+      ctx.beginPath();
+      ctx.ellipse(cx, axisY, rx, Math.min(rx, maxR), 0, codes[i] === 0 ? 0 : Math.PI, codes[i] === 0 ? Math.PI : 0, false);
+      ctx.strokeStyle = colors[codes[i]];
+      ctx.globalAlpha = 0.72;
+      ctx.lineWidth = 1.1;
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  } else {
+    // Ultra-fast dense trajectory & wall-code barcode strip for n > 200
+    const samples = Math.min(n, Math.floor(stripW));
+    const step = n / samples;
+    const barH = 12;
+    // Top barcode: wall code per step
+    for (let px = 0; px < samples; px++) {
+      const idx = Math.min(n, 1 + Math.floor(px * step));
+      ctx.fillStyle = colors[codes[idx]];
+      ctx.fillRect(padX + (px / samples) * stripW, stripTop + 2, Math.ceil(stripW / samples), barH);
+    }
+    // Dense polyline below barcode
+    ctx.strokeStyle = '#bfd9f5';
+    ctx.lineWidth = 1.25;
+    ctx.beginPath();
+    const plotTop = stripTop + barH + 6, plotH = stripH - barH - 10;
+    for (let px = 0; px < samples; px++) {
+      const idx = Math.min(n, Math.floor(px * step));
+      const x = padX + (px / (samples - 1)) * stripW;
+      const y = plotTop + (1 - seq[idx] / maxV) * plotH;
+      if (px === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+
+  // Show custom wall markers when custom filter is active
+  if (wtState.filter === 'custom' && n <= 200) {
+    const xFor = (v) => padX + 6 + (v / maxV) * (stripW - 12);
+    for (const wall of wtWalls) {
+      if (wall <= maxV) {
+        const x = xFor(wall);
+        ctx.strokeStyle = '#ff8a3c'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(x, stripTop); ctx.lineTo(x, stripTop + stripH); ctx.stroke();
+      }
+    }
+  }
+}
+
+function drawMiniLattice() {
+  const c = byId('canvas-wt-lattice');
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#0f2d55';
+  ctx.fillRect(0, 0, 240, 240);
+  const colors = ['#bfd9f5', '#d6ba73', '#a39bd5', '#ff8a3c'];
+  const cell = 232 / 32;
+  for (let i = 0; i < 1024; i++) {
+    const x = i & 31, y = i >> 5;
+    ctx.fillStyle = colors[wtState.lattice[i]];
+    ctx.fillRect(4 + x * cell + 0.7, 4 + y * cell + 0.7, cell - 1.4, cell - 1.4);
+  }
+}
+
+// Panel 2.2 Kernel: 4 Deterministic Duplication & Deduplication Protocols
+function runDedupProtocol(id, name, n) {
+  const t0 = performance.now();
+  const seq = new Int32Array(n + 1);
+  const hitAtStep = new Uint16Array(n + 1);
+  const rerouted = new Uint8Array(n + 1);
+
+  let cap = Math.max(65536, n * 18);
+  let hits = new Uint16Array(cap);
+  const ensureCap = (val) => {
+    if (val >= cap) {
+      let nextCap = cap;
+      while (val >= nextCap) nextCap <<= 1;
+      const grown = new Uint16Array(nextCap);
+      grown.set(hits);
+      hits = grown;
+      cap = nextCap;
+    }
+  };
+
+  seq[0] = 0;
+  hits[0] = 1;
+  hitAtStep[0] = 1;
+  let uniqueCount = 1, dupCollisions = 0, maxMult = 1;
+  let firstDupVal = -1, firstDupStep = -1;
+  let maxVal = 0, lowestUnvisited = 1;
+
+  for (let i = 1; i <= n; i++) {
+    const prev = seq[i - 1];
+    const down = prev - i;
+    let next;
+
+    if (id === 'standard') {
+      if (down >= 0 && (down >= cap || hits[down] === 0)) next = down;
+      else next = prev + i;
+    } else if (id === 'strict') {
+      if (down >= 0 && (down >= cap || hits[down] === 0)) {
+        next = down;
+      } else {
+        next = prev + i;
+        ensureCap(next);
+        if (hits[next] > 0) {
+          rerouted[i] = 1;
+          while (next < cap && hits[next] > 0) next++;
+          ensureCap(next);
+        }
+      }
+    } else if (id === 'voidfill') {
+      if (down >= 0 && (down >= cap || hits[down] === 0)) {
+        next = down;
+      } else {
+        const up = prev + i;
+        ensureCap(up);
+        if (hits[up] === 0) {
+          next = up;
+        } else {
+          rerouted[i] = 1;
+          while (lowestUnvisited < cap && hits[lowestUnvisited] > 0) lowestUnvisited++;
+          ensureCap(lowestUnvisited);
+          next = lowestUnvisited;
+        }
+      }
+    } else {
+      // Capped Dedup (Max 2 Hits)
+      if (down >= 0 && (down >= cap || hits[down] === 0)) {
+        next = down;
+      } else {
+        next = prev + i;
+        ensureCap(next);
+        if (hits[next] >= 2) {
+          rerouted[i] = 1;
+          while (next < cap && hits[next] >= 2) next++;
+          ensureCap(next);
+        }
+      }
+    }
+
+    ensureCap(next);
+    seq[i] = next;
+    const hNow = ++hits[next];
+    hitAtStep[i] = hNow;
+    if (hNow === 1) uniqueCount++;
+    else {
+      dupCollisions++;
+      if (firstDupStep === -1) { firstDupVal = next; firstDupStep = i; }
+    }
+    if (hNow > maxMult) maxMult = hNow;
+    if (next > maxVal) maxVal = next;
+  }
+
+  let minVoid = 0;
+  while (minVoid < cap && hits[minVoid] > 0) minVoid++;
+
+  // Build hit-multiplicity histogram [1x, 2x, 3x, 4x, 5x+]
+  const hist = [0, 0, 0, 0, 0];
+  for (let v = 0; v <= maxVal; v++) {
+    const h = hits[v];
+    if (h === 0) continue;
+    if (h >= 5) hist[4]++; else hist[h - 1]++;
+  }
+
+  return {
+    id, name, seq, hitAtStep, rerouted,
+    uniqueCount, dupCollisions, maxMult,
+    firstDupVal, firstDupStep, minVoid,
+    maxVal: Math.max(1, maxVal),
+    hist,
+    ms: performance.now() - t0,
+  };
+}
+
+function computeDedupScenarios() {
+  const n = wtState.n;
+  const activeId = byId('dd-scenario').value;
+  const std = runDedupProtocol('standard', 'Standard Recamán (Unguarded Up-Step)', n);
+  const strict = runDedupProtocol('strict', 'Strict Dedup (Guarded Up-Step)', n);
+  const voidfill = runDedupProtocol('voidfill', 'Void-Fill Dedup (Lowest Unvisited)', n);
+  const capped = runDedupProtocol('capped', 'Capped Dedup (Max 2 Hits)', n);
+
+  ddState.protocols = [std, strict, voidfill, capped];
+  ddState.standard = std;
+  ddState.active = ddState.protocols.find((p) => p.id === activeId) || strict;
+
+  // Build 1024-cell collision mask for Panel 1.1 Lattice
+  const lat = ddState.collisionLattice;
+  const stride = n > 1024 ? n / 1024 : 1;
+  for (let k = 0; k < 1024; k++) {
+    const idx = n >= 1024 ? Math.min(n, 1 + Math.floor(k * stride)) : 1 + (k % n);
+    const stdHit = std.hitAtStep[idx];
+    const actReroute = ddState.active.rerouted[idx];
+    if (stdHit >= 3) lat[k] = 3;          // Coral: high-multiplicity collision hub
+    else if (stdHit === 2) lat[k] = 1;    // Gold: standard 2x collision
+    else if (actReroute) lat[k] = 2;      // Violet: dedup rerouted step
+    else lat[k] = 0;                      // Slate: clean unique step
+  }
+
+  byId('dd-summary-note').textContent =
+    `n=${n} · Standard duplicates: ${std.dupCollisions} vs ${ddState.active.id}: ${ddState.active.dupCollisions}`;
+
+  drawDedupTrace();
+  drawDedupHist();
+  renderDedupTable();
+  updateInvariants();
+}
+
+function drawDedupTrace() {
+  const c = byId('canvas-dd-trace'), wrap = byId('wrap-dd-trace');
+  const w = wrap.clientWidth || 520, h = wrap.clientHeight || 260;
+  if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#0f2d55';
+  ctx.fillRect(0, 0, w, h);
+
+  const std = ddState.standard, act = ddState.active;
+  if (!std || !act) return;
+  const n = wtState.n;
+  const padL = 44, padR = 14, padT = 22, padB = 24;
+  const plotW = w - padL - padR, plotH = h - padT - padB;
+  const maxY = Math.max(std.maxVal, act.maxVal, 10);
+
+  // Subtle horizontal grid
+  ctx.strokeStyle = '#3d5f96'; ctx.lineWidth = 1;
+  ctx.font = '10px ui-monospace,monospace'; ctx.fillStyle = '#9fb0cf'; ctx.textAlign = 'right';
+  for (let i = 0; i <= 3; i++) {
+    const py = padT + (plotH * i) / 3;
+    ctx.beginPath(); ctx.moveTo(padL, py); ctx.lineTo(w - padR, py); ctx.stroke();
+    ctx.fillText(String(Math.round(maxY * (1 - i / 3))), padL - 6, py + 3);
+  }
+
+  const samples = Math.min(n, Math.max(120, Math.floor(plotW)));
+  const step = n / samples;
+  const xFor = (idx) => padL + (idx / n) * plotW;
+  const yFor = (val) => padT + (1 - val / maxY) * plotH;
+
+  // Find first divergence step between Standard and Active Dedup
+  let divStep = -1;
+  for (let i = 1; i <= n; i++) {
+    if (std.seq[i] !== act.seq[i]) { divStep = i; break; }
+  }
+  if (divStep !== -1) {
+    const dx = xFor(divStep);
+    ctx.save(); ctx.strokeStyle = '#d6ba73'; ctx.setLineDash([4, 3]); ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(dx, padT); ctx.lineTo(dx, h - padB); ctx.stroke(); ctx.restore();
+    ctx.fillStyle = '#d6ba73'; ctx.textAlign = dx > w - 120 ? 'right' : 'left';
+    ctx.fillText(`Divergence @ n=${divStep}`, dx + (dx > w - 120 ? -5 : 5), padT + 10);
+  }
+
+  // Standard Recamán trace (Mint)
+  ctx.strokeStyle = 'rgba(191,217,245,0.82)'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let s = 0; s <= samples; s++) {
+    const idx = Math.min(n, Math.round(s * step));
+    const px = xFor(idx), py = yFor(std.seq[idx]);
+    if (s === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // Active Dedup trace (Violet)
+  ctx.strokeStyle = 'rgba(163,155,213,0.9)'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let s = 0; s <= samples; s++) {
+    const idx = Math.min(n, Math.round(s * step));
+    const px = xFor(idx), py = yFor(act.seq[idx]);
+    if (s === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // Mark collision hubs on Standard trace (Coral dots)
+  const hubStride = Math.max(1, Math.floor(n / 600));
+  for (let i = 1; i <= n; i += hubStride) {
+    if (std.hitAtStep[i] >= 2) {
+      artDot(ctx, xFor(i), yFor(std.seq[i]), std.hitAtStep[i] >= 3 ? 3 : 2, '#ff8a3c');
+    }
+  }
+
+  // Top legend
+  ctx.textAlign = 'left'; ctx.font = '600 10.5px ui-monospace,monospace';
+  ctx.fillStyle = '#bfd9f5'; ctx.fillText('— Standard', padL + 4, 13);
+  ctx.fillStyle = '#a39bd5'; ctx.fillText(`— ${act.id}`, padL + 86, 13);
+  ctx.fillStyle = '#ff8a3c'; ctx.fillText('● Hubs', padL + 166, 13);
+}
+
+function drawDedupHist() {
+  const c = byId('canvas-dd-hist'), wrap = byId('wrap-dd-hist');
+  const w = wrap.clientWidth || 300, h = wrap.clientHeight || 260;
+  if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#0f2d55';
+  ctx.fillRect(0, 0, w, h);
+
+  const std = ddState.standard, act = ddState.active;
+  if (!std || !act) return;
+  const labels = ['1x', '2x', '3x', '4x', '5x+'];
+  const padL = 16, padR = 16, padT = 32, padB = 30;
+  const plotW = w - padL - padR, plotH = h - padT - padB;
+  const maxLog = Math.log10(Math.max(10, ...std.hist, ...act.hist) + 1);
+
+  ctx.fillStyle = '#f4f7fc'; ctx.font = '700 11px ui-monospace,monospace'; ctx.textAlign = 'left';
+  ctx.fillText('Hit Multiplicity (log scale)', padL, 17);
+
+  const groupW = plotW / 5;
+  for (let i = 0; i < 5; i++) {
+    const gx = padL + i * groupW;
+    const bw = groupW * 0.34;
+
+    const hStd = (Math.log10(std.hist[i] + 1) / maxLog) * plotH;
+    const hAct = (Math.log10(act.hist[i] + 1) / maxLog) * plotH;
+
+    // Standard bar (Mint / Coral for >=2x)
+    ctx.fillStyle = i === 0 ? '#bfd9f5' : '#ff8a3c';
+    ctx.fillRect(gx + groupW * 0.12, padT + plotH - hStd, bw, hStd);
+
+    // Active Dedup bar (Violet)
+    ctx.fillStyle = '#a39bd5';
+    ctx.fillRect(gx + groupW * 0.52, padT + plotH - hAct, bw, hAct);
+
+    ctx.fillStyle = '#9fb0cf'; ctx.font = '10px ui-monospace,monospace'; ctx.textAlign = 'center';
+    ctx.fillText(labels[i], gx + groupW * 0.5, h - 10);
+    if (std.hist[i] > 0) {
+      ctx.fillStyle = i === 0 ? '#bfd9f5' : '#ff8a3c';
+      ctx.fillText(String(std.hist[i]), gx + groupW * 0.29, padT + plotH - hStd - 4);
+    }
+    if (act.hist[i] > 0) {
+      ctx.fillStyle = '#a39bd5';
+      ctx.fillText(String(act.hist[i]), gx + groupW * 0.69, padT + plotH - hAct - 4);
+    }
+  }
+}
+
+function renderDedupTable() {
+  const actId = ddState.active.id;
+  byId('dd-table-body').innerHTML = ddState.protocols.map((p) => `
+    <tr class="${p.id === actId ? 'is-active-proto' : ''}">
+      <td>${p.name}</td>
+      <td>${p.uniqueCount}</td>
+      <td>${p.dupCollisions}</td>
+      <td>${p.maxMult}x</td>
+      <td>${p.firstDupStep === -1 ? 'none' : `${p.firstDupVal} @ n=${p.firstDupStep}`}</td>
+      <td>${p.minVoid}</td>
+      <td>${p.ms.toFixed(2)}</td>
+    </tr>
+  `).join('');
+}
+
+function setWallStepCount(val) {
+  const clamped = Math.max(24, Math.min(16384, Math.round(val) || 1024));
+  wtState.n = clamped;
+  byId('wt-n-slider').value = String(clamped);
+  byId('wt-n-num').value = String(clamped);
+  document.querySelectorAll('.preset-btn').forEach((b) => {
+    b.setAttribute('aria-pressed', String(Number(b.dataset.n) === clamped));
+  });
+  computeWallTree();
+  computeDedupScenarios();
+  drawRG(animTime);
+}
+
+
+// Tab 2 listeners (2.1 Wall Trees + 2.2 Dedup Scenarios)
+document.querySelectorAll('.preset-btn').forEach((b) => {
+  b.addEventListener('click', () => setWallStepCount(Number(b.dataset.n)));
+});
+byId('wt-n-slider').addEventListener('input', (e) => setWallStepCount(Number(e.target.value)));
+byId('wt-n-num').addEventListener('change', (e) => setWallStepCount(Number(e.target.value)));
+byId('wt-filter').addEventListener('change', (e) => {
+  wtState.filter = e.target.value;
+  byId('wt-clear-walls').hidden = wtState.filter !== 'custom';
+  computeWallTree();
+  drawRG(animTime);
+});
+byId('wt-clear-walls').addEventListener('click', () => {
+  wtWalls.clear();
+  computeWallTree();
+});
+byId('canvas-wt').addEventListener('click', (e) => {
+  if (wtState.filter !== 'custom') {
+    wtState.filter = 'custom';
+    byId('wt-filter').value = 'custom';
+    byId('wt-clear-walls').hidden = false;
+  }
+  const rect = e.currentTarget.getBoundingClientRect();
+  const rel = Math.max(0, Math.min(1, (e.clientX - rect.left - 24) / Math.max(1, rect.width - 48)));
+  const val = Math.max(1, Math.round(rel * wtState.maxVal));
+  if (wtWalls.has(val)) wtWalls.delete(val); else wtWalls.add(val);
+  computeWallTree();
+});
+byId('wt-map-rg').addEventListener('click', () => {
+  byId('rg-source').value = 'walltree';
+  drawRG(animTime);
+  byId('lattice').scrollIntoView();
+});
+byId('wt-save').addEventListener('click', () => saveCanvasPNG(byId('canvas-wt'), 'c32z-wall-tree-n' + wtState.n + '.png'));
+
+byId('dd-scenario').addEventListener('change', () => {
+  computeDedupScenarios();
+  drawRG(animTime);
+});
+byId('dd-map-rg').addEventListener('click', () => {
+  byId('rg-source').value = 'dedup';
+  drawRG(animTime);
+  byId('lattice').scrollIntoView();
+});
+byId('dd-save').addEventListener('click', () => saveCanvasPNG(byId('canvas-dd-trace'), 'c32z-dedup-' + byId('dd-scenario').value + '.png'));
+
+
+function initShowcase() {
+  const tour = byId('showcase');
+  const views = new Map([
+    ['unit-tree', ['Compare exact conversions and see how a unit changes the displayed digit towers.', () => byId('value').textContent + ' ' + units.get(selected).label]],
+    ['phase-slots', ['Each layer sets a quarter-turn. Compare the carrier and its sidebands after a mirror or a digit edit.', () => byId('spectrumSummary').textContent]],
+    ['prime-forms', ['The prime letters and paired orbits drive knots, ribbons and rosettes.', () => byId('gallery-caption').textContent, () => galleryForm === 'helix' ? 'helix-dna' : 'gallery-art']],
+    ['logistic-fork', ['Watch the two copies merge, stay exact mirrors, or follow different logistic parameters.', () => byId('helix-insight').textContent, () => 'helix-orbit']],
+    ['lattice', ['Rotate the height field, then average larger blocks to see what survives at lower resolution.', () => byId('rg-kpi-scale').textContent, () => 'canvas-rg']],
+    ['dimensions', ['Change the detector to see a loop, its projection, or a single point in the Hopf model.', () => byId('dimension-caption').textContent, () => 'dimension-canvas']],
+    ['gain-title', ['A shared gain drives every stage. Compare which tower thresholds the sweep crosses.', () => byId('gain-insight').textContent]],
+    ['research-controls', ['Check nearby offsets around the logistic flip and compare prime towers at matched gain.', () => byId('research-tower-note').textContent]],
+    ['omega-towers', ['Both prime orders fix Ω and have the same linear response there. Their finite trajectories can differ.', () => 'Pair multiplier ' + byId('omega-kpi-mult').textContent, () => 'omega-art']],
+    ['omega-light', ['Explore the ideal transmission feedback law x → exp(−g x).', () => byId('omega-light-note').textContent, () => 'omega-orbit']],
+    ['order-of-waves', ['Reverse the prime layers and the signed difference reverses. Its leading wave runs at twice the drive frequency.', () => '5 → 7  /  7 → 5', () => 'wave-plate-image']],
+    ['model-checks', ['Inspect the live checks and copy the settings for a repeatable run.', () => lastInvariants.filter(result => result.pass).length + ' of ' + lastInvariants.length + ' checks passing']],
+    ['chain', ['Every digit of c is a prime raised to a power. Three layers come apart and rebuild the number.', () => byId('chain-rebuild').textContent]],
+    ['units-compared', ['The same reading in all 14 units, with the modular reason each one ends or repeats.', () => 'metric ends · US customary repeats every 42 · nautical every 154']],
+    ['modular-cycle', ['The long-division remainders as a loop, and the same fraction as an exact cycle of the logistic map.', () => byId('cycle-note').textContent, () => 'cycle-art']],
+    ['obs-recaman', ['Click the number line to forbid a value and watch the Recamán arcs reroute.', () => 'Obstructed steps ' + byId('rec-rate').textContent, () => 'canvas-rec']],
+    ['obs-photonic', ['Place blockade cavities in the path of light pulses.', () => 'Transmitted ' + byId('pho-trans').textContent, () => 'canvas-pho']],
+    ['wall-trees', ['Every Recamán step is free, stopped by the floor, stopped by memory, or stopped by a wall you chose.', () => 'Longest wall streak ' + byId('wt-kpi-streak').textContent, () => 'canvas-wt']],
+    ['dedup', ['Standard Recamán repeats values. Three guarded rules are compared on the same run.', () => byId('dd-summary-note').textContent, () => 'canvas-dd-trace']],
+    ['authorship', ['Who made which part of this page.', () => 'Zolton Farkas · GPT and Codex · Gemini (Neon) · Claude']],
+    ['thread-notes', ['Trace the original questions about digit towers, logistic mirrors, Catalan and CM vanishing through to the Ω wave plate.', () => 'Digit towers → quarter-turn → Catalan disk → Ω waves']],
+  ]);
+  const stops = Array.from(document.querySelectorAll('.lab-menu a')).map(link => ({
+    link, name: link.textContent, target: link.getAttribute('href').slice(1),
+  }));
+  const canvas = byId('showcase-canvas');
+  const ctx = canvas.getContext('2d');
+  const stage = byId('showcase-stage');
+  const open = byId('showcase-open');
+  const play = byId('showcase-play');
+  const linkedStop = stops.findIndex(stop => '#' + stop.target === location.hash);
+  let index = Math.max(0, linkedStop);
+  let timer;
+  let inView = true;
+  let playing = linkedStop < 0 && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function drawPreview(sourceId) {
+    const source = sourceId ? byId(sourceId()) : null;
+    const width = source?.naturalWidth ?? source?.width;
+    const height = source?.naturalHeight ?? source?.height;
+    canvas.hidden = !ctx || !width || !height;
+    if (canvas.hidden) return;
+    const scale = Math.min(canvas.width / width, canvas.height / height);
+    const displayWidth = width * scale;
+    const displayHeight = height * scale;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(source, (canvas.width - displayWidth) / 2, (canvas.height - displayHeight) / 2, displayWidth, displayHeight);
+  }
+
+  function show() {
+    const stop = stops[index];
+    const [description, detail, sourceId] = views.get(stop.target) ?? ['', () => ''];
+    byId('showcase-count').textContent = (index + 1) + ' / ' + stops.length;
+    byId('showcase-screen').textContent = stop.name;
+    byId('showcase-description').textContent = description;
+    byId('showcase-detail').textContent = detail();
+    open.href = '#' + stop.target;
+    open.textContent = 'Open ' + stop.name;
+    for (const item of stops) item.link.toggleAttribute('data-showcase-current', item === stop);
+    drawPreview(sourceId);
+  }
+
+  function queue() {
+    clearTimeout(timer);
+    if (playing && inView && !document.hidden) {
+      timer = setTimeout(() => {
+        index = (index + 1) % stops.length;
+        show();
+        queue();
+      }, 6500);
+    }
+  }
+
+  function setPlaying(value) {
+    playing = value;
+    play.textContent = playing ? 'Pause tour' : 'Play tour';
+    stage.setAttribute('aria-live', playing ? 'off' : 'polite');
+    queue();
+  }
+
+  function move(delta) {
+    setPlaying(false);
+    index = (index + delta + stops.length) % stops.length;
+    show();
+  }
+
+  byId('showcase-prev').addEventListener('click', () => move(-1));
+  byId('showcase-next').addEventListener('click', () => move(1));
+  play.addEventListener('click', () => { show(); setPlaying(!playing); });
+  tour.addEventListener('focusin', event => { if (playing && event.target !== play) setPlaying(false); });
+  open.addEventListener('click', () => setPlaying(false));
+  stops.forEach((stop, position) => stop.link.addEventListener('click', () => {
+    setPlaying(false);
+    index = position;
+    show();
+  }));
+  byId('wave-plate-image').addEventListener('load', () => {
+    if (stops[index].target === 'order-of-waves') show();
+  });
+  document.addEventListener('visibilitychange', queue);
+  if (typeof IntersectionObserver === 'function') {
+    const observer = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      if (inView) show();
+      queue();
+    });
+    observer.observe(tour);
+  }
+  show();
+  setPlaying(playing);
+}
+
+// author tags on section titles
+function markAuthors() {
+  const by = {
+    'What this repository does': 'Zolton Farkas · Claude', 'The same speed in every unit system': 'Claude', 'The cycle behind the digits': 'Claude',
+    'Prime Forms showcase': 'GPT and Codex', 'Top-level configuration': 'GPT', 'Unit tree': 'GPT', 'Logistic fork': 'GPT',
+    'Lattice coarse-graining': 'Gemini · Claude', 'When does the hole disappear?': 'GPT · Gemini',
+    'Obstructions: Recamán walls': 'Gemini', 'Obstructions: photonic blockade': 'Gemini',
+    'Wall trees: why each Recamán step turned back': 'Gemini', 'Duplicates, and three ways to forbid them': 'Gemini',
+    'Ω towers: one fixed point, many stabilities': 'GPT · Claude', 'Ω in a beam of light, and in the letters': 'GPT · Claude',
+    'The Order of Waves': 'Codex', 'From the original thread': 'Codex', 'One gain, many towers': 'GPT',
+    'Controls: which part is doing the work?': 'GPT', 'Model checks': 'Gemini · Claude',
+  };
+  for (const h2 of document.querySelectorAll('main h2')) {
+    const who = by[h2.textContent.trim()];
+    if (who && !h2.querySelector('.by')) h2.append(element('span', 'by', who));
+  }
+  const forms = byId('gallery-modes');
+  if (forms && !forms.querySelector('.by')) forms.append(element('span', 'by', 'Prime Forms drawings: GPT'));
+}
+
 // Unified 60fps loop
 let frameDt = 0;
 const animatedViews = new Map([
@@ -2326,6 +3337,8 @@ function loop(ts) {
   requestAnimationFrame(loop);
 }
 
+window.addEventListener('resize', () => { drawWallTree(); drawDedupTrace(); drawDedupHist(); drawRG(animTime); });
+
 window.onload = function () {
   renderGainProbe();
   renderResearchTower();
@@ -2336,6 +3349,11 @@ window.onload = function () {
   computeRecaman();
   drawRecaman(animTime);
   drawPhotonic(0);
+  computeWallTree();
+  computeDedupScenarios();
+  drawRG(animTime);
+  markAuthors();
+  initShowcase();
   requestAnimationFrame(loop);
 };
 </script>

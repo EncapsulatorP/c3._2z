@@ -26,9 +26,12 @@ The same reading is carried through every unit system. Metric values end, US cus
 | [Recamán walls](index.html#obs-recaman) and [photonic blockade](index.html#obs-photonic) | Click the number line to forbid a value and watch the Recamán arcs reroute. Then place blockade cavities in the path of light pulses and compare the two kinds of exclusion. |
 | [Gain sweep](index.html#gain-title) and [research controls](index.html#research-controls) | Change one shared gain for a family of exponential towers. Compare their thresholds, then compare nearby offsets and equal-gain mirror responses. |
 | [Ω towers](index.html#omega-towers), [light loop](index.html#omega-light) and [wave plate](index.html#order-of-waves) | Reverse two prime layers that share a fixed point and a slope. Their half-difference reveals the order through its leading second harmonic. |
+| [Wall trees](index.html#wall-trees) and [dedup scenarios](index.html#dedup) | See why each Recamán step turned back, then compare three rules that forbid repeated values. Send either map to the 3D lattice. |
 | [Model checks](index.html#model-checks) | Inspect the live residuals and copy the current settings. |
+| [From the original thread](index.html#thread-notes) | Follow the original digit, arithmetic, logistic, Catalan and CM questions into the experiments and artworks. |
+| [Who made what](index.html#authorship) | The author of every section. |
 
-The index opens as one page with a direct link to every screen. For a local preview, open **index.html** in a browser. [Earlier Prime Forms gallery](pages/prime-forms.html) · [Dark neon version](pages/prime-forms-index-dark.html)
+The index opens as one page with a direct link to every screen, and its showcase cycles through all 21 stops by itself. For a local preview, open **index.html** in a browser. [Earlier Prime Forms gallery](pages/prime-forms.html) · [Dark neon version](pages/prime-forms-index-dark.html)
 
 ## Where the threads meet
 
@@ -38,4 +41,4 @@ The earlier Catalan and CM discussion supplied the quarter-turn motif. At the lo
 
 The implemented Ω study asks a different cancellation question. Let $\Omega=W(1)$ and $T_p(x)=\Omega p^{\Omega-x}$. The compositions $T_7\circ T_5$ and $T_5\circ T_7$ have the same slope at $\Omega$. Their difference starts at second order, which is the amber trace in [The Order of Waves](index.html#order-of-waves).
 
-Neon (Gemini) contributed the visual design, the RG lattice, the Hopf detector and the obstructions lab. The [research archive](RESEARCH_ARCHIVE.md) preserves the earlier notebook and links to its scripts and results.
+**Authorship.** Zolton Farkas brought the original questions and the tower idea. GPT and Codex built the unit tree, digit towers, phase slots, Prime Forms drawings, logistic fork, gain sweep and controls, worked through the Ω calculations, drew The Order of Waves, and made the showcase tour, the thread notes and the walkthrough. Gemini (Neon) contributed the Living SPEC workspace and neon visual study, the RG lattice with the Hopf detector, the obstructions lab, the wall trees and dedup scenarios, and the model checks. Claude added the white page and blue plates, the 3D relief, the chain, unit-system and cycle sections, the spectral read-back and the Omega pencil. The [research archive](RESEARCH_ARCHIVE.md) preserves the earlier notebook and links to its scripts and results.
