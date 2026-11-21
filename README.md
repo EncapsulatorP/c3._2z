@@ -1,6 +1,4 @@
-# c3._2z · Omega Stability
-
-# c3.2z · Prime Forms
+# c3.2z · Prime power tower composition Forms and omega wave power towers
 
 <p align="center">
   <a href="https://encapsulatorp.github.io/c3.2z/">
