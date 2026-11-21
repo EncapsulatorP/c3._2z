@@ -341,6 +341,22 @@ canvas{background:var(--plate)}
 .dedup-table tr.is-active-proto td:first-child{color:var(--violet);font-weight:700}
 @media(max-width:820px){.wall-split,.dedup-split,.showcase-stage{grid-template-columns:minmax(0,1fr)}.mini-lattice-card canvas{width:min(240px,100%);height:auto;aspect-ratio:1/1}}
 @media(max-width:900px){.topbar{position:static}html{scroll-padding-top:12px}}
+/* minimizers */
+.view-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:0 0 16px;font:.84rem var(--sans);color:var(--dim)}
+.view-bar button{font:500 .8rem var(--sans);padding:5px 11px;border-radius:999px}
+.view-bar button[aria-pressed=true]{background:var(--plate);border-color:var(--plate);color:#fff}
+.panel-tools{display:flex;justify-content:flex-end;margin:-8px -6px 0 0}
+.min-btn{font:500 .72rem var(--sans);padding:2px 10px;border-radius:999px;color:var(--dim)}
+.min-bar{display:none;width:100%;align-items:center;gap:6px 14px;flex-wrap:wrap;text-align:left;border:0;background:none;padding:0;font:inherit;color:inherit}
+.min-bar:hover{box-shadow:none}
+.min-bar strong{font:700 1rem "Fraunces","Iowan Old Style",Palatino,Georgia,serif;color:var(--ink)}
+.min-bar .min-tag{font:500 .7rem var(--sans);padding:2px 8px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--dim)}
+.min-bar .min-desc{flex:1 1 260px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.84rem;color:var(--dim)}
+.min-bar .min-open{font:600 .78rem var(--sans);color:var(--mint);white-space:nowrap}
+.is-min{padding:10px 16px!important;margin-bottom:8px!important;background:#eaf0fa!important;box-shadow:none!important;display:block!important}
+.is-min > :not(.min-bar){display:none!important}
+.is-min > .min-bar{display:flex}
+.wave-plate > .panel-tools{grid-column:1/-1}
 /* the chain */
 .lead-note{font-size:1.08rem;color:var(--ink);max-width:70ch;margin-top:8px}
 .chain-rows{display:flex;gap:6px;margin:18px 0 6px;overflow-x:auto;padding-bottom:4px}
@@ -413,6 +429,13 @@ canvas{background:var(--plate)}
 </header>
 
 <main>
+<div class="view-bar" role="group" aria-label="Which sections are open">
+    <span>Show</span>
+    <button type="button" data-view="cool" aria-pressed="false">Cool parts first</button>
+    <button type="button" data-view="all" aria-pressed="false">Everything open</button>
+    <button type="button" data-view="none" aria-pressed="false">Everything minimized</button>
+    <span>Minimized sections stay on the page as reference: open one from its bar or from the menu.</span>
+  </div>
 <section class="lab-screen" id="chain">
     <div class="panel">
       <h2>What this repository does</h2>
@@ -3150,7 +3173,7 @@ byId('canvas-wt').addEventListener('click', (e) => {
 byId('wt-map-rg').addEventListener('click', () => {
   byId('rg-source').value = 'walltree';
   drawRG(animTime);
-  byId('lattice').scrollIntoView();
+  revealSection('lattice'); byId('lattice').scrollIntoView();
 });
 byId('wt-save').addEventListener('click', () => saveCanvasPNG(byId('canvas-wt'), 'c32z-wall-tree-n' + wtState.n + '.png'));
 
@@ -3161,7 +3184,7 @@ byId('dd-scenario').addEventListener('change', () => {
 byId('dd-map-rg').addEventListener('click', () => {
   byId('rg-source').value = 'dedup';
   drawRG(animTime);
-  byId('lattice').scrollIntoView();
+  revealSection('lattice'); byId('lattice').scrollIntoView();
 });
 byId('dd-save').addEventListener('click', () => saveCanvasPNG(byId('canvas-dd-trace'), 'c32z-dedup-' + byId('dd-scenario').value + '.png'));
 
@@ -3301,6 +3324,95 @@ function markAuthors() {
   if (forms && !forms.querySelector('.by')) forms.append(element('span', 'by', 'Prime Forms drawings: GPT'));
 }
 
+// ---- minimizers: fold any section down to a one-line reference bar ----
+const MIN_KEY = 'c32z-minimized';
+const referenceTitles = ['Top-level configuration', 'Unit tree', 'Digit towers and phase slots', 'From the original thread',
+  'One gain, many towers', 'Controls: which part is doing the work?', 'Model checks', 'Who made what'];
+const minPanels = [];
+function redrawAll() {
+  try {
+    render(); renderOmega(); drawRG(animTime); paintDimension(animTime * 1000);
+    drawRecaman(animTime); drawPhotonic(0); drawWallTree(); drawMiniLattice(); drawDedupTrace(); drawDedupHist();
+  } catch (_) {}
+}
+function saveMinimized() {
+  try { localStorage.setItem(MIN_KEY, JSON.stringify(minPanels.filter((m) => m.panel.classList.contains('is-min')).map((m) => m.title))); } catch (_) {}
+}
+function setMinimized(entry, min, quiet) {
+  entry.panel.classList.toggle('is-min', min);
+  entry.bar.setAttribute('aria-expanded', String(!min));
+  if (!quiet) { if (!min) redrawAll(); saveMinimized(); markView(); }
+}
+function markView() {
+  const closed = new Set(minPanels.filter((m) => m.panel.classList.contains('is-min')).map((m) => m.title));
+  const state = closed.size === 0 ? 'all' : closed.size === minPanels.length ? 'none'
+    : closed.size === referenceTitles.length && referenceTitles.every((t) => closed.has(t)) ? 'cool' : '';
+  for (const b of document.querySelectorAll('.view-bar button')) b.setAttribute('aria-pressed', String(b.dataset.view === state));
+}
+function applyView(view) {
+  for (const m of minPanels) setMinimized(m, view === 'none' || (view === 'cool' && referenceTitles.includes(m.title)), true);
+  redrawAll(); saveMinimized(); markView();
+}
+function revealSection(id) {
+  const target = byId(id);
+  if (!target) return;
+  const own = target.closest('.panel, .showcase');
+  const panels = own ? [own] : [...target.querySelectorAll('.panel')];
+  let changed = false;
+  for (const m of minPanels) if (panels.includes(m.panel) && m.panel.classList.contains('is-min')) { setMinimized(m, false, true); changed = true; }
+  if (changed) { redrawAll(); saveMinimized(); markView(); }
+}
+function initMinimizers() {
+  const named = new Map([[byId('inspect'), 'Digit towers and phase slots'], [document.querySelector('nav.tree'), 'Unit tree'], [document.querySelector('.helix-lab'), 'Prime Forms and the logistic fork']]);
+  for (const panel of document.querySelectorAll('main .panel, main .showcase')) {
+    const h2 = panel.querySelector('h2');
+    let title = named.get(panel), who = '';
+    if (h2) {
+      const copy = h2.cloneNode(true);
+      const by = copy.querySelector('.by');
+      if (by) { who = by.textContent; by.remove(); }
+      title = title || copy.textContent.trim();
+    }
+    if (!title) continue;
+    const blurb = {
+      'Unit tree': 'Pick the unit: metric, US customary, nautical or normalized. Every other section follows it.',
+      'Digit towers and phase slots': 'The digits as factor towers, the optical phase model they drive, and the read-back of the word from its spectrum.',
+      'Prime Forms and the logistic fork': 'Six drawings made from the prime letters and two mirrored logistic orbits, with the controls that shape them.',
+      'Prime Forms showcase': 'A tour that steps through all 21 sections by itself, with live previews.',
+      'Model checks': 'Eleven live checks on the chain, the cycles, the spectrum, the knot, the gains, Recamán and Ω.',
+      'Who made what': 'The author of every section: Zolton Farkas, GPT and Codex, Gemini (Neon), Claude.',
+    }[title];
+    const note = blurb ? { textContent: blurb } : panel.querySelector('.lead-note, .note, .thread-intro, td');
+    const bar = element('button', 'min-bar');
+    bar.type = 'button';
+    bar.append(element('strong', '', title));
+    if (who) bar.append(element('span', 'min-tag', who));
+    bar.append(element('span', 'min-desc', note ? note.textContent.trim().replace(/\s+/g, ' ') : ''), element('span', 'min-open', 'Open'));
+    bar.setAttribute('aria-label', 'Open section: ' + title);
+    const tools = element('div', 'panel-tools');
+    const btn = element('button', 'min-btn', 'Minimize');
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Minimize section: ' + title);
+    tools.append(btn);
+    panel.prepend(bar, tools);
+    const entry = { panel, bar, title };
+    minPanels.push(entry);
+    btn.addEventListener('click', () => setMinimized(entry, true));
+    bar.addEventListener('click', () => setMinimized(entry, false));
+  }
+  let stored = null;
+  try { stored = JSON.parse(localStorage.getItem(MIN_KEY)); } catch (_) {}
+  const closed = Array.isArray(stored) ? stored : referenceTitles;
+  for (const m of minPanels) setMinimized(m, closed.includes(m.title), true);
+  markView();
+  for (const b of document.querySelectorAll('.view-bar button')) b.addEventListener('click', () => applyView(b.dataset.view));
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest?.('a[href^="#"]');
+    if (link) revealSection(link.getAttribute('href').slice(1));
+  }, true);
+  if (location.hash.length > 1) revealSection(location.hash.slice(1));
+}
+
 // Unified 60fps loop
 let frameDt = 0;
 const animatedViews = new Map([
@@ -3353,6 +3465,7 @@ window.onload = function () {
   computeDedupScenarios();
   drawRG(animTime);
   markAuthors();
+  initMinimizers();
   initShowcase();
   requestAnimationFrame(loop);
 };
