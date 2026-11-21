@@ -18,26 +18,20 @@ The earlier work also uses $L_2(x)=\ln\ln x$ as a coordinate for numerical optim
 
 ## Two constructions in Prime Forms
 
-**A change of units changes the digit tower.** Write the vacuum speed of light as `299792458` in metres per second. Counting prime factors with multiplicity in each digit gives `122121213`. Capping each count at two gives `122121212`. The only change is the third factor of $2$ in $8=2^3$. The [Unit tree](index.html#unit-tree) lets you reproduce that calculation across unit choices. The speed is the same physical quantity throughout, and the encoding depends on the displayed number.
+**A change of units changes the digit tower.** Write the vacuum speed of light as `299792458` in metres per second. Counting prime factors with multiplicity in each digit gives `122121213`. Capping each count at two gives `122121212`. The only change is the third factor of $2$ in $8=2^3$. You can reproduce the calculation with the unit selector and tower controls. The speed is the same physical quantity throughout, and the encoding depends on the displayed number.
 
-**Reversing two layers preserves the slope and changes the wave.** Let $\Omega=W(1)$ and set $T_p(x)=\Omega p^{\Omega-x}$ for prime $p$. Both compositions $T_q\circ T_p$ and $T_p\circ T_q$ fix $\Omega$ and have derivative $\Omega^2\ln p\ln q$ there. For distinct primes their second derivatives differ. With a small sinusoidal input around $\Omega$, the mean-subtracted half-difference of the two outputs therefore has a leading second harmonic. [Ω towers](index.html#omega-towers) computes the comparison, and [The Order of Waves](index.html#order-of-waves) draws it.
+**Reversing two layers preserves the slope and changes the wave.** Let $\Omega=W(1)$ and set $T_p(x)=\Omega p^{\Omega-x}$ for prime $p$. Both compositions $T_q\circ T_p$ and $T_p\circ T_q$ fix $\Omega$ and have derivative $\Omega^2\ln p\ln q$ there. For distinct primes their second derivatives differ. With a small sinusoidal input around $\Omega$, the mean-subtracted half-difference of the two outputs therefore has a leading second harmonic. The Ω towers screen computes the comparison, and [The Order of Waves](assets/omega-tower-waves.png) draws it.
 
 ## Explore the implementation
 
-Open [index.html](index.html) from a local checkout to run the 13-stop tour. Every screen is also accessible from the main menu. The phase, lattice, and feedback screens use explicit mathematical models with adjustable inputs.
+Open [index.html](index.html) from a local checkout. The gallery combines a draggable lattice, prime forms, and feedback experiments. Neo developed the visual layout and the helper that exports the current settings and live checks as a Markdown specification.
 
 | Screen | What you can examine |
 | --- | --- |
-| [Unit tree](index.html#unit-tree) and [optical phase slots](index.html#phase-slots) | Exact unit conversions, digit-factor layers, and an ideal phase-modulation spectrum |
-| [Prime Forms](index.html#prime-forms) and [logistic fork](index.html#logistic-fork) | Even and odd mirror responses as the strands are swapped or biased |
-| [3D lattice](index.html#lattice) and [Hopf detector](index.html#dimensions) | Coarse-graining a digit-seeded height field and projecting an orbit to a detector |
-| [Gain sweep](index.html#gain-title) and [research controls](index.html#research-controls) | Stability thresholds across a family of towers driven by one gain |
-| [Ω towers](index.html#omega-towers) and [Ω light loop](index.html#omega-light) | Reversed compositions and a model of optical feedback |
-| [Model checks](index.html#model-checks) | Live numerical checks and a copyable record of the current settings |
-
-[![Animated walkthrough of the unit tree, prime towers, and Ω wave plate](assets/prime-forms-walkthrough.png)](index.html)
-
-[Still preview](assets/prime-forms-walkthrough-still.png) · [Animated SVG](assets/prime-forms-walkthrough.svg) · [Earlier gallery](pages/prime-forms.html)
+| [Optical phase slots](index.html#phase-slots) | An ideal phase-modulation spectrum driven by digit-factor layers |
+| [Logistic fork](index.html#logistic-fork) | Even and odd mirror responses as the strands are swapped or biased |
+| [Hopf detector](index.html#dimensions) | Projecting an orbit to a detector and varying the pump setting |
+| [Gain sweep](index.html#gain-title) | Stability thresholds across a family of towers driven by one gain |
 
 ## Reproduce the analytic sweep
 
@@ -50,4 +44,8 @@ The [reference outputs](outputs/omega_stability/) include the base sweep, the pe
 
 ## From the original thread
 
-The project grew from Zolton’s question about which patterns in the digits of the speed of light could survive a change in representation. [From the original thread](index.html#thread-notes) follows that question through the Goldbach and Collatz examples, the logistic quarter-turn, Catalan’s disk, and the prime-layer wave experiment.
+The project grew from Zolton’s question about which patterns in the digits of the speed of light could survive a change in representation. The [original walkthrough](https://github.com/EncapsulatorP/c3._2z/blob/1ced156cc8c9f3e8c27d770afb229fc26c146d69/index.html) follows that question through the Goldbach and Collatz examples, the logistic quarter-turn, Catalan’s disk, and the prime-layer wave experiment.
+
+[![Animated walkthrough of the unit tree, prime towers, and Ω wave plate](assets/prime-forms-walkthrough.png)](assets/prime-forms-walkthrough.png)
+
+[Still preview](assets/prime-forms-walkthrough-still.png) · [Animated SVG](assets/prime-forms-walkthrough.svg) · [Earlier gallery](pages/prime-forms.html)
