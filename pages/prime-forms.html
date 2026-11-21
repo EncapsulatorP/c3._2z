@@ -95,7 +95,11 @@ table.research-table{border-collapse:collapse;width:100%;margin:16px 0 6px;font:
 .research-card h3,.model h3,.repeatbox h3,.branch h3{font:600 .98rem var(--sans)}
 .research-card>p{font-size:.94rem;color:var(--dim);margin-top:5px}
 .research-card .controls{margin:14px 0 10px}
-#research-readout{font-size:.84rem;line-height:1.75;border-left:2px solid var(--coral);padding-left:12px}
+.research-card .phase-frame{margin-bottom:12px}
+.omega-lab .research-table :is(th,td){padding-right:8px}
+.omega-lab .research-card{min-width:0;overflow-x:auto}
+#omega-channels{overflow-wrap:anywhere}
+#research-readout,#omega-light-readout,#omega-channels{font-size:.84rem;line-height:1.75;border-left:2px solid var(--coral);padding-left:12px}
 
 .dimension-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(240px,1fr);gap:28px}
 .dimension-controls{display:grid;gap:12px;align-content:start;font:.86rem var(--sans);color:var(--dim)}
@@ -162,7 +166,7 @@ table.research-table{border-collapse:collapse;width:100%;margin:16px 0 6px;font:
 <main>
 <header class="masthead">
 <h1><span class="repo">c3.2z</span>Prime forms</h1>
-<p>Six drawings made from prime letters, a mirrored logistic map and the thresholds of exponent towers. Every line is computed in this page.</p>
+<p>Seven drawings made from prime letters, a mirrored logistic map, the thresholds of exponent towers and the Ω constant. Every line is computed in this page.</p>
 </header>
 
 <section class="prime-gallery" aria-label="Prime forms gallery">
@@ -178,6 +182,7 @@ table.research-table{border-collapse:collapse;width:100%;margin:16px 0 6px;font:
 <label id="gallery-pitch-label" hidden>Helix pitch <input id="helix-pitch" type="range" min="4" max="24" step="1" value="8"></label>
 <span class="gallery-case" id="gallery-loom-tools" hidden><button type="button" id="gallery-seal">Seal seam</button><button type="button" id="gallery-drift">Let it drift</button></span>
 <a id="gallery-gain-link" href="#gain-title" hidden>Adjust the gain sweep</a>
+<label id="gallery-omega-label" hidden>Prime pair <select id="omega-pair"><option value="2,7">2 → 7</option><option value="5,7" selected>5 → 7</option><option value="3,5">3 → 5</option><option value="2,3">2 → 3</option><option value="3,7">3 → 7</option><option value="5,11">5 → 11</option><option value="7,11">7 → 11</option></select> <a href="#omega-title">Read the numbers</a></label>
 <label id="gallery-folds-label" hidden>Odd folds <select id="gallery-folds"><option>3</option><option selected>5</option><option>7</option></select></label>
 <span class="gallery-case" id="gallery-knot-tools" hidden>
 <label>Knot r <input id="gallery-knot-r" type="range" min="0.55" max="1.85" step="0.01" value="1.22"><output id="gallery-r-out"></output></label>
@@ -207,6 +212,31 @@ table.research-table{border-collapse:collapse;width:100%;margin:16px 0 6px;font:
 </section>
 
 <div class="studies">
+<details class="study omega-lab">
+<summary><h2 id="omega-title">Ω, a target we can build</h2><p>A light loop that settles at Ω = W(1) ≈ 56.7% transmission, and prime towers that all share that point but not its stability.</p></summary>
+<div class="study-body">
+<div class="research-grid">
+<section class="research-card" aria-labelledby="omega-light-title">
+<h3 id="omega-light-title">Ω in a beam of light</h3>
+<p>An attenuator sets its optical depth from the transmission it last measured. With feedback gain g the ideal Beer–Lambert loop is x → e<sup>−g·x</sup>, and its steady transmission is W(g)/g.</p>
+<div class="controls"><label>Feedback gain g <input id="omega-gain" type="range" min="0.2" max="4" step="0.01" value="1"><output id="omega-gain-out"></output></label><button type="button" id="omega-gain-e">Set g = e</button></div>
+<figure class="phase-frame"><canvas id="omega-orbit" width="530" height="170" role="img" aria-label="Transmission over 60 passes of the feedback loop"></canvas><figcaption>Transmission over 60 passes, starting from 0.5. The dashed line is W(g)/g.</figcaption></figure>
+<div id="omega-light-readout" class="mono" aria-live="polite"></div>
+<p class="note" id="omega-light-note"></p>
+</section>
+<section class="research-card" aria-labelledby="omega-tower-title">
+<h3 id="omega-tower-title">Prime layers that all keep Ω</h3>
+<p>Each prime letter is one layer, T<sub>p</sub>(x) = Ω·p<sup>Ω−x</sup>. Every layer sends Ω to Ω. Two layers p then q multiply a small displacement by Ω²·ln p·ln q, the same in either order; the curvature (second derivative at Ω) depends on which prime goes first.</p>
+<table class="research-table"><thead><tr><th scope="col">Pair</th><th scope="col">Multiplier</th><th scope="col">Curvature p→q</th><th scope="col">Curvature q→p</th><th scope="col">Rest p→q</th><th scope="col">Rest q→p</th></tr></thead><tbody id="omega-pairs"></tbody></table>
+<p>Rest is where the tower sits after 20,000 double layers started at 1.11. Pick the pair on the Omega pencil drawing.</p>
+</section>
+</div>
+<div id="omega-channels" class="mono" style="margin-top:18px" aria-live="polite"></div>
+<p class="note" id="omega-channel-note"></p>
+<p class="note">This gives Ω an engineered role: we choose a loop whose arithmetic lands on it. A claim about a universal coupling such as α would need an Ω-dependent prediction from an independently specified physical model, compared with measurement.</p>
+<p class="lab-sources"><a href="https://dlmf.nist.gov/4.13">Lambert W function, NIST DLMF §4.13</a>.</p>
+</div>
+</details>
 <details class="study gain-lab">
 <summary><h2 id="gain-title">One physical knob, many towers</h2><p>An idealized analog circuit where one calibrated gain decides which prime towers stay bounded.</p></summary>
 <div class="study-body">
@@ -851,6 +881,7 @@ const galleryForms = {
   rosette: { title:'Prime rosette', caption:'Prime letters set the short chords; the prime and tower height together set the long chords. The two strands wind in opposite directions.' },
   loom: { title:'Fracture loom', caption:'The gap opens where |x + y − 1| grows. An exact mirror seals the seam; independent updates can tear it open.' },
   crown: { title:'Threshold crown', caption:'Each petal is a prime sequence. A petal splits when the shared gain sweep crosses its analytic threshold.' },
+  omega: { title:'Omega pencil', caption:'Every prime layer Ω·p^(Ω−x) passes through the one point Ω. The two cobwebs start at 1.11 and differ only in which prime goes first.' },
   helix: { title:'Original helix', caption:'Prime-letter rungs follow the two orbits in mirrored coordinates. Red marks a suppressed third layer.' },
 };
 const galleryPalette = ['#f3f7fb','#ff9a85','#f3cf8f','#9fd8e6','#f2a9bb'];
@@ -1150,6 +1181,157 @@ function drawThresholdCrown(ctx,bounds,angle) {
   artDot(ctx,520,220,16,'#f3cf8f40');
 }
 
+function lambertW(g) {
+  let w = g<1 ? g : Math.log(g+1);
+  for (let i=0;i<60;i++) {
+    const e = Math.exp(w);
+    w -= (w*e-g)/(e*(w+1));
+  }
+  return w;
+}
+const OMEGA = lambertW(1);
+const omegaLayer = (p,x) => OMEGA*Math.pow(p,OMEGA-x);
+const omegaTwo = (p,q,x) => omegaLayer(q,omegaLayer(p,x));
+const omegaRestCache = new Map();
+function omegaRun(p,q,count) {
+  let x = 1.11;
+  const out = [x];
+  for (let n=0;n<count;n++) { x = omegaTwo(p,q,x); out.push(x); }
+  return out;
+}
+function omegaRest(p,q) {
+  const key = p+'>'+q;
+  if (!omegaRestCache.has(key)) omegaRestCache.set(key,omegaRun(p,q,20000).at(-1));
+  return omegaRestCache.get(key);
+}
+function omegaFacts(p,q) {
+  const lp = Math.log(p), lq = Math.log(q);
+  return { multiplier:OMEGA*OMEGA*lp*lq, curvature:OMEGA*OMEGA*lp*lp*lq*(OMEGA*lq-1) };
+}
+function omegaPair() {
+  return byId('omega-pair').value.split(',').map(Number);
+}
+function drawOmegaPencil(ctx,p,q) {
+  const X0=96, Y0=38, S=364, top=1.4;
+  const mx = x => X0+S*x/top, my = y => Y0+S-S*y/top;
+  const white='#f3f7fb', amber='#f3cf8f', red='#ff9a85', dim='#c7d6e8';
+  ctx.font='13px system-ui, sans-serif';
+  ctx.textAlign='left';
+  ctx.strokeStyle='#4c6c9c'; ctx.lineWidth=1;
+  ctx.strokeRect(X0,Y0,S,S);
+  artPath(ctx,[[mx(0),my(0)],[mx(top),my(top)]],'#b9cbe670',1);
+  ctx.save();
+  ctx.beginPath(); ctx.rect(X0,Y0,S,S); ctx.clip();
+  const curve = prime => Array.from({length:141},(_,i)=>{ const x=top*i/140; return [mx(x),my(omegaLayer(prime,x))]; });
+  for (const prime of [2,3,5,7,11,13,17,19,23,29,31]) {
+    if (prime!==p && prime!==q) artPath(ctx,curve(prime),white+'38',0.8);
+  }
+  artPath(ctx,curve(p),white,1.9);
+  artPath(ctx,curve(q),amber,1.9);
+  for (const [first,second,tone] of [[p,q,white],[q,p,amber]]) {
+    let x = 1.11;
+    const web = [[mx(x),my(x)]];
+    for (let n=0;n<60;n++) {
+      const y = omegaLayer(n%2===0?first:second,x);
+      web.push([mx(x),my(y)],[mx(y),my(y)]);
+      x = y;
+    }
+    ctx.beginPath();
+    ctx.moveTo(...web[0]);
+    for (const point of web.slice(1)) ctx.lineTo(...point);
+    ctx.strokeStyle=tone+'8c'; ctx.lineWidth=0.9; ctx.stroke();
+  }
+  ctx.restore();
+  artDot(ctx,mx(OMEGA),my(OMEGA),11,red+'40');
+  artDot(ctx,mx(OMEGA),my(OMEGA),4,red);
+  artDot(ctx,mx(1.11),my(1.11),3,dim);
+  ctx.fillStyle=red; ctx.fillText('Ω',mx(OMEGA)+13,my(OMEGA)-9);
+  ctx.fillStyle=dim; ctx.fillText('1.11',mx(1.11)+8,my(1.11)+16);
+  ctx.fillText('x',X0+S-10,Y0+S+17); ctx.fillText('next x',X0,Y0-10);
+
+  const steps=48, L=570, R=968;
+  const a = omegaRun(p,q,steps), b = omegaRun(q,p,steps);
+  const sx = n => L+(R-L)*n/steps;
+  const low = Math.min(OMEGA,...a,...b), high = Math.max(OMEGA,...a,...b);
+  const pad = 0.08*(high-low||1);
+  const sy = v => 216-(216-62)*(v-low+pad)/(high-low+2*pad);
+  ctx.setLineDash([4,4]);
+  artPath(ctx,[[L,sy(OMEGA)],[R,sy(OMEGA)]],red+'b0',1);
+  ctx.setLineDash([]);
+  artPath(ctx,a.map((v,n)=>[sx(n),sy(v)]),white,1.6);
+  artPath(ctx,b.map((v,n)=>[sx(n),sy(v)]),amber,1.6);
+  ctx.fillStyle=white; ctx.fillText(p+' → '+q+' first',L,44);
+  ctx.fillStyle=amber; ctx.fillText(q+' → '+p+' first',L+110,44);
+  ctx.fillStyle=red; ctx.fillText('Ω',R+8,sy(OMEGA)+4);
+  const odd = a.map((v,n)=>(v-b[n])/2);
+  const peak = Math.max(1e-12,...odd.map(Math.abs));
+  const zero = 330, reach = 58;
+  artPath(ctx,[[L,zero],[R,zero]],'#4c6c9c',1);
+  for (const [n,v] of odd.entries()) {
+    const y = zero-reach*v/peak;
+    artPath(ctx,[[sx(n),zero],[sx(n),y]],red+'c0',1.4);
+    artDot(ctx,sx(n),y,1.8,red);
+  }
+  ctx.fillStyle=red; ctx.fillText('Half the difference, peak '+peak.toPrecision(3),L,256);
+  ctx.fillStyle=dim; ctx.fillText('double layers 0 to '+steps,L,410);
+}
+function renderOmega() {
+  const g = Number(byId('omega-gain').value);
+  const w = lambertW(g);
+  byId('omega-gain-out').textContent = g.toFixed(2);
+  let x = 0.5;
+  const pass = [x];
+  for (let n=0;n<4000;n++) { x = Math.exp(-g*x); if (n<60) pass.push(x); }
+  const partner = Math.exp(-g*x);
+  const ctx = byId('omega-orbit').getContext?.('2d');
+  if (ctx) {
+    ctx.clearRect(0,0,530,170);
+    const px = n => 16+498*n/60, py = v => 156-140*v;
+    ctx.setLineDash([4,4]);
+    artPath(ctx,[[16,py(w/g)],[514,py(w/g)]],'#ff9a85',1);
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    for (const [n,v] of pass.entries()) n ? ctx.lineTo(px(n),py(v)) : ctx.moveTo(px(n),py(v));
+    ctx.strokeStyle='#f3f7fb'; ctx.lineWidth=1.6; ctx.stroke();
+  }
+  const settled = Math.abs(x-partner)<1e-9;
+  byId('omega-light-readout').replaceChildren(
+    element('div','','Steady transmission W(g)/g = '+(100*w/g).toFixed(4)+'%'),
+    element('div','','Multiplier −W(g) = '+(-w).toFixed(6)),
+    element('div','',settled ? 'After 4000 passes: '+(100*x).toFixed(4)+'%' :
+      'After 4000 passes: alternates '+(100*Math.min(x,partner)).toFixed(3)+'% and '+(100*Math.max(x,partner)).toFixed(3)+'%'),
+  );
+  byId('omega-light-note').textContent = Math.abs(g-1)<0.005 ?
+    'At g = 1 the steady transmission is Ω itself, '+OMEGA.toFixed(8)+'.' :
+    g<Math.E ? 'The loop settles while W(g) stays below 1, which holds for every gain below e ≈ 2.71828.' :
+    'Past g = e the multiplier is beyond −1: the steady level still exists but the loop alternates between two transmissions around it.';
+  const [p,q] = omegaPair();
+  const rows = byId('omega-pairs');
+  rows.replaceChildren();
+  for (const option of byId('omega-pair').options) {
+    const [a,b] = option.value.split(',').map(Number);
+    const forward = omegaFacts(a,b), back = omegaFacts(b,a);
+    const row = element('tr',a===p&&b===q?'is-probe':'');
+    const name = element('th','',a+' → '+b);
+    name.scope='row';
+    row.append(name,element('td','',forward.multiplier.toFixed(6)),
+      element('td','',forward.curvature.toFixed(6)),element('td','',back.curvature.toFixed(6)),
+      element('td','',omegaRest(a,b).toFixed(6)),element('td','',omegaRest(b,a).toFixed(6)));
+    rows.append(row);
+  }
+  const A = omegaRun(p,q,64), B = omegaRun(q,p,64);
+  const line = n => 'after '+String(n).padStart(2)+' double layers   average '+((A[n]+B[n])/2).toFixed(6)+
+    '   half difference '+((A[n]-B[n])/2).toExponential(3);
+  const restA = omegaRest(p,q), restB = omegaRest(q,p);
+  byId('omega-channels').replaceChildren(...[1,8,64].map(n=>element('div','',line(n))),
+    element('div','','at rest                  average '+((restA+restB)/2).toFixed(6)+'   half difference '+((restA-restB)/2).toExponential(3)));
+  const multiplier = omegaFacts(p,q).multiplier;
+  byId('omega-channel-note').textContent = 'Both towers for '+p+' and '+q+' start at 1.11. The average carries the response they share; half the difference cancels it and leaves only the effect of the order. '+
+    (Math.abs(restA-restB)>1e-6 ?
+      'Here the multiplier is '+multiplier.toFixed(4)+', above 1, so Ω repels. The two orders come to rest on different levels, '+restA.toFixed(4)+' and '+restB.toFixed(4)+', and the difference never fades.' :
+      'Here the multiplier is '+multiplier.toFixed(4)+', below 1, so both orders return to Ω and the difference fades to zero; only the path there remembers which prime went first.');
+}
+
 for (const key of Object.keys(galleryForms)) {
   const button=element('button','',galleryForms[key].title);
   button.type='button';
@@ -1168,7 +1350,8 @@ function paintGallery() {
   const classic=galleryForm==='helix';
   byId('gallery-classic').hidden=!classic;
   byId('gallery-frame').hidden=classic;
-  byId('gallery-angle-label').hidden=classic;
+  byId('gallery-angle-label').hidden=classic||galleryForm==='omega';
+  byId('gallery-omega-label').hidden=galleryForm!=='omega';
   byId('gallery-pitch-label').hidden=!classic;
   byId('gallery-loom-tools').hidden=galleryForm!=='loom';
   byId('gallery-knot-tools').hidden=galleryForm!=='knot';
@@ -1207,6 +1390,7 @@ function paintGallery() {
   if (galleryForm==='rosette') drawPrimeRosette(ctx,galleryState,angle,folds);
   if (galleryForm==='loom') drawFractureLoom(ctx,galleryState,angle);
   if (galleryForm==='crown') drawThresholdCrown(ctx,bounds,angle);
+  if (galleryForm==='omega') drawOmegaPencil(ctx,...omegaPair());
 }
 
 function updateGallery(modules,orbit) {
@@ -1408,6 +1592,11 @@ function renderGainProbe() {
 }
 for (const id of ['gain-center','gain-sweep']) byId(id).addEventListener('input',renderGainProbe);
 renderGainProbe();
+
+byId('omega-pair').addEventListener('change',()=>{ renderOmega(); paintGallery(); });
+byId('omega-gain').addEventListener('input',renderOmega);
+byId('omega-gain-e').addEventListener('click',()=>{ byId('omega-gain').value=Math.E.toFixed(2); renderOmega(); });
+renderOmega();
 
 render();
 
