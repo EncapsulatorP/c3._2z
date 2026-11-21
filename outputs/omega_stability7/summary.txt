@@ -25,9 +25,9 @@ Odd-prime delay check
 
 Cheap-feature recovery
 - peak_signature_disagreement: best cheap feature was `first_digit_benford_prob` with AUC 0.745660, threshold accuracy 0.750000
-- first_break_signature_disagreement: label collapsed to a constant or near-constant pattern under these bases, so AUC is not diagnostic.
+- first_break_signature_disagreement: label collapsed to a constant or near-constant pattern under these bases, so AUC is not informative.
 - late_prime_obstruction_peak: best cheap feature was `first_digit_benford_prob` with AUC 0.723750, threshold accuracy 0.741000
-- late_prime_obstruction_first_break: label collapsed to a constant or near-constant pattern under these bases, so AUC is not diagnostic.
+- late_prime_obstruction_first_break: label collapsed to a constant or near-constant pattern under these bases, so AUC is not informative.
 
 Benford residual check
 - late_prime_obstruction_peak: after the best Benford threshold, the residual error rate is 0.259000; the strongest remaining cheap feature is `digit_entropy_bits` with residual AUC 0.521897

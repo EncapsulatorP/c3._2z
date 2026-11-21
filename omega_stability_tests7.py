@@ -814,7 +814,7 @@ def build_summary(
         row = best_target_rows(target)
         if label_rates[target] in (0.0, 1.0) or math.isnan(float(row["best_auc"])):
             lines.append(
-                f"- {target}: label collapsed to a constant or near-constant pattern under these bases, so AUC is not diagnostic."
+                f"- {target}: label collapsed to a constant or near-constant pattern under these bases, so AUC is not informative."
             )
         else:
             lines.append(
