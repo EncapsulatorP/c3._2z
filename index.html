@@ -3,32 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>c3.2z · Prime Forms</title>
+<title>c3.2z · The speed of light as a power tower</title>
 <style>
 :root{
-  color-scheme:dark;
-  --bg:#0a1222;
-  --panel:#0e1830;
-  --canvas:#070d1a;
-  --rg-bg:#070d1a;
-  --line:#24365c;
-  --line-soft:#172443;
-  --ink:#f4f7fc;
-  --dim:#9fb0cf;
-  --mint:#bfd9f5;
-  --violet:#a39bd5;
-  --gold:#d6ba73;
-  --sky:#6fb6c3;
-  --coral:#ff8a3c;
-  --pass:#3fd0bd;
+  color-scheme:light;
+  --bg:#F4F7FC; --panel:#FFFFFF; --canvas:#FFFFFF; --plate:#0f2d55; --rg-bg:#0f2d55;
+  --line:#c9d5ea; --line-soft:#dfe7f5; --ink:#101B32; --dim:#465570;
+  --mint:#2a55c0; --violet:#6b52d0; --gold:#9a6a00; --sky:#0c7f8f; --coral:#c95a00; --pass:#0c9a89;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
   --prism:linear-gradient(90deg,#A39BD5,#948AC8,#6FB6C3,#9BC8D8);
   font:15px/1.55 "IBM Plex Sans",system-ui,-apple-system,sans-serif;
 }
 *{box-sizing:border-box}
 body{
   margin:0;
-  background:radial-gradient(ellipse at 85% 0,#13254a 0,transparent 36rem),var(--bg);
+  background:radial-gradient(ellipse at 85% 0,#e7edf8 0,transparent 36rem),var(--bg);
   color:var(--ink);
   overflow-x:hidden;
 }
@@ -41,14 +31,14 @@ a{color:var(--mint);text-underline-offset:3px}
 strong{color:var(--ink)}
 code,.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 button,select,input[type=number]{
-  background:#12203d;
+  background:#ffffff;
   color:var(--ink);
   border:1px solid var(--line);
   border-radius:8px;
   font:inherit;
 }
 button{cursor:pointer;padding:6px 10px}
-button:hover{background:#1a2c52}
+button:hover{background:#e7edf8}
 button:focus-visible,select:focus-visible,a:focus-visible,input:focus-visible{
   outline:2px solid var(--gold);
   outline-offset:2px;
@@ -60,7 +50,7 @@ input[type=range]{accent-color:var(--mint);cursor:pointer}
 /* Sticky Top Navigation & Shared State Bar */
 .topbar{
   position:sticky;top:0;z-index:40;
-  background:rgba(10,18,34,.9);
+  background:rgba(244,247,252,.9);
   backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);
   padding:10px 18px;
@@ -70,8 +60,8 @@ input[type=range]{accent-color:var(--mint);cursor:pointer}
 .brand{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .brand-pill{
   font:700 11px/1 var(--mono);color:var(--mint);
-  background:rgba(191,217,245,.11);
-  border:1px solid rgba(191,217,245,.4);
+  background:rgba(42,85,192,.11);
+  border:1px solid rgba(42,85,192,.4);
   padding:4px 8px;border-radius:6px;
 }
 .status-strip{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:.82rem}
@@ -87,10 +77,10 @@ input[type=range]{accent-color:var(--mint);cursor:pointer}
 }
 .unit-pill select option{background:var(--panel);color:var(--ink)}
 .btn-mint{
-  background:rgba(191,217,245,.14);border-color:rgba(191,217,245,.5);
+  background:rgba(42,85,192,.14);border-color:rgba(42,85,192,.5);
   color:var(--mint);font:700 .8rem var(--mono);
 }
-.btn-mint:hover{background:rgba(191,217,245,.24)}
+.btn-mint:hover{background:rgba(42,85,192,.24)}
 .btn-play{display:inline-flex;align-items:center;gap:6px;font:600 .8rem var(--mono)}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--pass);box-shadow:0 0 8px var(--pass)}
 .dot.paused{background:var(--dim);box-shadow:none}
@@ -120,8 +110,8 @@ main{max-width:1240px;padding:18px 18px 48px;margin:auto}
 .kpi-lbl{font:600 10px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin-bottom:3px}
 .kpi-val{font:700 .95rem var(--mono);color:var(--mint)}
 .kpi-val.violet{color:var(--violet)}.kpi-val.gold{color:var(--gold)}.kpi-val.coral{color:var(--coral)}
-.btn-coral{background:rgba(255,138,60,.14);border-color:rgba(255,138,60,.5);color:var(--coral);font:600 .8rem var(--mono)}
-.btn-gold{background:rgba(214,186,115,.14);border-color:rgba(214,186,115,.5);color:var(--gold);font:600 .8rem var(--mono)}
+.btn-coral{background:rgba(201,90,0,.14);border-color:rgba(201,90,0,.5);color:var(--coral);font:600 .8rem var(--mono)}
+.btn-gold{background:rgba(154,106,0,.14);border-color:rgba(154,106,0,.5);color:var(--gold);font:600 .8rem var(--mono)}
 
 /* TAB 1: RG Precision Instrument & Hopf Lab */
 .rg-header{
@@ -167,8 +157,10 @@ main{max-width:1240px;padding:18px 18px 48px;margin:auto}
 .lab-menu{display:flex;flex-wrap:wrap;gap:6px 8px}
 .lab-menu a{display:inline-block;padding:5px 9px;border:1px solid var(--line);border-radius:6px;font:.79rem var(--sans);text-decoration:none;color:var(--ink)}
 .lab-menu a:is(:hover,:focus-visible){border-color:var(--gold);color:var(--gold)}
-main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-height,140px) + 16px)}
+main section[id],main [id].panel,main h2[id],#conjectural{scroll-margin-top:calc(var(--menu-height,140px) + 16px)}
 .lab-screen{margin-bottom:20px}
+.canvas-box{position:relative;width:100%;height:390px;background:var(--canvas);border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:crosshair}
+.canvas-box canvas{width:100%;height:100%;display:block}
 .wave-plate{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:22px;align-items:center}
 .wave-plate img{width:100%;height:auto;display:block;border-radius:8px}
 .lab-credit{font:.82rem var(--sans);color:var(--dim);margin-top:20px}
@@ -178,8 +170,8 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
 .prime-gallery{margin:0 0 14px}
 .gallery-modes{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px}
 .gallery-modes button{font-size:.84rem;padding:6px 10px}
-.gallery-modes button[aria-pressed=true]{border-color:#a39bd5;background:#1d2a55;color:#eef3ff}
-.gallery-stage{margin:0;border:1px solid #24365c;border-radius:13px;overflow:hidden;background:var(--canvas)}
+.gallery-modes button[aria-pressed=true]{border-color:#6b52d0;background:#dfe9fb;color:#101b32}
+.gallery-stage{margin:0;border:1px solid #c9d5ea;border-radius:13px;overflow:hidden;background:var(--canvas)}
 .gallery-stage canvas{width:100%;height:auto;display:block}
 .gallery-stage #helix-dna{max-width:650px;margin:auto}
 .gallery-stage[hidden],.gallery-toolbar [hidden]{display:none}
@@ -191,6 +183,9 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
 .orbit-details{margin:10px 0 4px}
 .orbit-details summary{cursor:pointer;color:var(--mint);font-size:.88rem}
 .orbit-details figure{max-width:570px;margin:8px 0 0}
+.conjectural{padding:14px 18px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.conjectural > summary{cursor:pointer;font-weight:600;color:var(--ink)}
+.conjectural > .note{margin:10px 0 16px}
 .helix-word{
   margin-top:10px;overflow-wrap:anywhere;word-break:break-word;
   color:var(--mint);font:.83rem/1.6 var(--mono);
@@ -215,8 +210,8 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
   display:flex;justify-content:space-between;align-items:center;text-align:left;
   width:100%;padding:5px 8px;border-color:transparent;background:transparent;gap:6px;
 }
-.leaves button:hover{background:#1a2c52}
-.leaves button[aria-pressed=true]{border-color:#bfd9f5;color:var(--mint);background:#16305a}
+.leaves button:hover{background:#e7edf8}
+.leaves button[aria-pressed=true]{border-color:#2a55c0;color:var(--mint);background:#dfe9fb}
 .period{color:var(--dim);font:.73rem var(--mono);white-space:nowrap}
 .intro,.properties{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;justify-content:space-between}
 .intro{margin-bottom:10px}
@@ -231,9 +226,9 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
 .tile{
   width:26px;height:44px;display:grid;grid-template-rows:19px 1fr;
   justify-items:center;align-items:center;border:1px solid var(--line);
-  border-radius:5px;background:#101c36;font:.74rem var(--mono);position:relative;padding:0;
+  border-radius:5px;background:#ffffff;font:.74rem var(--mono);position:relative;padding:0;
 }
-.tile.repeat{background:#14223f;border-bottom-color:#bfd9f5}
+.tile.repeat{background:#eef3fb;border-bottom-color:#2a55c0}
 .tile.active{border-color:var(--gold)}
 .tile.edited{box-shadow:inset 0 -2px var(--violet)}
 .tile.overflow::after{
@@ -253,9 +248,9 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
 .plot{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:4px;height:96px;align-items:end;margin-top:8px}
 .plot-col{height:100%;display:grid;grid-template-rows:1fr 17px;text-align:center;font:.62rem var(--mono);color:var(--dim);align-items:end}
 .bar-space{height:100%;display:flex;align-items:end;border-bottom:1px solid var(--line)}
-.bar{width:100%;background:#bfd9f5;border-radius:3px 3px 0 0}
+.bar{width:100%;background:#2a55c0;border-radius:3px 3px 0 0}
 .plot-col:nth-child(7) .bar{background:var(--gold)}
-.plot-col:nth-child(n+8) .bar{background:#a39bd5}
+.plot-col:nth-child(n+8) .bar{background:#6b52d0}
 
 /* TAB 5: Gain, Research & SPEC */
 .research-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
@@ -266,8 +261,8 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
 .gain-lab .research-table tr.is-probe th{color:var(--mint)}
 .gain-lab .research-table tr.is-probe th::after{content:" ·";color:var(--gold)}
 .badge{display:inline-block;font:700 10.5px/1 var(--mono);padding:4px 7px;border-radius:5px}
-.badge.pass{background:rgba(63,208,189,.14);color:var(--pass);border:1px solid rgba(63,208,189,.45)}
-.badge.fail{background:rgba(255,138,60,.16);color:var(--coral);border:1px solid rgba(255,138,60,.5)}
+.badge.pass{background:rgba(12,154,137,.14);color:var(--pass);border:1px solid rgba(12,154,137,.45)}
+.badge.fail{background:rgba(201,90,0,.16);color:var(--coral);border:1px solid rgba(201,90,0,.5)}
 
 @media(max-width:820px){
   .layout,.dimension-layout,.research-grid{grid-template-columns:minmax(0,1fr)}
@@ -276,59 +271,116 @@ main section[id],main [id].panel,main h2[id]{scroll-margin-top:calc(var(--menu-h
   .rg-readout-block{text-align:left}
 }
 
-/* ---- Neon layer: glass tubes on black. Website palette: ice blue = parent strand, violet = mirror, gold = thresholds. ---- */
+/* ---- Light layer: white page, blue plates. Drawings keep their ice-blue, violet and gold inks on the plate. ---- */
 [hidden]{display:none!important}
-body{background:radial-gradient(ellipse at 78% -6%,#1b3566 0,transparent 38rem),radial-gradient(ellipse at 0 100%,#102a4a 0,transparent 32rem),var(--bg)}
-h1,h2{font-family:"Fraunces","Iowan Old Style",Palatino,Georgia,serif;letter-spacing:-.02em}
-h1{font-weight:700;color:#fff;text-shadow:0 0 14px rgba(191,217,245,.55),0 0 38px rgba(85,124,219,.6)}
-h1 em{font-style:italic;font-weight:500;background:var(--prism);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 0 10px rgba(163,155,213,.75))}
-h2{font-weight:700;color:#fff;text-shadow:0 0 10px rgba(163,155,213,.75),0 0 28px rgba(85,124,219,.45)}
-h3{color:#fff;text-shadow:0 0 10px rgba(111,182,195,.6)}
-.topbar{border-bottom:3px solid transparent;border-image:var(--prism) 1;box-shadow:0 6px 30px -8px rgba(111,182,195,.45)}
-.brand-pill{box-shadow:0 0 12px rgba(191,217,245,.5),inset 0 0 8px rgba(191,217,245,.25);text-shadow:0 0 8px var(--mint)}
-#research .panel{overflow-x:auto}
-.panel{border-color:rgba(163,155,213,.3);box-shadow:0 0 44px -18px rgba(163,155,213,.6)}
-.rg-stage,.canvas-box,.gallery-stage,.phase-frame{border-color:rgba(111,182,195,.34);box-shadow:inset 0 0 44px rgba(111,182,195,.06),0 0 28px -12px rgba(111,182,195,.65)}
-.kpi{border-color:rgba(163,155,213,.24)}
-.kpi-val,.rg-readout-val.mint,.btn-mint,.btn-gold,.btn-coral,.badge{text-shadow:0 0 9px currentColor}
-button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
-.gallery-modes button[aria-pressed=true]{box-shadow:0 0 14px rgba(163,155,213,.5);text-shadow:0 0 8px var(--violet)}
-.leaves button[aria-pressed=true]{box-shadow:0 0 12px rgba(191,217,245,.35)}
-.brick{box-shadow:0 0 6px var(--mint)}.brick:nth-child(2){box-shadow:0 0 6px var(--violet)}.brick:nth-child(3){box-shadow:0 0 6px var(--gold)}
-.bar{box-shadow:0 0 10px var(--mint)}.plot-col:nth-child(7) .bar{box-shadow:0 0 12px var(--gold)}.plot-col:nth-child(n+8) .bar{box-shadow:0 0 10px var(--violet)}
-.helix-word,.repeat-text,.summary,.value{text-shadow:0 0 9px rgba(191,217,245,.45)}
+html{scroll-behavior:smooth;scroll-padding-top:190px}
+body{background:var(--bg);color:var(--ink)}
+h1,h2{font-family:"Fraunces","Iowan Old Style",Palatino,Georgia,serif;letter-spacing:-.02em;color:var(--ink)}
+h1{font-weight:700}
+h1 em{font-style:italic;font-weight:500;color:var(--mint)}
+h2{font-weight:700}
+.topbar{background:rgba(244,247,252,.95);border-bottom:3px solid transparent;border-image:var(--prism) 1}
+.panel{box-shadow:0 16px 36px -28px rgba(16,27,50,.5)}
+canvas{background:var(--plate)}
+.rg-stage,.canvas-box,.gallery-stage{background:var(--plate);border-color:var(--plate)}
+.phase-frame canvas{border-radius:8px}
+.lab-menu a{background:#fff}
+.lab-menu a:is(:hover,:focus-visible){border-color:var(--mint);color:var(--mint)}
 .rg-stage canvas{cursor:grab;touch-action:none}.rg-stage canvas:active{cursor:grabbing}
-.omega-readout{font:.84rem/1.75 var(--mono);color:var(--mint);margin-top:12px;text-shadow:0 0 8px rgba(191,217,245,.4);overflow-wrap:anywhere}
+.omega-readout{font:.84rem/1.75 var(--mono);color:var(--ink);margin-top:12px;overflow-wrap:anywhere;border-left:2px solid var(--mint);padding-left:12px}
 .omega-lab .research-table td{font-family:var(--mono);text-align:left;white-space:nowrap}
-.omega-lab .research-table tr.is-probe :is(th,td){color:var(--gold);text-shadow:0 0 8px rgba(214,186,115,.6)}
+.omega-lab .research-table tr.is-probe :is(th,td){color:var(--coral);font-weight:600}
 .omega-lab .phase-frame{overflow-x:auto}
 .omega-lab .phase-frame canvas{margin:10px 0}
-
-.showcase{margin:16px 0 26px;padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+#research .panel,#chain .panel{overflow-x:auto}
+.by{display:inline-block;margin-left:10px;padding:2px 8px;border:1px solid var(--line);border-radius:999px;font:500 .72rem var(--sans);letter-spacing:0;color:var(--dim);background:#fff;vertical-align:middle}
+.gallery-modes .by{margin-left:auto;align-self:center}
+.author-table th{white-space:nowrap;vertical-align:top;padding-right:18px}
+.author-table td{font-family:var(--sans)!important;text-align:left!important;white-space:normal!important}
+/* showcase and thread notes (GPT and Codex) */
+.showcase{margin:0 0 20px;padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--panel);box-shadow:0 16px 36px -28px rgba(16,27,50,.5)}
 .showcase-header,.showcase-controls{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.showcase-header{margin-bottom:13px}.showcase-header h2{margin:0}
+.showcase-header{margin-bottom:13px}
 .showcase-count{color:var(--dim);font:.8rem var(--mono)}
-.showcase-stage{min-height:200px;display:grid;grid-template-columns:minmax(12rem,1fr) minmax(0,1.6fr);gap:18px;align-items:center;padding:16px;background:var(--canvas);border-radius:8px}
+.showcase-stage{min-height:200px;display:grid;grid-template-columns:minmax(12rem,1fr) minmax(0,1.6fr);gap:18px;align-items:center;padding:16px;background:#eef3fb;border-radius:10px}
 .showcase-stage h3{margin:0 0 7px;font:600 1.25rem var(--sans)}
 .showcase-stage p{margin:6px 0;color:var(--dim)}
-.showcase-stage .showcase-detail{display:block;color:var(--gold);font:600 .86rem/1.5 var(--mono);overflow-wrap:anywhere}
-.showcase-stage canvas{display:block;width:100%;max-height:230px;object-fit:contain}
-.showcase-stage canvas[hidden]{display:none}
+.showcase-stage .showcase-detail{display:block;color:var(--mint);font:600 .86rem/1.5 var(--mono);overflow-wrap:anywhere}
+.showcase-stage canvas{display:block;width:100%;max-height:230px;object-fit:contain;border-radius:8px}
 .showcase-stage:has(canvas[hidden]){grid-template-columns:1fr}
 .showcase-controls{margin-top:12px}
 .showcase-controls .actions{display:flex;flex-wrap:wrap;gap:7px}
-.showcase-controls a{color:var(--mint)}
-.lab-menu a[data-showcase-current]{border-color:var(--gold);color:var(--gold)}
-@media(max-width:620px){.showcase{padding:12px}.showcase-stage{grid-template-columns:1fr;min-height:220px;gap:11px}.showcase-stage canvas{max-height:150px}}
-
+.lab-menu a[data-showcase-current]{border-color:var(--mint);color:var(--mint);background:#dfe9fb}
 .thread-intro{max-width:68ch;color:var(--dim)}
 .thread-notes{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}
 .thread-notes li{padding:13px 0;border-top:1px solid var(--line)}
 .thread-notes h3{margin:0 0 6px;font:600 1.04rem var(--sans)}
 .thread-notes p{max-width:76ch;margin:0 0 8px}
-.thread-notes p:last-child{margin-bottom:0}
 .thread-links{font:.82rem var(--sans);color:var(--dim)}
-.thread-notes code{word-break:normal;overflow-wrap:anywhere}
+.thread-notes code{overflow-wrap:anywhere}
+/* wall trees and dedup (Gemini) */
+#obstruction-trees .controls label{flex-wrap:wrap;max-width:100%}
+#obstruction-trees select{max-width:100%}
+.preset-group{display:inline-flex;flex-wrap:wrap;gap:4px;align-items:center}
+.preset-btn{padding:4px 8px;font:600 .78rem var(--mono)}
+.preset-btn[aria-pressed=true]{background:#dfe9fb;border-color:var(--mint);color:var(--mint)}
+.wall-split{display:grid;grid-template-columns:minmax(0,1fr) 256px;gap:14px;align-items:start;margin-top:10px}
+.wall-tree-box{position:relative;width:100%;height:300px;background:var(--plate);border-radius:12px;overflow:hidden;cursor:crosshair}
+.wall-tree-box canvas,.dedup-canvas-box canvas{width:100%;height:100%;display:block}
+.mini-lattice-card{background:var(--plate);border-radius:12px;padding:8px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.mini-lattice-card canvas{width:240px;height:240px;display:block;border-radius:6px}
+.mini-lattice-lbl{font:600 10.5px var(--mono);color:#c9d9f2;text-align:center}
+.legend-strip{display:flex;flex-wrap:wrap;gap:10px 16px;font:600 .78rem var(--mono);margin-top:8px;color:var(--dim)}
+.legend-item{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block;border:1px solid var(--plate)}
+.dedup-split{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(240px,1fr);gap:14px;margin-top:10px}
+.dedup-canvas-box{position:relative;width:100%;height:260px;background:var(--plate);border-radius:12px;overflow:hidden}
+.table-wrap{overflow-x:auto;margin-top:12px}
+.dedup-table{border-collapse:collapse;width:100%;font-size:.82rem}
+.dedup-table th,.dedup-table td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.dedup-table th:first-child,.dedup-table td:first-child{text-align:left}
+.dedup-table td{font-family:var(--mono)}
+.dedup-table tr.is-active-proto{background:#eeeafb}
+.dedup-table tr.is-active-proto td:first-child{color:var(--violet);font-weight:700}
+@media(max-width:820px){.wall-split,.dedup-split,.showcase-stage{grid-template-columns:minmax(0,1fr)}.mini-lattice-card canvas{width:min(240px,100%);height:auto;aspect-ratio:1/1}}
+@media(max-width:900px){.topbar{position:static}html{scroll-padding-top:12px}}
+/* minimizers */
+.view-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:0 0 16px;font:.84rem var(--sans);color:var(--dim)}
+.view-bar button{font:500 .8rem var(--sans);padding:5px 11px;border-radius:999px}
+.view-bar button[aria-pressed=true]{background:var(--plate);border-color:var(--plate);color:#fff}
+.panel-tools{display:flex;justify-content:flex-end;margin:-8px -6px 0 0}
+.min-btn{font:500 .72rem var(--sans);padding:2px 10px;border-radius:999px;color:var(--dim)}
+.min-bar{display:none;width:100%;align-items:center;gap:6px 14px;flex-wrap:wrap;text-align:left;border:0;background:none;padding:0;font:inherit;color:inherit}
+.min-bar:hover{box-shadow:none}
+.min-bar strong{font:700 1rem "Fraunces","Iowan Old Style",Palatino,Georgia,serif;color:var(--ink)}
+.min-bar .min-tag{font:500 .7rem var(--sans);padding:2px 8px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--dim)}
+.min-bar .min-desc{flex:1 1 260px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.84rem;color:var(--dim)}
+.min-bar .min-open{font:600 .78rem var(--sans);color:var(--mint);white-space:nowrap}
+.is-min{padding:10px 16px!important;margin-bottom:8px!important;background:#eaf0fa!important;box-shadow:none!important;display:block!important}
+.is-min > :not(.min-bar){display:none!important}
+.is-min > .min-bar{display:flex}
+.wave-plate > .panel-tools{grid-column:1/-1}
+/* the chain */
+.lead-note{font-size:1.08rem;color:var(--ink);max-width:70ch;margin-top:8px}
+.chain-rows{display:flex;gap:6px;margin:18px 0 6px;overflow-x:auto;padding-bottom:4px}
+.chain-col{display:grid;grid-template-rows:repeat(4,2.5rem);justify-items:center;align-items:center;min-width:2.5rem;font-family:var(--mono)}
+.chain-col.labels{justify-items:start;min-width:8.5rem;font:600 .8rem var(--sans);color:var(--dim)}
+.chain-col span{display:grid;place-items:center;width:100%;height:2.2rem;border-radius:6px}
+.chain-col .d{font-size:1.5rem;font-weight:600;color:#fff;background:var(--plate)}
+.chain-col .p{font-size:1.05rem;color:var(--mint);background:#e7edf8}
+.chain-col .e{font-size:1.05rem;color:var(--violet);background:#eeeafb}
+.chain-col .t{font-size:1.05rem;color:var(--gold);background:#f6efdc}
+.chain-col.radix span{background:none;color:var(--dim)}
+.chain-col.radix{min-width:.8rem}
+.chain-col.capped .e{outline:2px solid var(--coral)}
+.chain-words{font:.9rem/1.9 var(--mono);margin-top:10px;overflow-wrap:anywhere}
+.chain-words b{font:600 .8rem var(--sans);color:var(--dim);display:inline-block;min-width:8.5rem}
+.chain-table td{font-family:var(--mono);font-size:.8rem;text-align:left!important;white-space:nowrap}
+.chain-table tbody tr{cursor:pointer}
+.chain-table tbody tr:hover{background:#eef3fb}
+.chain-table tbody tr.is-probe{background:#dfe9fb}
+.chain-table tbody tr.is-probe th{color:var(--mint)}
+.chain-table .family td{font:600 .8rem var(--sans);color:var(--dim);cursor:default;background:none;padding-top:14px}
 </style>
 </head>
 <body>
@@ -339,7 +391,7 @@ button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
     <div class="top-row">
       <div class="brand">
         <span class="brand-pill">c3.2z</span>
-        <h1><em>Prime Forms</em></h1>
+        <h1>The speed of light, <em>three layers deep</em></h1>
       </div>
       <div class="status-strip">
         <label class="unit-pill" for="top-unit-select">
@@ -354,26 +406,66 @@ button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
       </div>
     </div>
     <nav class="lab-menu" aria-label="Main menu">
+      <a href="#chain">What it does</a>
+      <a href="#units-compared">Every unit system</a>
+      <a href="#modular-cycle">Cycle behind the digits</a>
       <a href="#unit-tree">Unit tree</a>
-      <a href="#phase-slots">Optical phase slots</a>
+      <a href="#phase-slots">Phase slots and read-back</a>
       <a href="#prime-forms">Prime Forms</a>
       <a href="#logistic-fork">Logistic fork</a>
       <a href="#lattice">3D lattice</a>
       <a href="#dimensions">Hopf detector</a>
-      <a href="#gain-title">Gain sweep</a>
-      <a href="#research-controls">Research controls</a>
       <a href="#omega-towers">Ω towers</a>
       <a href="#omega-light">Ω light loop</a>
       <a href="#order-of-waves">Wave plate</a>
-      <a href="#model-checks">Model checks</a>
       <a href="#thread-notes">From the thread</a>
+      <a href="#gain-title">Gain sweep</a>
+      <a href="#research-controls">Controls</a>
+      <a href="#model-checks">Model checks</a>
+      <a href="#authorship">Who made what</a>
+      <a href="#conjectural" data-tour-exclude>Conjectural</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <p class="note">Start with the exact unit conversion. Use its digit towers to drive the drawings, then compare their dynamics and Ω layers.</p>
-
+<div class="view-bar" role="group" aria-label="Which sections are open">
+    <span>Show</span>
+    <button type="button" data-view="cool" aria-pressed="false">Cool parts first</button>
+    <button type="button" data-view="all" aria-pressed="false">Everything open</button>
+    <button type="button" data-view="none" aria-pressed="false">Everything minimized</button>
+    <span>Minimized sections stay on the page as reference: open one from its bar or from the menu.</span>
+  </div>
+<section class="lab-screen" id="chain">
+    <div class="panel">
+      <h2>What this repository does</h2>
+      <p class="lead-note">It reads the speed of light as a power tower, digit by digit. Every digit is a prime raised to a power, so the number splits into three layers: the primes, their exponents, and the top. The layers rebuild the number exactly.</p>
+      <div class="chain-rows" id="chain-rows" aria-label="The digits of c and their three layers"></div>
+      <div class="chain-words" id="chain-words"></div>
+      <p class="note" id="chain-rebuild" style="color:var(--ink)" aria-live="polite"></p>
+      <p class="note">The rule: 4 = 2², 8 = 2³, 9 = 3²; a prime is itself to the power 1; 6 = 2·3 keeps both primes at power 1; 0 and 1 carry no prime. The cap holds every exponent at 2 or less. <a href="#tower-configuration">Change the cap or the unit</a>.</p>
+    </div>
+    <div class="panel" id="units-compared">
+      <h2>The same speed in every unit system</h2>
+      <p class="note">Changing the unit changes the digits and the layers. Each unit system leaves its own modular signature: metric values end, US customary values repeat every 42 digits, nautical values every 154. Click a row to carry that unit through the whole page.</p>
+      <table class="research-table chain-table">
+        <thead><tr><th>Unit</th><th>c in that unit</th><th>Repeats every</th><th>Because</th><th>Prime layer</th><th>Exponent layer</th></tr></thead>
+        <tbody id="chain-units"></tbody>
+      </table>
+    </div>
+    <div class="panel" id="modular-cycle">
+      <h2>The cycle behind the digits</h2>
+      <p class="note">Long division makes each digit from a remainder. Left: the decimal remainders, r → 10·r mod d, joined in order around a circle. Right: the same fraction under doubling, θ → 2θ mod 1, which is the logistic map x → 4x(1−x) seen through x = sin²(πθ). Both are computed exactly with whole numbers. Gold is the run-in, ice blue and violet are the cycle.</p>
+      <figure class="gallery-stage"><canvas id="cycle-art" width="2080" height="880" role="img" aria-label="Remainder cycle on a circle and the matching cycle of the logistic map"></canvas></figure>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-lbl">Reduced denominator d</div><div class="kpi-val" id="cycle-d"></div></div>
+        <div class="kpi"><div class="kpi-lbl">Decimal cycle length</div><div class="kpi-val" id="cycle-ten"></div></div>
+        <div class="kpi"><div class="kpi-lbl">Logistic cycle length</div><div class="kpi-val violet" id="cycle-two"></div></div>
+        <div class="kpi"><div class="kpi-lbl">Run-in steps (decimal / doubling)</div><div class="kpi-val gold" id="cycle-pre"></div></div>
+      </div>
+      <p class="note" id="cycle-note" style="color:var(--ink)" aria-live="polite"></p>
+    </div>
+</section>
   <section class="showcase" id="showcase" aria-labelledby="showcase-title">
     <div class="showcase-header">
       <h2 id="showcase-title">Prime Forms showcase</h2>
@@ -396,7 +488,6 @@ button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
       <a id="showcase-open" href="#unit-tree">Open Unit tree</a>
     </div>
   </section>
-
 <section class="lab-screen" id="unit-tree">
     <div class="panel" id="tower-configuration">
       <h2>Top-level configuration</h2>
@@ -448,6 +539,7 @@ button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
           </div>
           <div id="spectrumSummary" class="summary" aria-live="polite"></div>
           <p id="work" class="work"></p>
+          <p id="readback" class="note" style="color:var(--ink)" aria-live="polite"></p>
           <div id="plot" class="plot" role="group" aria-label="Carrier and six sidebands on either side"></div>
         </section>
       </section>
@@ -517,7 +609,7 @@ button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
       <div id="helix-word" class="helix-word"></div>
       <div id="helix-results" class="helix-results" aria-live="polite"></div>
       <p class="helix-insight" id="helix-insight"></p>
-      <p class="lab-sources">The α setting uses the fine-structure constant as an exploratory dimensionless bias in a chosen rule. Use <strong>Tab 4</strong> to edit the unit, cap, or tower rule.</p>
+      <p class="lab-sources">The α setting uses the fine-structure constant as an exploratory dimensionless bias in a chosen rule. Use the <a href="#tower-configuration">top-level configuration</a> to edit the unit, cap, or tower rule.</p>
     </div>
   </section>
 <section class="lab-screen" id="lattice">
@@ -545,6 +637,15 @@ button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
       </div>
 
       <div class="rg-bar">
+        <label class="mono" style="font-size:.83rem;color:var(--dim);display:inline-flex;gap:8px;align-items:center">Lattice source
+          <select id="rg-source">
+            <option value="primetower" selected>Digit towers (chosen unit)</option>
+            <optgroup label="Conjectural · Recamán inputs">
+              <option value="walltree">Wall tree codes</option>
+              <option value="dedup">Dedup collision map</option>
+            </optgroup>
+          </select>
+        </label>
         <div class="rg-slider-wrap">
           <label for="rg-scale" class="mono" style="font-size:.83rem;color:var(--dim)">Coarse-Graining Layer</label>
           <input id="rg-scale" type="range" min="0" max="3" step="1" value="0">
@@ -599,56 +700,6 @@ button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
       </div>
       <p id="dimension-command" class="note"></p>
       <p class="note">Normalized Hopf model. The attractor is a fixed point or a cycle. The dimension and hole shown by the detector depend on the chosen projection.</p>
-    </div>
-  </section>
-<section class="lab-screen" id="research">
-    <div class="panel gain-lab">
-      <h2 id="gain-title">One gain, many towers</h2>
-      <p class="note">Idealized analog circuit. Each step is an exponential amplifier: x_next = exp(g · ln(p) · x). Repeat a row to build a tower; bracketed thresholds sync with Threshold Crown in Tab 3.</p>
-      <div class="controls">
-        <label>Center gain <input id="gain-center" type="number" min="0" max="1" step="any" value="0.189"></label>
-        <label>Mirror sweep ± <input id="gain-sweep" type="number" min="0" max="1" step="any" value="0.003"></label>
-      </div>
-      <table class="research-table">
-        <thead><tr><th>Repeating primes</th><th>Critical gain</th><th id="gain-left"></th><th id="gain-right"></th></tr></thead>
-        <tbody id="gain-probes"></tbody>
-      </table>
-      <p class="note" id="gain-insight" aria-live="polite"></p>
-    </div>
-
-    <div class="panel">
-      <h2 id="research-controls">Which part is doing the work?</h2>
-      <div class="research-grid">
-        <section class="phase-frame">
-          <h3>Does α win the flip test?</h3>
-          <p class="note">Uniform parent r ∈ [3.40, 3.49]. Fraction below r = 1 + √6 whose R copy crosses above it:</p>
-          <table class="research-table">
-            <thead><tr><th>R offset</th><th>Crossing probability</th></tr></thead>
-            <tbody id="research-crossings"></tbody>
-          </table>
-        </section>
-        <section class="phase-frame">
-          <h3>Does the repunit top survive equal gain?</h3>
-          <p class="note">Analytic log ratio V = L(u + iε)/L(u) matched to first-order phase gain 0.1:</p>
-          <div class="controls">
-            <label>Tower depth <select id="research-depth"><option value="2">2 primes</option><option value="3" selected>3 primes</option></select></label>
-            <label>Top u <select id="research-top"><option>1.10</option><option selected>1.11</option><option>1.12</option><option>11</option></select></label>
-          </div>
-          <div id="research-readout" class="mono" style="font-size:.83rem;color:var(--mint)" aria-live="polite"></div>
-          <p class="note" id="research-tower-note"></p>
-        </section>
-      </div>
-    </div>
-
-    <div class="panel">
-      <div class="intro">
-        <h2 id="model-checks">Model checks</h2>
-        <button type="button" id="spec-copy-btn" class="btn-mint">Copy settings</button>
-      </div>
-      <table class="research-table">
-        <thead><tr><th>#</th><th>Invariant</th><th>Status</th><th>Live Measurement</th></tr></thead>
-        <tbody id="spec-invariants"></tbody>
-      </table>
     </div>
   </section>
 <section class="lab-screen" id="omega-towers">
@@ -711,7 +762,7 @@ button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
     <ol class="thread-notes">
       <li>
         <h3>Start with a digit and ask what survives</h3>
-        <p>In the m/s spelling <code>299792458</code>, counting prime factors with multiplicity gives <code>122121213</code>. Capping each height at two gives <code>122121212</code>. The whole difference is the third factor of 2 in the final digit, <strong>8 = 2³</strong>. That became the amber layer. Changing units re-encodes the number, which gave us a control for the mirror patterns.</p>
+        <p>In the m/s spelling <code>299792458</code>, counting prime factors with multiplicity gives <code>122121213</code>. Capping each height at two gives <code>122121212</code>. The whole difference is the third factor of 2 in the final digit, <strong>8 = 2³</strong>. That became the gold layer. Changing units re-encodes the number, which gave us a control for the mirror patterns.</p>
         <p class="thread-links"><a href="#unit-tree">Open the unit tree</a> · <a href="#phase-slots">Open the phase slots</a></p>
       </li>
       <li>
@@ -734,8 +785,237 @@ button:hover{box-shadow:0 0 12px rgba(191,217,245,.32)}
         <p class="thread-links"><a href="#omega-towers">Open Ω towers</a> · <a href="#order-of-waves">View the signed wave plate</a> · <a href="#gain-title">Open the shared gain sweep</a></p>
       </li>
     </ol>
-    <p class="lab-credit">The project author brought the initial questions and tower ideas. Codex worked through the calculations and drew The Order of Waves. Neon contributed the visual design and 3D lattice.</p>
   </section>
+<section class="lab-screen" id="research">
+    <div class="panel gain-lab">
+      <h2 id="gain-title">One gain, many towers</h2>
+      <p class="note">Idealized analog circuit. Each step is an exponential amplifier: x_next = exp(g · ln(p) · x). Repeat a row to build a tower; bracketed thresholds sync with the Threshold crown drawing in <a href="#prime-forms">Prime Forms</a>.</p>
+      <div class="controls">
+        <label>Center gain <input id="gain-center" type="number" min="0" max="1" step="any" value="0.189"></label>
+        <label>Mirror sweep ± <input id="gain-sweep" type="number" min="0" max="1" step="any" value="0.003"></label>
+      </div>
+      <table class="research-table">
+        <thead><tr><th>Repeating primes</th><th>Critical gain</th><th id="gain-left"></th><th id="gain-right"></th></tr></thead>
+        <tbody id="gain-probes"></tbody>
+      </table>
+      <p class="note" id="gain-insight" aria-live="polite"></p>
+    </div>
+
+    <div class="panel">
+      <h2 id="research-controls">Controls: which part is doing the work?</h2>
+      <div class="research-grid">
+        <section class="phase-frame">
+          <h3>Does α win the flip test?</h3>
+          <p class="note">Uniform parent r ∈ [3.40, 3.49]. Fraction below r = 1 + √6 whose R copy crosses above it:</p>
+          <table class="research-table">
+            <thead><tr><th>R offset</th><th>Crossing probability</th></tr></thead>
+            <tbody id="research-crossings"></tbody>
+          </table>
+        </section>
+        <section class="phase-frame">
+          <h3>Does the repunit top survive equal gain?</h3>
+          <p class="note">Analytic log ratio V = L(u + iε)/L(u) matched to first-order phase gain 0.1:</p>
+          <div class="controls">
+            <label>Tower depth <select id="research-depth"><option value="2">2 primes</option><option value="3" selected>3 primes</option></select></label>
+            <label>Top u <select id="research-top"><option>1.10</option><option selected>1.11</option><option>1.12</option><option>11</option></select></label>
+          </div>
+          <div id="research-readout" class="mono" style="font-size:.83rem;color:var(--mint)" aria-live="polite"></div>
+          <p class="note" id="research-tower-note"></p>
+        </section>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="intro">
+        <h2 id="model-checks">Model checks</h2>
+        <button type="button" id="spec-copy-btn" class="btn-mint">Copy settings</button>
+      </div>
+      <table class="research-table">
+        <thead><tr><th>#</th><th>Invariant</th><th>Status</th><th>Live Measurement</th></tr></thead>
+        <tbody id="spec-invariants"></tbody>
+      </table>
+    </div>
+  </section>
+  <section class="panel" id="authorship" aria-labelledby="authorship-title">
+    <h2 id="authorship-title">Who made what</h2>
+    <table class="research-table author-table">
+      <thead><tr><th>Author</th><th>Contribution</th></tr></thead>
+      <tbody>
+        <tr><th>Zolton Farkas</th><td>The original questions and the tower idea: c read as primes, exponents and top, across unit systems.</td></tr>
+        <tr><th>GPT and Codex</th><td>Unit tree and exact conversions, digit towers, optical phase slots, the Prime Forms drawings and logistic fork, the first Hopf detector, gain sweep and controls, the Ω tower composition and its calculations, The Order of Waves plate, the showcase tour, the thread notes, the README walkthrough and the one-page layout.</td></tr>
+        <tr><th>Gemini (Neon)</th><td>The Living SPEC workspace and neon visual study, the RG lattice with the Hopf detector beside it, the obstructions lab (Recamán walls, photonic blockade), wall trees and dedup scenarios, the lattice sources, and the model checks. The neon study is kept as <a href="pages/prime-forms-index-dark.html">the dark version of this page</a>.</td></tr>
+        <tr><th>Claude</th><td>The white page and blue plates, the 3D relief of the lattice, the chain, unit-system and cycle sections, the spectral read-back, the Omega pencil drawing with its rest levels, and the assembly of the parts.</td></tr>
+      </tbody>
+    </table>
+    <p class="lab-credit">Each section title carries its author. Where two names appear, the first made it and the second reworked it.</p>
+  </section>
+  <details class="conjectural" id="conjectural">
+    <summary>Conjectural · Recamán and exclusion models</summary>
+    <p class="note">The tables and plots report finite runs for the selected rules. Can the arithmetic exclusion statistics predict anything about the toy optical blockade under a specified mapping? That correspondence is an open question.</p>
+<section class="lab-screen" id="obstructions">
+    <div class="panel" id="obs-recaman">
+      <h2>Obstructions: Recamán walls</h2>
+      <p class="note">The Recamán sequence steps back by n when it can and forward when the landing spot is taken. Click the number line to add or remove a forbidden wall and watch every later arc reroute.</p>
+      <div class="controls">
+        <label>Terms n <input id="rec-n" type="range" min="20" max="250" step="1" value="90"><output id="rec-n-out" class="mono">90</output></label>
+        <button type="button" id="rec-inject" class="btn-gold">+ Inject random wall</button>
+        <button type="button" id="rec-clear" class="btn-coral">Reset walls</button>
+        <button type="button" id="rec-save">Save PNG</button>
+      </div>
+      <div class="canvas-box" id="wrap-rec"><canvas id="canvas-rec" role="img" aria-label="Recaman semicircular arcs and the strip of unvisited values"></canvas></div>
+      <p class="note">Ice-blue arcs below the line are free back-steps (aₙ₋₁ − n). Violet arcs above are obstructed forward steps (aₙ₋₁ + n). Orange pins are your walls. The lower strip marks every value not yet visited.</p>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-lbl">Obstructed steps</div><div class="kpi-val violet" id="rec-rate">0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Smallest unvisited value</div><div class="kpi-val gold" id="rec-void">—</div></div>
+        <div class="kpi"><div class="kpi-lbl">Custom walls</div><div class="kpi-val coral" id="rec-walls">0</div></div>
+        <div class="kpi"><div class="kpi-lbl">Largest value reached</div><div class="kpi-val" id="rec-max">0</div></div>
+      </div>
+    </div>
+    <div class="panel" id="obs-photonic">
+      <h2>Obstructions: photonic blockade</h2>
+      <p class="note">Pulses in this toy model travel one cell per tick along 45° rays and bounce off the waveguide walls. Click the lattice to place or remove a blockade cavity. The digit towers of the chosen unit set the model’s bandgap layers.</p>
+      <div class="controls">
+        <label>Anharmonicity <input id="pho-anh" type="range" min="0" max="1" step="0.02" value="0.80"><output id="pho-anh-out" class="mono">0.80</output></label>
+        <label><input id="pho-bg" type="checkbox" checked> Prime bandgap layers (<span id="pho-unit-txt" class="mono">m/s</span>)</label>
+        <button type="button" id="pho-clear" class="btn-coral">Clear cavities</button>
+        <button type="button" id="pho-save">Save PNG</button>
+      </div>
+      <div class="canvas-box" id="wrap-pho"><canvas id="canvas-pho" role="img" aria-label="Photon pulses on 45 degree rays meeting blockade cavities"></canvas></div>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-lbl">Transmitted</div><div class="kpi-val" id="pho-trans">50%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Reflected</div><div class="kpi-val violet" id="pho-refl">50%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Shadow zone</div><div class="kpi-val coral" id="pho-shadow">0.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Ray speed</div><div class="kpi-val gold">1 cell per tick</div></div>
+      </div>
+    </div>
+</section>
+<section class="lab-screen" id="obstruction-trees">
+    <!-- Panel 2.1 · Fast Hierarchical Wall Trees -> 1.1 Lattice -->
+    <div class="panel">
+      <div class="intro">
+        <div>
+          <h2 id="wall-trees">Wall trees: why each Recamán step turned back</h2>
+          <p class="note" style="margin-top:4px">TypedArray Recamán wall classifier (<code>Int32Array</code> / <code>Uint8Array</code>). Classifies every step into 4 hierarchical obstruction codes and maps one-to-one onto the 32×32 lattice.</p>
+        </div>
+        <div class="controls" style="margin:0">
+          <button type="button" id="wt-map-rg" class="btn-mint">Show on the 3D lattice</button>
+          <button type="button" id="wt-save">Save PNG</button>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="preset-group" role="group" aria-label="Step count presets">
+          <span class="mono" style="font-size:.8rem;color:var(--dim);margin-right:4px">n:</span>
+          <button type="button" class="preset-btn" data-n="64" aria-pressed="false">64</button>
+          <button type="button" class="preset-btn" data-n="256" aria-pressed="false">256</button>
+          <button type="button" class="preset-btn" data-n="1024" aria-pressed="true">1024</button>
+          <button type="button" class="preset-btn" data-n="4096" aria-pressed="false">4096</button>
+          <button type="button" class="preset-btn" data-n="16384" aria-pressed="false">16384</button>
+        </div>
+        <label>Steps
+          <input id="wt-n-slider" type="range" min="32" max="16384" step="32" value="1024" style="width:130px">
+          <input id="wt-n-num" type="number" min="24" max="16384" step="1" value="1024" style="width:76px">
+        </label>
+        <label>Wall Filter
+          <select id="wt-filter">
+            <option value="none" selected>None (Pure Recamán)</option>
+            <option value="mod3">Mod 3 Forbidden</option>
+            <option value="mod5">Mod 5 Forbidden</option>
+            <option value="prime">Prime Forbidden</option>
+            <option value="custom">Click-to-Toggle Custom Walls</option>
+          </select>
+        </label>
+        <button type="button" id="wt-clear-walls" class="btn-coral" hidden>Clear Custom Walls</button>
+      </div>
+
+      <div class="wall-split">
+        <div>
+          <div class="wall-tree-box" id="wrap-wt">
+            <canvas id="canvas-wt" role="img" aria-label="Hierarchical wall tree breakdown and trajectory strip"></canvas>
+          </div>
+          <div class="legend-strip">
+            <span class="legend-item"><i class="sw" style="background:#bfd9f5"></i>0 · Free Down</span>
+            <span class="legend-item"><i class="sw" style="background:#d6ba73"></i>1 · Floor Boundary (&lt;0)</span>
+            <span class="legend-item"><i class="sw" style="background:#a39bd5"></i>2 · Memory Wall (in V)</span>
+            <span class="legend-item"><i class="sw" style="background:#ff8a3c"></i>3 · Filter/Custom Wall</span>
+          </div>
+        </div>
+        <div class="mini-lattice-card">
+          <canvas id="canvas-wt-lattice" width="240" height="240" role="img" aria-label="32 by 32 live lattice mapping of wall classes"></canvas>
+          <div class="mini-lattice-lbl" id="wt-lattice-lbl">Live lattice map (32×32 · 1:1)</div>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-lbl">Compute Time</div><div class="kpi-val" id="wt-kpi-ms">0.00 ms</div></div>
+        <div class="kpi"><div class="kpi-lbl">Free Down (0)</div><div class="kpi-val" id="wt-kpi-free">0.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Floor Walls (1)</div><div class="kpi-val gold" id="wt-kpi-floor">0.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Memory Walls (2)</div><div class="kpi-val violet" id="wt-kpi-mem">0.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Filter Walls (3)</div><div class="kpi-val coral" id="wt-kpi-filt">0.0%</div></div>
+        <div class="kpi"><div class="kpi-lbl">Longest Wall Streak</div><div class="kpi-val gold" id="wt-kpi-streak">0</div></div>
+        <div class="kpi"><div class="kpi-lbl">Minimal Unvisited Void</div><div class="kpi-val" id="wt-kpi-void">—</div></div>
+      </div>
+    </div>
+
+    <!-- Panel 2.2 · Duplication & Deduplication Scenarios -->
+    <div class="panel">
+      <div class="intro">
+        <div>
+          <h2 id="dedup">Duplicates and three ways to constrain them</h2>
+          <p class="note" style="margin-top:4px">Compare Standard Recamán's unguarded up-step (which creates collision hubs like <code>a₂₀ = a₂₄ = 42</code>) against 3 deterministic deduplication protocols on the exact same <code>n</code>.</p>
+        </div>
+        <div class="controls" style="margin:0">
+          <button type="button" id="dd-map-rg" class="btn-mint">Show collisions on the 3D lattice</button>
+          <button type="button" id="dd-save">Save PNG</button>
+        </div>
+      </div>
+
+      <div class="controls">
+        <label>Active Comparison Scenario
+          <select id="dd-scenario">
+            <option value="strict" selected>Strict Dedup (Guarded Up-Step)</option>
+            <option value="voidfill">Void-Fill Dedup (Lowest Unvisited Fallback)</option>
+            <option value="capped">Capped Dedup (Max 2 Hits)</option>
+          </select>
+        </label>
+        <span id="dd-summary-note" class="mono" style="font-size:.8rem;color:var(--dim)"></span>
+      </div>
+
+      <div class="dedup-split">
+        <div class="dedup-canvas-box" id="wrap-dd-trace">
+          <canvas id="canvas-dd-trace" role="img" aria-label="Dual trace comparing standard Recaman with active deduplication scenario"></canvas>
+        </div>
+        <div class="dedup-canvas-box" id="wrap-dd-hist">
+          <canvas id="canvas-dd-hist" role="img" aria-label="Hit multiplicity histogram comparing standard and dedup protocols"></canvas>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="dedup-table">
+          <thead>
+            <tr>
+              <th>Protocol</th>
+              <th>Unique Values</th>
+              <th>Duplicate Collisions</th>
+              <th>Max Multiplicity</th>
+              <th>First Duplicate (Val @ n)</th>
+              <th>Min Unvisited Void</th>
+              <th>Compute (ms)</th>
+            </tr>
+          </thead>
+          <tbody id="dd-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+</section>
+    <div class="panel" id="conjectural-checks">
+      <h2>Finite-run checks</h2>
+      <table class="research-table">
+        <thead><tr><th>#</th><th>Check</th><th>Status</th><th>Live Measurement</th></tr></thead>
+        <tbody id="conjectural-invariants"></tbody>
+      </table>
+    </div>
+  </details>
 </main>
 
 <script>
@@ -916,7 +1196,7 @@ function drawRG(t) {
   const ctx = c.getContext('2d');
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
-  ctx.fillStyle = '#070d1a';
+  ctx.fillStyle = '#0f2d55';
   ctx.fillRect(0, 0, w, h);
 
   const sc = Number(byId('rg-scale').value);
@@ -930,14 +1210,16 @@ function drawRG(t) {
   const roots = knotAttractors(kR, kE);
   const knotAmp = roots.length === 2 ? roots[1] : 0.25;
 
-  // 32x32 Layer 0 micro-field (unchanged rule)
+  const rgSrc = byId('rg-source').value;
+  // 32x32 Layer 0 micro-field: digit towers, or the wall-tree / dedup codes as four height bands
   let s0 = 0, sq0 = 0;
   for (let y = 0; y < 32; y++) {
     for (let x = 0; x < 32; x++) {
       const hA = digs[(x + y * 3) % dLen];
       const hB = digs[(x * 5 + y * 7) % dLen];
       const wave = 0.5 + 0.5 * Math.sin(t * 1.15 + x * 0.42 - y * 0.37 + knotAmp * Math.cos(t * 0.8 + ((x * 7) ^ (y * 11)) * 0.22));
-      const v = Math.max(0, Math.min(1, 0.42 * hA + 0.22 * hB + 0.36 * wave));
+      const code = rgSrc === 'walltree' ? wtState.lattice[y * 32 + x] : rgSrc === 'dedup' ? ddState.collisionLattice[y * 32 + x] : -1;
+      const v = code < 0 ? Math.max(0, Math.min(1, 0.42 * hA + 0.22 * hB + 0.36 * wave)) : Math.max(0, Math.min(1, (code + 0.5) / 4 + 0.07 * (wave - 0.5)));
       microField[y * 32 + x] = v;
       s0 += v; sq0 += v * v;
     }
@@ -1088,7 +1370,7 @@ function paintDimension(timeMs) {
   const { radius, visible, detector, resolved } = displayedDimension;
   const x = 320, y = 122, angle = 0.0022 * timeMs + 0.66, px = radius * 88;
   ctx.clearRect(0, 0, 640, 244);
-  ctx.strokeStyle = '#24365c'; ctx.lineWidth = 1;
+  ctx.strokeStyle = '#3d5f96'; ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(55, y); ctx.lineTo(585, y); ctx.moveTo(x, 19); ctx.lineTo(x, 225); ctx.stroke();
   ctx.font = '14px system-ui'; ctx.fillStyle = '#9fb0cf';
   ctx.fillText(detector === 'power' ? 'Power' : detector === 'sum' ? 'Real field sum' : 'In-phase field', 493, 145);
@@ -1154,9 +1436,9 @@ function artRing(a, r, x = 520, y = 220) { return [x + r * Math.cos(a), y + r * 
 function galleryBackdrop(ctx, tint) {
   ctx.setTransform(2, 0, 0, 2, 0, 0);
   ctx.shadowBlur = 0; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-  ctx.fillStyle = '#070d1a'; ctx.fillRect(0, 0, 1040, 440);
+  ctx.fillStyle = '#0f2d55'; ctx.fillRect(0, 0, 1040, 440);
   const wash = ctx.createRadialGradient(520, 220, 10, 520, 220, 560);
-  wash.addColorStop(0, tint + '2e'); wash.addColorStop(1, '#070d1a00');
+  wash.addColorStop(0, tint + '2e'); wash.addColorStop(1, '#0f2d5500');
   ctx.fillStyle = wash; ctx.fillRect(0, 0, 1040, 440);
 }
 function perspective(x, y, z, angle) {
@@ -1361,7 +1643,7 @@ function drawPrimeHelix(mods, pitch, breathing) {
     return pt;
   });
   ctx.lineWidth = 2;
-  for (const pt of pts) { ctx.strokeStyle = '#24365c'; ctx.beginPath(); ctx.moveTo(pt.x, pt.a); ctx.lineTo(pt.x, pt.b); ctx.stroke(); }
+  for (const pt of pts) { ctx.strokeStyle = '#3d5f96'; ctx.beginPath(); ctx.moveTo(pt.x, pt.a); ctx.lineTo(pt.x, pt.b); ctx.stroke(); }
   for (const [rail, col] of [['a', '#bfd9f5'], ['b', '#a39bd5']]) {
     ctx.strokeStyle = col; ctx.beginPath();
     pts.forEach((pt, i) => {
@@ -1374,7 +1656,7 @@ function drawPrimeHelix(mods, pitch, breathing) {
   ctx.font = fs + 'px monospace'; ctx.textAlign = 'center';
   for (const { x, a, b, letters, base, height } of pts) {
     for (const [y, word] of [[a, letters], [b, [...letters].reverse().join('')]]) {
-      ctx.fillStyle = '#070d1a'; ctx.fillRect(x - fs, y - fs * 0.7, fs * 2, fs * 1.4);
+      ctx.fillStyle = '#0f2d55'; ctx.fillRect(x - fs, y - fs * 0.7, fs * 2, fs * 1.4);
       if (!word) { ctx.fillStyle = '#9fb0cf'; ctx.fillText('·', x, y + fs / 3); }
       [...word].forEach((ch, j) => { ctx.fillStyle = primeColors[ch]; ctx.fillText(ch, x + (j - (word.length - 1) / 2) * fs * 0.61, y + fs / 3); });
     }
@@ -1385,7 +1667,7 @@ function drawPrimeHelix(mods, pitch, breathing) {
 function drawForkOrbit(history) {
   const ctx = byId('helix-orbit').getContext('2d');
   ctx.clearRect(0, 0, 530, 220);
-  ctx.strokeStyle = '#24365c'; ctx.lineWidth = 1;
+  ctx.strokeStyle = '#3d5f96'; ctx.lineWidth = 1;
   for (const v of [0, 0.5, 1]) {
     const y = 198 - 176 * v;
     ctx.beginPath(); ctx.moveTo(30, y); ctx.lineTo(509, y); ctx.stroke();
@@ -1549,6 +1831,7 @@ function updateSlotOptions(digits, word, mode) {
   }));
   picker.value = String(Math.max(0, word.findIndex((h) => h % 2 === 1)));
 }
+let spectrumReadsBack = true;
 function drawSpectrum() {
   const unit = units.get(selected);
   const digits = byId('drive').value === 'cycle' ? unit.cycle : visibleDigits;
@@ -1579,6 +1862,19 @@ function drawSpectrum() {
     element('span', '', (100 * powers[6]).toFixed(2) + '% carrier power'),
   );
   byId('work').textContent = (cached ? 'Reused base spectrum' : 'New base spectrum') + ' · ' + changes.length + ' of ' + len + ' slots modified' + (mode === 'whole' ? ' · Whole mirror reverses bin order' : '');
+  // read the word back from its full spectrum (all len lines, amplitude and phase)
+  const full = Array.from({ length: len }, (_, k) => {
+    let re = 0, im = 0;
+    for (let j = 0; j < len; j++) { const a = (edited[j] * Math.PI) / 2 - (2 * Math.PI * k * j) / len; re += Math.cos(a); im += Math.sin(a); }
+    return [re, im];
+  });
+  const back = Array.from({ length: len }, (_, j) => {
+    let re = 0, im = 0;
+    for (let k = 0; k < len; k++) { const a = (2 * Math.PI * k * j) / len; re += full[k][0] * Math.cos(a) - full[k][1] * Math.sin(a); im += full[k][0] * Math.sin(a) + full[k][1] * Math.cos(a); }
+    return ((Math.round(Math.atan2(im, re) / (Math.PI / 2)) % 4) + 4) % 4;
+  });
+  spectrumReadsBack = back.join('') === edited.join('');
+  byId('readback').textContent = 'Read back from the ' + len + ' spectral lines: ' + back.join('') + (spectrumReadsBack ? ', the same word that drove the modulator.' : ', which does not match the driving word.') + ' The read-back uses each line\'s amplitude and phase; the powers in the bars are not enough by themselves.';
   const plot = byId('plot');
   plot.replaceChildren();
   harmonics.forEach((harm, idx) => {
@@ -1690,7 +1986,7 @@ function drawOmegaPencil(p, q) {
   const mx = (x) => X0 + (S * x) / top, my = (y) => Y0 + S - (S * y) / top;
   const lime = '#bfd9f5', violet = '#a39bd5', hot = '#d6ba73', dim = '#9fb0cf';
   ctx.font = '13px system-ui, sans-serif'; ctx.textAlign = 'left';
-  ctx.strokeStyle = '#24365c'; ctx.lineWidth = 1; ctx.strokeRect(X0, Y0, S, S);
+  ctx.strokeStyle = '#3d5f96'; ctx.lineWidth = 1; ctx.strokeRect(X0, Y0, S, S);
   artPath(ctx, [[mx(0), my(0)], [mx(top), my(top)]], '#759bcf66', 1);
   ctx.save();
   ctx.beginPath(); ctx.rect(X0, Y0, S, S); ctx.clip();
@@ -1735,7 +2031,7 @@ function drawOmegaPencil(p, q) {
   const odd = a.map((v, n) => (v - b[n]) / 2);
   const peak = Math.max(1e-12, ...odd.map(Math.abs));
   const zero = 330, reach = 58;
-  artPath(ctx, [[L, zero], [R, zero]], '#24365c', 1);
+  artPath(ctx, [[L, zero], [R, zero]], '#3d5f96', 1);
   for (const [n, v] of odd.entries()) {
     const y = zero - (reach * v) / peak;
     artPath(ctx, [[sx(n), zero], [sx(n), y]], '#6fb6c3c8', 1.4);
@@ -1803,7 +2099,135 @@ function renderOmega() {
   updateInvariants();
 }
 
+// ---- The chain: digits -> primes -> exponents -> top ----
+const digitBases = ['', '', '2', '3', '2', '5', '2·3', '7', '2', '3'];
+const digitExponent = [0, 0, 1, 1, 2, 1, 1, 1, 3, 2];
+function chainLayers(digits, raw) {
+  return [...digits].map((d) => {
+    const full = digitExponent[d], exp = raw ? full : Math.min(2, full);
+    const rebuilt = d === '6' ? 6 : digitBases[d] ? Number(digitBases[d]) ** exp : Number(d);
+    return { digit: d, base: digitBases[d] || '·', exp: full ? String(exp) : '·', top: full ? '1' : '·', rebuilt: String(rebuilt), capped: exp !== full };
+  });
+}
+function withPoint(text, whole) { return text.length > whole ? text.slice(0, whole) + '.' + text.slice(whole) : text; }
+function coprimeToTen(d) { while (d % 2n === 0n) d /= 2n; while (d % 5n === 0n) d /= 5n; return d; }
+function orderOf(base, q) {
+  if (q === 1n) return 0;
+  let x = base % q, n = 1;
+  while (x !== 1n && n < 200000) { x = (x * base) % q; n++; }
+  return n;
+}
+function remainderOrbit(n, d, mult) {
+  const seen = new Map(), path = [];
+  let r = n % d;
+  while (!seen.has(r) && path.length < 20000) { seen.set(r, path.length); path.push(r); r = (r * mult) % d; }
+  const start = seen.get(r) ?? path.length;
+  const fixedAtZero = path.length - start === 1 && path[start] === 0n;
+  return { path, start, length: fixedAtZero ? 0 : path.length - start, fixedAtZero };
+}
+function renderChain() {
+  const unit = units.get(selected), raw = byId('uncap').checked;
+  const shown = visibleDigits.slice(0, 24), whole = unit.whole.length;
+  const layers = chainLayers(shown, raw);
+  const rows = byId('chain-rows');
+  const labels = element('div', 'chain-col labels');
+  for (const text of ['Digits of c', 'Prime layer', 'Exponent layer', 'Top layer']) labels.append(element('span', '', text));
+  rows.replaceChildren(labels);
+  layers.forEach((cell, i) => {
+    if (i === whole) { const dot = element('div', 'chain-col radix'); dot.append(element('span', '', '.')); rows.append(dot); }
+    const col = element('div', 'chain-col' + (cell.capped ? ' capped' : ''));
+    col.append(element('span', 'd', cell.digit), element('span', 'p', cell.base), element('span', 'e', cell.exp), element('span', 't', cell.top));
+    col.title = cell.base === '·' ? cell.digit + ' carries no prime' : cell.digit + ' = ' + cell.base + ' to the power ' + digitExponent[cell.digit];
+    rows.append(col);
+  });
+  const word = (key) => layers.map((c) => c[key]).join(key === 'base' && layers.some((c) => c.base.length > 1) ? ' ' : '');
+  const lines = [['Digits of c', withPoint(shown, whole)], ['Prime layer', word('base')], ['Exponent layer', word('exp')], ['Top layer', word('top')]];
+  byId('chain-words').replaceChildren(...lines.map(([label, text]) => { const div = element('div', ''); div.append(element('b', '', label), document.createTextNode(text)); return div; }));
+  const rebuilt = layers.map((c) => c.rebuilt).join('');
+  const lost = layers.filter((c) => c.capped).length;
+  byId('chain-rebuild').textContent = (rebuilt === shown
+    ? 'Rebuilt from the layers: ' + withPoint(rebuilt, whole) + ', identical to the input' + (visibleDigits.length > 24 ? ' (first 24 digits shown).' : '.')
+    : 'With the cap on, the layers rebuild ' + withPoint(rebuilt, whole) + ': ' + lost + (lost === 1 ? ' digit 8 loses its third layer and reads as 4.' : ' digits 8 lose their third layer and read as 4.') + ' Restore the third layer to rebuild c exactly.')
+    + ' Unit: ' + unit.label + '.';
+
+  const body = byId('chain-units');
+  body.replaceChildren();
+  let family = '';
+  for (const [id, u] of units) {
+    if (u.family !== family) { family = u.family; const head = element('tr', 'family'); const td = element('td', '', family); td.colSpan = 6; head.append(td); body.append(head); }
+    const frac = fractionWindow(u, 6), digits = u.whole + frac, q = coprimeToTen(u.d);
+    const cells = chainLayers(digits, true);
+    const tr = element('tr', id === selected ? 'is-probe' : '');
+    tr.append(element('th', '', u.label), element('td', '', withPoint(digits, u.whole.length) + (u.cycle || frac.length < u.prefix.length ? '…' : '')),
+      element('td', '', u.cycle ? u.cycle.length + ' digits' : 'ends'),
+      element('td', '', u.d === 1n ? 'whole number' : q === 1n ? 'denominator ' + u.d + ' has only 2s and 5s' : '10^' + orderOf(10n, q) + ' ≡ 1 (mod ' + q + ')'),
+      element('td', '', cells.map((c) => c.base).join(cells.some((c) => c.base.length > 1) ? ' ' : '')), element('td', '', cells.map((c) => c.exp).join('')));
+    tr.addEventListener('click', () => { selected = id; render(); });
+    body.append(tr);
+  }
+  drawCycle(unit);
+}
+function drawCycle(unit) {
+  const ctx = byId('cycle-art').getContext('2d');
+  galleryBackdrop(ctx, '#6fb6c3');
+  const ten = remainderOrbit(unit.n, unit.d, 10n), two = remainderOrbit(unit.n, unit.d, 2n);
+  const D = Number(unit.d), ice = '#bfd9f5', violet = '#a39bd5', gold = '#d6ba73', dim = '#9fb0cf';
+  ctx.font = '13px system-ui, sans-serif'; ctx.textAlign = 'left';
+  // left: remainders on a circle
+  const cx = 280, cy = 222, R = 172;
+  artPath(ctx, Array.from({ length: 181 }, (_, i) => [cx + R * Math.cos((i * Math.PI) / 90), cy + R * Math.sin((i * Math.PI) / 90)]), '#3d5f96', 1);
+  const at = (r) => { const a = (2 * Math.PI * Number(r)) / D - Math.PI / 2; return [cx + R * Math.cos(a), cy + R * Math.sin(a)]; };
+  const closed = [...ten.path, ten.path[ten.start]];
+  ctx.beginPath(); closed.slice(0, ten.start + 1).forEach((r, i) => (i ? ctx.lineTo(...at(r)) : ctx.moveTo(...at(r))));
+  ctx.strokeStyle = gold; ctx.lineWidth = 1.4; ctx.stroke();
+  ctx.beginPath(); closed.slice(ten.start).forEach((r, i) => (i ? ctx.lineTo(...at(r)) : ctx.moveTo(...at(r))));
+  ctx.strokeStyle = ice + (ten.length > 60 ? '90' : 'd0'); ctx.lineWidth = ten.length > 60 ? 0.8 : 1.2; ctx.stroke();
+  for (const r of ten.path.slice(ten.start)) artDot(ctx, ...at(r), ten.length > 60 ? 1.6 : 2.6, ice);
+  artDot(ctx, ...at(ten.path[0]), 4, gold);
+  artDot(ctx, cx, cy - R, 3, '#ffffff');
+  ctx.fillStyle = dim; ctx.fillText('0', cx - 3, cy - R - 10);
+  ctx.fillStyle = ice; ctx.fillText('remainders, r → 10·r mod ' + unit.d, 62, 428);
+  // right: the logistic map at r = 4
+  const X0 = 600, Y0 = 44, S = 356;
+  const mx = (x) => X0 + S * x, my = (y) => Y0 + S - S * y;
+  ctx.strokeStyle = '#3d5f96'; ctx.lineWidth = 1; ctx.strokeRect(X0, Y0, S, S);
+  artPath(ctx, [[mx(0), my(0)], [mx(1), my(1)]], '#759bcf80', 1);
+  artPath(ctx, Array.from({ length: 121 }, (_, i) => { const x = i / 120; return [mx(x), my(4 * x * (1 - x))]; }), '#ffffff', 1.6);
+  const xs = two.path.map((r) => Math.sin((Math.PI * Number(r)) / D) ** 2);
+  const web = (from, to, color, width) => {
+    ctx.beginPath(); ctx.moveTo(mx(xs[from]), my(xs[from]));
+    for (let i = from; i < to; i++) {
+      const next = xs[i + 1 < xs.length ? i + 1 : two.start];
+      ctx.lineTo(mx(xs[i]), my(next)); ctx.lineTo(mx(next), my(next));
+    }
+    ctx.strokeStyle = color; ctx.lineWidth = width; ctx.stroke();
+  };
+  web(0, two.start, gold, 1.3);
+  web(two.start, xs.length, violet + (two.length > 60 ? '90' : 'e0'), two.length > 60 ? 0.8 : 1.3);
+  for (let i = two.start; i < xs.length; i++) artDot(ctx, mx(xs[i]), my(4 * xs[i] * (1 - xs[i])), two.length > 60 ? 1.6 : 2.8, violet);
+  artDot(ctx, mx(xs[0]), my(xs[0]), 4, gold);
+  ctx.fillStyle = violet; ctx.fillText('logistic map x → 4x(1 − x), from θ → 2θ mod 1', X0, 428);
+  ctx.fillStyle = dim; ctx.fillText('x', X0 + S + 8, Y0 + S + 4); ctx.fillText('next x', X0, Y0 - 12);
+
+  byId('cycle-d').textContent = String(unit.d);
+  byId('cycle-ten').textContent = ten.length ? ten.length + ' remainders' : 'none: ends at 0';
+  byId('cycle-two').textContent = two.length ? two.length + ' points' : 'none: rests at 0';
+  byId('cycle-pre').textContent = ten.start + ' / ' + two.start;
+  byId('cycle-note').textContent = unit.d === 1n
+    ? unit.label + ' is a whole number of units, so nothing is left to divide: both pictures sit on the single point 0. Pick a US customary or nautical unit to see a cycle.'
+    : (ten.length ? 'In ' + unit.label + ' the decimal remainders close into a loop of ' + ten.length + ', which is why the digits repeat every ' + ten.length + '.' : 'In ' + unit.label + ' the decimal remainders reach 0 after ' + ten.start + (ten.start === 1 ? ' step' : ' steps') + ', so the decimal ends.')
+      + (two.length ? ' Under doubling the same fraction lands on an exact ' + two.length + '-point cycle of the logistic map.' : ' Under doubling it falls onto the fixed point 0 of the logistic map.');
+}
+function chainChecks() {
+  const ms = units.get('ms');
+  const rebuilt = chainLayers(ms.whole, true).map((c) => c.rebuilt).join('');
+  let periods = true;
+  for (const u of units.values()) { const q = coprimeToTen(u.d); if ((q === 1n ? 0 : orderOf(10n, q)) !== u.cycle.length) periods = false; }
+  return { rebuilt, periods };
+}
+
 let lastInvariants = [];
+let lastConjecturalChecks = [];
 function updateInvariants() {
   const kR = Number(byId('gallery-knot-r').value), kE = Number(byId('gallery-knot-e').value);
   const roots = knotAttractors(kR, kE);
@@ -1816,7 +2240,11 @@ function updateInvariants() {
   const u = units.get(selected);
   const bigOk = u.n > 0n && u.d > 0n && gcd(u.n, u.d) === 1n;
 
+  const chain = chainChecks();
   lastInvariants = [
+    { name: 'Layers Rebuild c Exactly', pass: chain.rebuilt === '299792458', detail: `2·3²·3²·7·3²·2·2²·5·2³ read digit by digit → ${chain.rebuilt}` },
+    { name: 'Decimal Period = Order of 10 mod d', pass: chain.periods, detail: 'all 14 units agree: 42 where 127 divides d, 154 for 463, none when d has only 2s and 5s' },
+    { name: 'Spectrum Reads Back the Word', pass: spectrumReadsBack, detail: 'inverse transform of the full line spectrum equals the driving word' },
     { name: 'Odd Knot Fixed-Point Residual', pass: fpErr < 1e-12, detail: (roots.length === 2 ? '±' + roots[1].toFixed(4) : '0') + ' · residual ' + fpErr.toExponential(1) },
     { name: 'Critical Gain Monotonicity', pass: monoOk, detail: `g_c(2)=${g2.toFixed(4)} > g_c(3) > g_c(5) > g_c(7)=${g7.toFixed(4)}` },
     { name: 'Hopf Detector Consistency', pass: hopfOk, detail: `R²=${(d.radius ** 2).toFixed(4)}, hole=${d.hole ? 1 : 0}, det=${d.detector}` },
@@ -1824,8 +2252,16 @@ function updateInvariants() {
     { name: 'Ω Defining Identity', pass: Math.abs(OMEGA - Math.exp(-OMEGA)) < 1e-14, detail: `Ω=${OMEGA.toFixed(12)}, |Ω − e^(−Ω)|=${Math.abs(OMEGA - Math.exp(-OMEGA)).toExponential(1)}` },
     { name: 'Ω Fixed by Every Prime Layer', pass: omegaLayerResidual() < 1e-14, detail: `max |T_p(Ω) − Ω| over p ≤ 31 = ${omegaLayerResidual().toExponential(1)}` },
   ];
-  const tb = byId('spec-invariants');
-  tb.innerHTML = lastInvariants.map((inv, i) => `<tr><td class="mono">${i + 1}</td><td><strong>${inv.name}</strong></td><td><span class="badge ${inv.pass ? 'pass' : 'fail'}">${inv.pass ? 'PASS' : 'FAIL'}</span></td><td class="mono">${inv.detail}</td></tr>`).join('');
+  lastConjecturalChecks = [
+    { name: 'Standard Recamán repeats 42', pass: ddState.standard?.seq[20] === 42 && ddState.standard?.seq[24] === 42, detail: ddState.standard ? `a₂₀=${ddState.standard.seq[20]}, a₂₄=${ddState.standard.seq[24]}` : 'pending' },
+    { name: 'Strict dedup has zero repeats in this run', pass: ddState.protocols[1]?.dupCollisions === 0, detail: ddState.protocols[1] ? `duplicates = ${ddState.protocols[1].dupCollisions} (n=${wtState.n})` : 'pending' },
+  ];
+  renderChecks('spec-invariants', lastInvariants);
+  renderChecks('conjectural-invariants', lastConjecturalChecks);
+}
+
+function renderChecks(id, checks) {
+  byId(id).innerHTML = checks.map((inv, i) => `<tr><td class="mono">${i + 1}</td><td><strong>${inv.name}</strong></td><td><span class="badge ${inv.pass ? 'pass' : 'fail'}">${inv.pass ? 'PASS' : 'FAIL'}</span></td><td class="mono">${inv.detail}</td></tr>`).join('');
 }
 
 function omegaLayerResidual() {
@@ -1836,6 +2272,7 @@ function copySpecMarkdown(btn) {
   const u = units.get(selected);
   const sc = Number(byId('rg-scale').value);
   const meta = RG_META[sc];
+  const checkLine = inv => '- ' + inv.name + ': ' + (inv.pass ? 'PASS' : 'FAIL') + ' (' + inv.detail + ')';
   const md = [
     '# Prime Forms settings', '',
     '- Unit: ' + u.label,
@@ -1844,7 +2281,8 @@ function copySpecMarkdown(btn) {
     '- Logistic r and mode: ' + byId('helix-r').value + ', ' + byId('helix-mode').value,
     '- Gain sweep: ' + byId('gain-center').value + ' ± ' + byId('gain-sweep').value,
     '- Ω prime pair: ' + omegaPair().join(' → '), '', '## Model checks',
-    ...lastInvariants.map(inv => '- ' + inv.name + ': ' + (inv.pass ? 'PASS' : 'FAIL') + ' (' + inv.detail + ')'),
+    ...lastInvariants.map(checkLine), '', '## Conjectural · Recamán finite-run checks',
+    ...lastConjecturalChecks.map(checkLine),
   ].join('\n');
 
   const ta = document.createElement('textarea');
@@ -1893,6 +2331,7 @@ function render() {
   byId('drive').options[1].disabled = !unit.cycle;
   if (!unit.cycle && byId('drive').value === 'cycle') byId('drive').value = 'word';
 
+  renderChain();
   drawSpectrum();
   drawRG(animTime);
   renderDimension();
@@ -1918,12 +2357,13 @@ byId('top-play').addEventListener('click', () => {
 byId('top-copy-spec').addEventListener('click', (e) => copySpecMarkdown(e.currentTarget));
 byId('spec-copy-btn').addEventListener('click', (e) => copySpecMarkdown(e.currentTarget));
 
-// Tab 1 listeners
+// Lattice and Hopf listeners
 byId('rg-scale').addEventListener('input', () => drawRG(animTime));
+byId('rg-source').addEventListener('change', () => drawRG(animTime));
 byId('rg-save').addEventListener('click', () => saveCanvasPNG(byId('canvas-rg'), 'c32z-rg-layer-' + byId('rg-scale').value + '.png'));
 for (const id of ['dimension-view', 'dimension-drive', 'dimension-bias', 'dimension-floor']) byId(id).addEventListener('input', renderDimension);
 
-// Tab 3 listeners
+// Prime Forms listeners
 for (const id of ['gallery-angle', 'gallery-knot-r', 'gallery-knot-e', 'gallery-folds']) byId(id).addEventListener('input', paintGallery);
 byId('gallery-seal').addEventListener('click', () => { byId('helix-mode').value = 'mirror'; byId('helix-r').value = '3.91'; byId('helix-seed').value = '0.37'; renderHelix(); });
 byId('gallery-drift').addEventListener('click', () => { byId('helix-mode').value = 'roundoff'; byId('helix-r').value = '3.91'; byId('helix-seed').value = '0.37'; renderHelix(); });
@@ -1935,7 +2375,7 @@ byId('helix-threshold').addEventListener('click', () => {
   renderHelix();
 });
 
-// Tab 4 & Tab 5 listeners
+// Unit tree, gain and research listeners
 for (const id of ['precision', 'uncap', 'rule', 'rule-digit', 'rule-height', 'rule-order']) byId(id).addEventListener('change', render);
 for (const id of ['drive', 'rate', 'mirror', 'slot']) byId(id).addEventListener('change', drawSpectrum);
 for (const id of ['gain-center', 'gain-sweep']) byId(id).addEventListener('input', renderGainProbe);
@@ -1945,37 +2385,830 @@ byId('omega-gain').addEventListener('input', renderOmega);
 byId('omega-gain-e').addEventListener('click', () => { byId('omega-gain').value = Math.E.toFixed(2); renderOmega(); });
 byId('omega-save').addEventListener('click', () => saveCanvasPNG(byId('omega-art'), 'c32z-omega-towers.png'));
 
-// Unified 60fps loop
-const animatedViews = new Map([
-  [byId('wrap-rg'), () => drawRG(animTime)],
-  [byId('dimension-canvas'), () => paintDimension(animTime * 1000)],
-]);
-const visibleViews = new Set(animatedViews.keys());
-if (typeof IntersectionObserver === 'function') {
-  const visibility = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      if (entry.isIntersecting) {
-        visibleViews.add(entry.target);
-        animatedViews.get(entry.target)();
-      } else {
-        visibleViews.delete(entry.target);
-      }
-    }
-  });
-  for (const panel of animatedViews.keys()) visibility.observe(panel);
+// Obstructions lab (Recamán walls, photonic blockade)
+let recN = 90;
+const customWalls = new Set([12, 27]);
+let recData = { seq: [], steps: [], maxVal: 1, rate: 0, voids: [], visited: new Set() };
+
+function computeRecaman() {
+  const seq = [0], visited = new Set([0]), steps = [];
+  let obs = 0, maxVal = 1;
+  for (let n = 1; n <= recN; n++) {
+    const prev = seq[n - 1], down = prev - n;
+    const blocked = down < 0 || visited.has(down) || customWalls.has(down);
+    let next = blocked ? prev + n : down;
+    if (blocked) { obs++; while (customWalls.has(next)) next++; }
+    seq.push(next); visited.add(next);
+    if (next > maxVal) maxVal = next;
+    steps.push({ from: prev, to: next, blocked });
+  }
+  for (const w of customWalls) if (w > maxVal && w <= maxVal + 30) maxVal = w;
+  const voids = [];
+  for (let k = 0; k <= maxVal; k++) if (!visited.has(k)) voids.push(k);
+  recData = { seq, steps, maxVal, rate: (obs / recN) * 100, voids, visited };
+  byId('rec-rate').textContent = recData.rate.toFixed(1) + '%';
+  byId('rec-void').textContent = voids.length ? String(voids[0]) : 'none';
+  byId('rec-walls').textContent = String(customWalls.size);
+  byId('rec-max').textContent = String(maxVal);
+  if (!isPlaying) drawRecaman(animTime);
 }
 
-let lastTs = 0;
-function loop(ts) {
-  if (!lastTs) lastTs = ts;
-  const dt = Math.min(0.05, (ts - lastTs) / 1000);
-  lastTs = ts;
-  if (isPlaying) {
-    animTime += dt;
-    for (const panel of visibleViews) animatedViews.get(panel)();
+function drawRecaman(t) {
+  const c = byId('canvas-rec'), wrap = byId('wrap-rec');
+  const w = wrap.clientWidth || 720, h = wrap.clientHeight || 390;
+  if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#0f2d55'; ctx.fillRect(0, 0, w, h);
+  const pad = 28, axisY = Math.round(h * 0.45), stripY = Math.round(h * 0.78), stripH = Math.round(h * 0.14);
+  const maxV = Math.max(10, recData.maxVal);
+  const xFor = (v) => pad + (v / maxV) * (w - pad * 2);
+
+  ctx.strokeStyle = '#3d5f96'; ctx.lineWidth = 1.4;
+  ctx.beginPath(); ctx.moveTo(pad, axisY); ctx.lineTo(w - pad, axisY); ctx.stroke();
+
+  const maxR = Math.min(axisY - 16, stripY - axisY - 18);
+  const pulseIdx = recData.steps.length ? Math.floor((t * 4.5) % recData.steps.length) : -1;
+  recData.steps.forEach((st, i) => {
+    const x1 = xFor(st.from), x2 = xFor(st.to), cx = 0.5 * (x1 + x2), rx = Math.abs(x2 - x1) * 0.5;
+    if (rx < 0.5) return;
+    const ry = Math.min(rx, maxR);
+    ctx.beginPath();
+    if (st.blocked) {
+      ctx.ellipse(cx, axisY, rx, ry, 0, Math.PI, 0, false);
+      ctx.strokeStyle = i === pulseIdx ? '#eef3ff' : 'rgba(163,155,213,0.58)';
+    } else {
+      ctx.ellipse(cx, axisY, rx, ry, 0, 0, Math.PI, false);
+      ctx.strokeStyle = i === pulseIdx ? '#ffffff' : 'rgba(191,217,245,0.68)';
+    }
+    ctx.lineWidth = i === pulseIdx ? 2.5 : 1.15;
+    ctx.stroke();
+    ctx.globalAlpha = 0.14; ctx.lineWidth = 7; ctx.stroke(); ctx.globalAlpha = 1;
+  });
+
+  for (const wall of customWalls) {
+    if (wall > maxV) continue;
+    const x = xFor(wall);
+    ctx.save(); ctx.strokeStyle = '#ff8a3c'; ctx.lineWidth = 2; ctx.setLineDash([4, 3]);
+    ctx.beginPath(); ctx.moveTo(x, 16); ctx.lineTo(x, stripY + stripH); ctx.stroke(); ctx.restore();
+    artDot(ctx, x, axisY, 5, '#ff8a3c');
+    ctx.fillStyle = '#d6ba73'; ctx.font = '700 10px monospace'; ctx.textAlign = 'center';
+    ctx.fillText('W:' + wall, x, 12);
   }
-  requestAnimationFrame(loop);
+
+  ctx.fillStyle = '#0b2447'; ctx.strokeStyle = '#3d5f96'; ctx.lineWidth = 1;
+  ctx.fillRect(pad, stripY, w - pad * 2, stripH); ctx.strokeRect(pad, stripY, w - pad * 2, stripH);
+  const tw = Math.max(1.5, Math.min(4, ((w - pad * 2) / maxV) * 0.65));
+  for (const v of recData.voids) {
+    ctx.fillStyle = customWalls.has(v) ? '#ff8a3c' : 'rgba(214,186,115,0.88)';
+    ctx.fillRect(xFor(v) - tw / 2, stripY + 4, tw, stripH - 8);
+  }
 }
+
+// Photonic Blockade & Light-Cone Obstructions (45-degree null rays)
+const blockades = [{ nx: 0.36, ny: 0.34, cd: 0 }, { nx: 0.58, ny: 0.58, cd: 0 }, { nx: 0.72, ny: 0.30, cd: 0 }];
+const photons = [];
+let phoAccum = 0, phoT = 1, phoR = 1;
+
+function drawPhotonic(dt) {
+  byId('pho-unit-txt').textContent = units.get(selected).label;
+  const c = byId('canvas-pho'), wrap = byId('wrap-pho');
+  const w = wrap.clientWidth || 720, h = wrap.clientHeight || 390;
+  if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#0f2d55'; ctx.fillRect(0, 0, w, h);
+
+  const anh = Number(byId('pho-anh').value);
+  const useBg = byId('pho-bg').checked;
+  const raw = byId('uncap').checked;
+  const dig = [...visibleDigits].slice(0, 9);
+  const layers = useBg ? dig.map((d, i) => ({ nx: 0.14 + (i / Math.max(1, dig.length - 1)) * 0.74, h: towerHeight(d, raw) })).filter((l) => l.h > 0) : [];
+  const cavR = Math.max(16, Math.min(w, h) * 0.052);
+
+  if (isPlaying) {
+    for (const b of blockades) if (b.cd > 0) b.cd = Math.max(0, b.cd - dt * 1.4);
+    phoAccum += dt;
+    if (phoAccum >= 0.15) {
+      phoAccum = 0;
+      const up = Math.random() < 0.5 ? -1 : 1;
+      const startY = (0.18 + Math.random() * 0.64) * h;
+      photons.push({ x: 14, y: startY, vx: Math.SQRT1_2, vy: up * Math.SQRT1_2, refl: false, tr: [] });
+    }
+    const dist = Math.min(w, h) * 0.45 * dt;
+    for (let i = photons.length - 1; i >= 0; i--) {
+      const p = photons[i];
+      p.tr.push([p.x, p.y]); if (p.tr.length > 14) p.tr.shift();
+      const px0 = p.x; p.x += p.vx * dist; p.y += p.vy * dist;
+      // Reflect cleanly at top/bottom waveguide walls along 45° null rays
+      if (p.y < 10) { p.y = 10; p.vy = Math.abs(p.vy); }
+      else if (p.y > h - 10) { p.y = h - 10; p.vy = -Math.abs(p.vy); }
+
+      if (!p.refl) {
+        for (const b of blockades) {
+          if (Math.hypot(p.x - b.nx * w, p.y - b.ny * h) < cavR) {
+            const prob = anh * (b.cd > 0.05 ? 0.95 : 0.45 + 0.5 * anh);
+            b.cd = 1;
+            if (Math.random() < prob) {
+              p.refl = true; p.vx = -Math.SQRT1_2; p.vy = -p.vy; phoR++; break;
+            }
+          }
+        }
+        if (!p.refl) {
+          for (const l of layers) {
+            if (px0 < l.nx * w && p.x >= l.nx * w && Math.random() < (l.h / 3) * 0.46 * (0.35 + 0.65 * anh)) {
+              p.refl = true; p.vx = -Math.SQRT1_2; phoR++; break;
+            }
+          }
+        }
+      }
+      if (p.x > w + 10) { if (!p.refl) phoT++; photons.splice(i, 1); }
+      else if (p.x < -10) photons.splice(i, 1);
+    }
+    if (phoT + phoR > 160) { phoT = Math.round(phoT * 0.6); phoR = Math.round(phoR * 0.6); }
+  }
+
+  // 45° null light-cone lattice
+  ctx.strokeStyle = 'rgba(120,150,205,0.24)'; ctx.lineWidth = 1; ctx.beginPath();
+  for (let d = -h; d < w + h; d += 44) { ctx.moveTo(d, 0); ctx.lineTo(d + h, h); ctx.moveTo(d, h); ctx.lineTo(d + h, 0); }
+  ctx.stroke();
+
+  for (const l of layers) {
+    const lx = l.nx * w;
+    ctx.fillStyle = `rgba(191,217,245,${0.05 + 0.05 * l.h})`;
+    ctx.fillRect(lx - 3, 0, 6, h);
+  }
+  let shadowPx = 0;
+  for (const b of blockades) {
+    const bx = b.nx * w, by = b.ny * h, dep = (w - bx) * (0.28 + 0.72 * anh), hh = cavR * (0.85 + 0.55 * anh);
+    ctx.fillStyle = `rgba(255,138,60,${0.12 * anh})`;
+    ctx.beginPath(); ctx.moveTo(bx, by - cavR * 0.7); ctx.lineTo(bx + dep, by - hh * 1.45); ctx.lineTo(bx + dep, by + hh * 1.45); ctx.lineTo(bx, by + cavR * 0.7); ctx.closePath(); ctx.fill();
+    shadowPx += dep * (cavR * 0.7 + hh * 1.45);
+  }
+  for (const p of photons) {
+    if (p.tr.length > 1) artPath(ctx, [...p.tr, [p.x, p.y]], p.refl ? 'rgba(163,155,213,0.68)' : 'rgba(191,217,245,0.78)', 2);
+    artDot(ctx, p.x, p.y, 3, p.refl ? '#a39bd5' : '#bfd9f5');
+  }
+  for (const b of blockades) {
+    const bx = b.nx * w, by = b.ny * h;
+    ctx.strokeStyle = b.cd > 0.15 ? '#ff8a3c' : '#d6ba73'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(bx, by, cavR, 0, Math.PI * 2); ctx.stroke();
+    artDot(ctx, bx, by, 3, b.cd > 0.15 ? '#ff8a3c' : '#d6ba73');
+  }
+  const tPct = Math.round((phoT / Math.max(1, phoT + phoR)) * 100);
+  byId('pho-trans').textContent = tPct + '%';
+  byId('pho-refl').textContent = (100 - tPct) + '%';
+  byId('pho-shadow').textContent = Math.min(95, (shadowPx / Math.max(1, w * h)) * 100).toFixed(1) + '%';
+}
+
+
+byId('rec-n').addEventListener('input', (e) => { recN = Number(e.target.value); byId('rec-n-out').textContent = String(recN); computeRecaman(); });
+byId('rec-clear').addEventListener('click', () => { customWalls.clear(); computeRecaman(); });
+byId('rec-inject').addEventListener('click', () => {
+  const cand = recData.seq.filter((v) => v > 0 && !customWalls.has(v));
+  customWalls.add(cand.length ? cand[Math.floor(Math.random() * cand.length)] : Math.max(1, Math.floor(Math.random() * 60)));
+  computeRecaman();
+});
+byId('rec-save').addEventListener('click', () => saveCanvasPNG(byId('canvas-rec'), 'c32z-recaman-obstructions.png'));
+byId('canvas-rec').addEventListener('click', (e) => {
+  const rect = e.currentTarget.getBoundingClientRect(), pad = 28;
+  const val = Math.max(1, Math.min(recData.maxVal, Math.round(((e.clientX - rect.left - pad) / (rect.width - pad * 2)) * Math.max(10, recData.maxVal))));
+  if (customWalls.has(val)) customWalls.delete(val); else customWalls.add(val);
+  computeRecaman();
+});
+byId('pho-anh').addEventListener('input', (e) => { byId('pho-anh-out').textContent = Number(e.target.value).toFixed(2); });
+byId('pho-clear').addEventListener('click', () => { blockades.length = 0; phoT = 1; phoR = 1; drawPhotonic(0); });
+byId('pho-save').addEventListener('click', () => saveCanvasPNG(byId('canvas-pho'), 'c32z-photonic-blockade.png'));
+byId('canvas-pho').addEventListener('click', (e) => {
+  const rect = e.currentTarget.getBoundingClientRect(), x = e.clientX - rect.left, y = e.clientY - rect.top;
+  const idx = blockades.findIndex((b) => Math.hypot(b.nx * rect.width - x, b.ny * rect.height - y) < 24);
+  if (idx !== -1) blockades.splice(idx, 1); else blockades.push({ nx: x / rect.width, ny: y / rect.height, cd: 0 });
+  drawPhotonic(0);
+});
+
+
+// Wall trees and dedup scenarios (Gemini)
+// Precompute fast prime sieve up to 400,000 for O(1) Prime Forbidden wall checks
+const SIEVE_MAX = 400000;
+const isPrimeArr = new Uint8Array(SIEVE_MAX);
+(function buildPrimeSieve() {
+  isPrimeArr.fill(1);
+  isPrimeArr[0] = 0; isPrimeArr[1] = 0;
+  for (let p = 2; p * p < SIEVE_MAX; p++) {
+    if (isPrimeArr[p]) {
+      for (let m = p * p; m < SIEVE_MAX; m += p) isPrimeArr[m] = 0;
+    }
+  }
+})();
+
+const wtWalls = new Set([12, 27, 42]);
+const wtState = {
+  n: 1024,
+  filter: 'none',
+  seq: new Int32Array(1025),
+  codes: new Uint8Array(1025),
+  counts: [0, 0, 0, 0],
+  maxStreak: 0,
+  minVoid: 0,
+  maxVal: 1,
+  ms: 0,
+  lattice: new Uint8Array(1024),
+};
+
+const ddState = {
+  protocols: [],
+  standard: null,
+  active: null,
+  collisionLattice: new Uint8Array(1024),
+};
+
+function isFilterWalled(v, filterMode) {
+  if (v < 0) return false;
+  if (filterMode === 'mod3') return v % 3 === 0 && v > 0;
+  if (filterMode === 'mod5') return v % 5 === 0 && v > 0;
+  if (filterMode === 'prime') return v < SIEVE_MAX ? isPrimeArr[v] === 1 : false;
+  if (filterMode === 'custom') return wtWalls.has(v);
+  return false;
+}
+
+// Panel 2.1 Kernel: Ultra-fast TypedArray Recamán Hierarchical Wall Tree
+function computeWallTree() {
+  const t0 = performance.now();
+  const n = wtState.n;
+  const filter = wtState.filter;
+  const seq = new Int32Array(n + 1);
+  const codes = new Uint8Array(n + 1);
+
+  let cap = Math.max(65536, n * 16);
+  let visited = new Uint8Array(cap);
+  const ensureCap = (val) => {
+    if (val >= cap) {
+      let nextCap = cap;
+      while (val >= nextCap) nextCap <<= 1;
+      const grown = new Uint8Array(nextCap);
+      grown.set(visited);
+      visited = grown;
+      cap = nextCap;
+    }
+  };
+
+  seq[0] = 0;
+  visited[0] = 1;
+  let c0 = 0, c1 = 0, c2 = 0, c3 = 0;
+  let streak = 0, maxStreak = 0, maxVal = 0;
+
+  for (let i = 1; i <= n; i++) {
+    const prev = seq[i - 1];
+    const down = prev - i;
+    let code = 0;
+    let next = down;
+
+    if (down < 0) {
+      code = 1; // Floor Boundary Wall
+      next = prev + i;
+    } else if (isFilterWalled(down, filter)) {
+      code = 3; // Custom/Filter Wall
+      next = prev + i;
+    } else if (down < cap && visited[down]) {
+      code = 2; // History Memory Wall
+      next = prev + i;
+    } else {
+      code = 0; // Free Down-Step
+    }
+
+    if (code !== 0 && filter === 'custom') {
+      while (wtWalls.has(next)) next++;
+    }
+
+    ensureCap(next);
+    seq[i] = next;
+    codes[i] = code;
+    visited[next] = 1;
+    if (next > maxVal) maxVal = next;
+
+    if (code === 0) { c0++; streak = 0; }
+    else {
+      if (code === 1) c1++; else if (code === 2) c2++; else c3++;
+      streak++;
+      if (streak > maxStreak) maxStreak = streak;
+    }
+  }
+
+  let minVoid = 0;
+  while (minVoid < cap && visited[minVoid]) minVoid++;
+
+  // Map 1-to-1 (or stride-sampled when n > 1024) onto the 32x32 = 1024 lattice
+  const lattice = wtState.lattice;
+  const stride = n > 1024 ? n / 1024 : 1;
+  for (let k = 0; k < 1024; k++) {
+    const idx = n >= 1024 ? Math.min(n, 1 + Math.floor(k * stride)) : 1 + (k % n);
+    lattice[k] = codes[idx];
+  }
+
+  wtState.seq = seq;
+  wtState.codes = codes;
+  wtState.counts = [c0, c1, c2, c3];
+  wtState.maxStreak = maxStreak;
+  wtState.minVoid = minVoid;
+  wtState.maxVal = Math.max(1, maxVal);
+  wtState.ms = performance.now() - t0;
+
+  const inv = 100 / n;
+  byId('wt-kpi-ms').textContent = wtState.ms.toFixed(2) + ' ms';
+  byId('wt-kpi-free').textContent = (c0 * inv).toFixed(1) + '%';
+  byId('wt-kpi-floor').textContent = (c1 * inv).toFixed(1) + '%';
+  byId('wt-kpi-mem').textContent = (c2 * inv).toFixed(1) + '%';
+  byId('wt-kpi-filt').textContent = (c3 * inv).toFixed(1) + '%';
+  byId('wt-kpi-streak').textContent = String(maxStreak);
+  byId('wt-kpi-void').textContent = String(minVoid);
+  byId('wt-lattice-lbl').textContent = n === 1024 ? 'Live lattice map (32×32 · 1:1)'
+    : n > 1024 ? `Live lattice map (stride ${(n / 1024).toFixed(0)}×)`
+    : `Live lattice map (tiled n=${n})`;
+
+  drawWallTree();
+  drawMiniLattice();
+}
+
+function drawWallTree() {
+  const c = byId('canvas-wt'), wrap = byId('wrap-wt');
+  const w = wrap.clientWidth || 680, h = wrap.clientHeight || 300;
+  if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#0f2d55';
+  ctx.fillRect(0, 0, w, h);
+
+  const n = wtState.n;
+  const counts = wtState.counts;
+  const treeH = Math.round(h * 0.56);
+  const rootX = w * 0.5, rootY = 26;
+  const labels = ['0 · Free Down', '1 · Floor (<0)', '2 · Memory (V)', '3 · Filter/Wall'];
+  const colors = ['#bfd9f5', '#d6ba73', '#a39bd5', '#ff8a3c'];
+
+  // Draw hierarchical root -> 4 wall class branches
+  const colW = (w - 40) / 4;
+  for (let i = 0; i < 4; i++) {
+    const frac = counts[i] / n;
+    const tx = 20 + colW * (i + 0.5);
+    const ty = treeH - 32;
+    const lw = Math.max(1.5, Math.min(20, frac * 34));
+
+    ctx.strokeStyle = colors[i];
+    ctx.globalAlpha = frac > 0 ? 0.78 : 0.18;
+    ctx.lineWidth = lw;
+    ctx.beginPath();
+    ctx.moveTo(rootX, rootY + 8);
+    ctx.bezierCurveTo(rootX, rootY + 52, tx, ty - 48, tx, ty);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    // Leaf node badge
+    ctx.fillStyle = '#0b2447';
+    ctx.strokeStyle = colors[i];
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.arc(tx, ty, 7, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+
+    ctx.fillStyle = colors[i];
+    ctx.font = '700 11px ui-monospace,monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(`${counts[i]} (${(frac * 100).toFixed(1)}%)`, tx, ty + 20);
+    ctx.fillStyle = '#9fb0cf';
+    ctx.font = '10px ui-monospace,monospace';
+    ctx.fillText(labels[i], tx, ty + 33);
+  }
+
+  // Root pill
+  ctx.fillStyle = '#0b2447'; ctx.strokeStyle = '#bfd9f5'; ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.roundRect ? ctx.roundRect(rootX - 66, rootY - 11, 132, 22, 6) : ctx.rect(rootX - 66, rootY - 11, 132, 22);
+  ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#f4f7fc'; ctx.font = '700 11px ui-monospace,monospace'; ctx.textAlign = 'center';
+  ctx.fillText(`Step Stream n=${n}`, rootX, rootY + 4);
+
+  // Compact trajectory / arc strip underneath (switches cleanly to dense strip when n > 200)
+  const stripTop = treeH + 14;
+  const stripH = h - stripTop - 14;
+  const padX = 18, stripW = w - padX * 2;
+  ctx.fillStyle = '#0b2447';
+  ctx.strokeStyle = '#3d5f96';
+  ctx.lineWidth = 1;
+  ctx.fillRect(padX, stripTop, stripW, stripH);
+  ctx.strokeRect(padX, stripTop, stripW, stripH);
+
+  const seq = wtState.seq, codes = wtState.codes, maxV = wtState.maxVal;
+  if (n <= 200) {
+    // Crisp arc strip for small n
+    const axisY = stripTop + stripH * 0.54;
+    ctx.strokeStyle = '#3d5f96';
+    ctx.beginPath(); ctx.moveTo(padX, axisY); ctx.lineTo(padX + stripW, axisY); ctx.stroke();
+    const xFor = (v) => padX + 6 + (v / maxV) * (stripW - 12);
+    const maxR = stripH * 0.42;
+    for (let i = 1; i <= n; i++) {
+      const x1 = xFor(seq[i - 1]), x2 = xFor(seq[i]);
+      const cx = (x1 + x2) * 0.5, rx = Math.abs(x2 - x1) * 0.5;
+      if (rx < 0.4) continue;
+      ctx.beginPath();
+      ctx.ellipse(cx, axisY, rx, Math.min(rx, maxR), 0, codes[i] === 0 ? 0 : Math.PI, codes[i] === 0 ? Math.PI : 0, false);
+      ctx.strokeStyle = colors[codes[i]];
+      ctx.globalAlpha = 0.72;
+      ctx.lineWidth = 1.1;
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  } else {
+    // Ultra-fast dense trajectory & wall-code barcode strip for n > 200
+    const samples = Math.min(n, Math.floor(stripW));
+    const step = n / samples;
+    const barH = 12;
+    // Top barcode: wall code per step
+    for (let px = 0; px < samples; px++) {
+      const idx = Math.min(n, 1 + Math.floor(px * step));
+      ctx.fillStyle = colors[codes[idx]];
+      ctx.fillRect(padX + (px / samples) * stripW, stripTop + 2, Math.ceil(stripW / samples), barH);
+    }
+    // Dense polyline below barcode
+    ctx.strokeStyle = '#bfd9f5';
+    ctx.lineWidth = 1.25;
+    ctx.beginPath();
+    const plotTop = stripTop + barH + 6, plotH = stripH - barH - 10;
+    for (let px = 0; px < samples; px++) {
+      const idx = Math.min(n, Math.floor(px * step));
+      const x = padX + (px / (samples - 1)) * stripW;
+      const y = plotTop + (1 - seq[idx] / maxV) * plotH;
+      if (px === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+
+  // Show custom wall markers when custom filter is active
+  if (wtState.filter === 'custom' && n <= 200) {
+    const xFor = (v) => padX + 6 + (v / maxV) * (stripW - 12);
+    for (const wall of wtWalls) {
+      if (wall <= maxV) {
+        const x = xFor(wall);
+        ctx.strokeStyle = '#ff8a3c'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(x, stripTop); ctx.lineTo(x, stripTop + stripH); ctx.stroke();
+      }
+    }
+  }
+}
+
+function drawMiniLattice() {
+  const c = byId('canvas-wt-lattice');
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#0f2d55';
+  ctx.fillRect(0, 0, 240, 240);
+  const colors = ['#bfd9f5', '#d6ba73', '#a39bd5', '#ff8a3c'];
+  const cell = 232 / 32;
+  for (let i = 0; i < 1024; i++) {
+    const x = i & 31, y = i >> 5;
+    ctx.fillStyle = colors[wtState.lattice[i]];
+    ctx.fillRect(4 + x * cell + 0.7, 4 + y * cell + 0.7, cell - 1.4, cell - 1.4);
+  }
+}
+
+// Panel 2.2 Kernel: 4 Deterministic Duplication & Deduplication Protocols
+function runDedupProtocol(id, name, n) {
+  const t0 = performance.now();
+  const seq = new Int32Array(n + 1);
+  const hitAtStep = new Uint16Array(n + 1);
+  const rerouted = new Uint8Array(n + 1);
+
+  let cap = Math.max(65536, n * 18);
+  let hits = new Uint16Array(cap);
+  const ensureCap = (val) => {
+    if (val >= cap) {
+      let nextCap = cap;
+      while (val >= nextCap) nextCap <<= 1;
+      const grown = new Uint16Array(nextCap);
+      grown.set(hits);
+      hits = grown;
+      cap = nextCap;
+    }
+  };
+
+  seq[0] = 0;
+  hits[0] = 1;
+  hitAtStep[0] = 1;
+  let uniqueCount = 1, dupCollisions = 0, maxMult = 1;
+  let firstDupVal = -1, firstDupStep = -1;
+  let maxVal = 0, lowestUnvisited = 1;
+
+  for (let i = 1; i <= n; i++) {
+    const prev = seq[i - 1];
+    const down = prev - i;
+    let next;
+
+    if (id === 'standard') {
+      if (down >= 0 && (down >= cap || hits[down] === 0)) next = down;
+      else next = prev + i;
+    } else if (id === 'strict') {
+      if (down >= 0 && (down >= cap || hits[down] === 0)) {
+        next = down;
+      } else {
+        next = prev + i;
+        ensureCap(next);
+        if (hits[next] > 0) {
+          rerouted[i] = 1;
+          while (next < cap && hits[next] > 0) next++;
+          ensureCap(next);
+        }
+      }
+    } else if (id === 'voidfill') {
+      if (down >= 0 && (down >= cap || hits[down] === 0)) {
+        next = down;
+      } else {
+        const up = prev + i;
+        ensureCap(up);
+        if (hits[up] === 0) {
+          next = up;
+        } else {
+          rerouted[i] = 1;
+          while (lowestUnvisited < cap && hits[lowestUnvisited] > 0) lowestUnvisited++;
+          ensureCap(lowestUnvisited);
+          next = lowestUnvisited;
+        }
+      }
+    } else {
+      // Capped Dedup (Max 2 Hits)
+      if (down >= 0 && (down >= cap || hits[down] === 0)) {
+        next = down;
+      } else {
+        next = prev + i;
+        ensureCap(next);
+        if (hits[next] >= 2) {
+          rerouted[i] = 1;
+          while (next < cap && hits[next] >= 2) next++;
+          ensureCap(next);
+        }
+      }
+    }
+
+    ensureCap(next);
+    seq[i] = next;
+    const hNow = ++hits[next];
+    hitAtStep[i] = hNow;
+    if (hNow === 1) uniqueCount++;
+    else {
+      dupCollisions++;
+      if (firstDupStep === -1) { firstDupVal = next; firstDupStep = i; }
+    }
+    if (hNow > maxMult) maxMult = hNow;
+    if (next > maxVal) maxVal = next;
+  }
+
+  let minVoid = 0;
+  while (minVoid < cap && hits[minVoid] > 0) minVoid++;
+
+  // Build hit-multiplicity histogram [1x, 2x, 3x, 4x, 5x+]
+  const hist = [0, 0, 0, 0, 0];
+  for (let v = 0; v <= maxVal; v++) {
+    const h = hits[v];
+    if (h === 0) continue;
+    if (h >= 5) hist[4]++; else hist[h - 1]++;
+  }
+
+  return {
+    id, name, seq, hitAtStep, rerouted,
+    uniqueCount, dupCollisions, maxMult,
+    firstDupVal, firstDupStep, minVoid,
+    maxVal: Math.max(1, maxVal),
+    hist,
+    ms: performance.now() - t0,
+  };
+}
+
+function computeDedupScenarios() {
+  const n = wtState.n;
+  const activeId = byId('dd-scenario').value;
+  const std = runDedupProtocol('standard', 'Standard Recamán (Unguarded Up-Step)', n);
+  const strict = runDedupProtocol('strict', 'Strict Dedup (Guarded Up-Step)', n);
+  const voidfill = runDedupProtocol('voidfill', 'Void-Fill Dedup (Lowest Unvisited)', n);
+  const capped = runDedupProtocol('capped', 'Capped Dedup (Max 2 Hits)', n);
+
+  ddState.protocols = [std, strict, voidfill, capped];
+  ddState.standard = std;
+  ddState.active = ddState.protocols.find((p) => p.id === activeId) || strict;
+
+  // Build 1024-cell collision mask for Panel 1.1 Lattice
+  const lat = ddState.collisionLattice;
+  const stride = n > 1024 ? n / 1024 : 1;
+  for (let k = 0; k < 1024; k++) {
+    const idx = n >= 1024 ? Math.min(n, 1 + Math.floor(k * stride)) : 1 + (k % n);
+    const stdHit = std.hitAtStep[idx];
+    const actReroute = ddState.active.rerouted[idx];
+    if (stdHit >= 3) lat[k] = 3;          // Coral: high-multiplicity collision hub
+    else if (stdHit === 2) lat[k] = 1;    // Gold: standard 2x collision
+    else if (actReroute) lat[k] = 2;      // Violet: dedup rerouted step
+    else lat[k] = 0;                      // Slate: clean unique step
+  }
+
+  byId('dd-summary-note').textContent =
+    `n=${n} · Standard duplicates: ${std.dupCollisions} vs ${ddState.active.id}: ${ddState.active.dupCollisions}`;
+
+  drawDedupTrace();
+  drawDedupHist();
+  renderDedupTable();
+  updateInvariants();
+}
+
+function drawDedupTrace() {
+  const c = byId('canvas-dd-trace'), wrap = byId('wrap-dd-trace');
+  const w = wrap.clientWidth || 520, h = wrap.clientHeight || 260;
+  if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#0f2d55';
+  ctx.fillRect(0, 0, w, h);
+
+  const std = ddState.standard, act = ddState.active;
+  if (!std || !act) return;
+  const n = wtState.n;
+  const padL = 44, padR = 14, padT = 22, padB = 24;
+  const plotW = w - padL - padR, plotH = h - padT - padB;
+  const maxY = Math.max(std.maxVal, act.maxVal, 10);
+
+  // Subtle horizontal grid
+  ctx.strokeStyle = '#3d5f96'; ctx.lineWidth = 1;
+  ctx.font = '10px ui-monospace,monospace'; ctx.fillStyle = '#9fb0cf'; ctx.textAlign = 'right';
+  for (let i = 0; i <= 3; i++) {
+    const py = padT + (plotH * i) / 3;
+    ctx.beginPath(); ctx.moveTo(padL, py); ctx.lineTo(w - padR, py); ctx.stroke();
+    ctx.fillText(String(Math.round(maxY * (1 - i / 3))), padL - 6, py + 3);
+  }
+
+  const samples = Math.min(n, Math.max(120, Math.floor(plotW)));
+  const step = n / samples;
+  const xFor = (idx) => padL + (idx / n) * plotW;
+  const yFor = (val) => padT + (1 - val / maxY) * plotH;
+
+  // Find first divergence step between Standard and Active Dedup
+  let divStep = -1;
+  for (let i = 1; i <= n; i++) {
+    if (std.seq[i] !== act.seq[i]) { divStep = i; break; }
+  }
+  if (divStep !== -1) {
+    const dx = xFor(divStep);
+    ctx.save(); ctx.strokeStyle = '#d6ba73'; ctx.setLineDash([4, 3]); ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(dx, padT); ctx.lineTo(dx, h - padB); ctx.stroke(); ctx.restore();
+    ctx.fillStyle = '#d6ba73'; ctx.textAlign = dx > w - 120 ? 'right' : 'left';
+    ctx.fillText(`Divergence @ n=${divStep}`, dx + (dx > w - 120 ? -5 : 5), padT + 10);
+  }
+
+  // Standard Recamán trace (Mint)
+  ctx.strokeStyle = 'rgba(191,217,245,0.82)'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let s = 0; s <= samples; s++) {
+    const idx = Math.min(n, Math.round(s * step));
+    const px = xFor(idx), py = yFor(std.seq[idx]);
+    if (s === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // Active Dedup trace (Violet)
+  ctx.strokeStyle = 'rgba(163,155,213,0.9)'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let s = 0; s <= samples; s++) {
+    const idx = Math.min(n, Math.round(s * step));
+    const px = xFor(idx), py = yFor(act.seq[idx]);
+    if (s === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // Mark collision hubs on Standard trace (Coral dots)
+  const hubStride = Math.max(1, Math.floor(n / 600));
+  for (let i = 1; i <= n; i += hubStride) {
+    if (std.hitAtStep[i] >= 2) {
+      artDot(ctx, xFor(i), yFor(std.seq[i]), std.hitAtStep[i] >= 3 ? 3 : 2, '#ff8a3c');
+    }
+  }
+
+  // Top legend
+  ctx.textAlign = 'left'; ctx.font = '600 10.5px ui-monospace,monospace';
+  ctx.fillStyle = '#bfd9f5'; ctx.fillText('— Standard', padL + 4, 13);
+  ctx.fillStyle = '#a39bd5'; ctx.fillText(`— ${act.id}`, padL + 86, 13);
+  ctx.fillStyle = '#ff8a3c'; ctx.fillText('● Hubs', padL + 166, 13);
+}
+
+function drawDedupHist() {
+  const c = byId('canvas-dd-hist'), wrap = byId('wrap-dd-hist');
+  const w = wrap.clientWidth || 300, h = wrap.clientHeight || 260;
+  if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#0f2d55';
+  ctx.fillRect(0, 0, w, h);
+
+  const std = ddState.standard, act = ddState.active;
+  if (!std || !act) return;
+  const labels = ['1x', '2x', '3x', '4x', '5x+'];
+  const padL = 16, padR = 16, padT = 32, padB = 30;
+  const plotW = w - padL - padR, plotH = h - padT - padB;
+  const maxLog = Math.log10(Math.max(10, ...std.hist, ...act.hist) + 1);
+
+  ctx.fillStyle = '#f4f7fc'; ctx.font = '700 11px ui-monospace,monospace'; ctx.textAlign = 'left';
+  ctx.fillText('Hit Multiplicity (log scale)', padL, 17);
+
+  const groupW = plotW / 5;
+  for (let i = 0; i < 5; i++) {
+    const gx = padL + i * groupW;
+    const bw = groupW * 0.34;
+
+    const hStd = (Math.log10(std.hist[i] + 1) / maxLog) * plotH;
+    const hAct = (Math.log10(act.hist[i] + 1) / maxLog) * plotH;
+
+    // Standard bar (Mint / Coral for >=2x)
+    ctx.fillStyle = i === 0 ? '#bfd9f5' : '#ff8a3c';
+    ctx.fillRect(gx + groupW * 0.12, padT + plotH - hStd, bw, hStd);
+
+    // Active Dedup bar (Violet)
+    ctx.fillStyle = '#a39bd5';
+    ctx.fillRect(gx + groupW * 0.52, padT + plotH - hAct, bw, hAct);
+
+    ctx.fillStyle = '#9fb0cf'; ctx.font = '10px ui-monospace,monospace'; ctx.textAlign = 'center';
+    ctx.fillText(labels[i], gx + groupW * 0.5, h - 10);
+    if (std.hist[i] > 0) {
+      ctx.fillStyle = i === 0 ? '#bfd9f5' : '#ff8a3c';
+      ctx.fillText(String(std.hist[i]), gx + groupW * 0.29, padT + plotH - hStd - 4);
+    }
+    if (act.hist[i] > 0) {
+      ctx.fillStyle = '#a39bd5';
+      ctx.fillText(String(act.hist[i]), gx + groupW * 0.69, padT + plotH - hAct - 4);
+    }
+  }
+}
+
+function renderDedupTable() {
+  const actId = ddState.active.id;
+  byId('dd-table-body').innerHTML = ddState.protocols.map((p) => `
+    <tr class="${p.id === actId ? 'is-active-proto' : ''}">
+      <td>${p.name}</td>
+      <td>${p.uniqueCount}</td>
+      <td>${p.dupCollisions}</td>
+      <td>${p.maxMult}x</td>
+      <td>${p.firstDupStep === -1 ? 'none' : `${p.firstDupVal} @ n=${p.firstDupStep}`}</td>
+      <td>${p.minVoid}</td>
+      <td>${p.ms.toFixed(2)}</td>
+    </tr>
+  `).join('');
+}
+
+function setWallStepCount(val) {
+  const clamped = Math.max(24, Math.min(16384, Math.round(val) || 1024));
+  wtState.n = clamped;
+  byId('wt-n-slider').value = String(clamped);
+  byId('wt-n-num').value = String(clamped);
+  document.querySelectorAll('.preset-btn').forEach((b) => {
+    b.setAttribute('aria-pressed', String(Number(b.dataset.n) === clamped));
+  });
+  computeWallTree();
+  computeDedupScenarios();
+  drawRG(animTime);
+}
+
+
+// Tab 2 listeners (2.1 Wall Trees + 2.2 Dedup Scenarios)
+document.querySelectorAll('.preset-btn').forEach((b) => {
+  b.addEventListener('click', () => setWallStepCount(Number(b.dataset.n)));
+});
+byId('wt-n-slider').addEventListener('input', (e) => setWallStepCount(Number(e.target.value)));
+byId('wt-n-num').addEventListener('change', (e) => setWallStepCount(Number(e.target.value)));
+byId('wt-filter').addEventListener('change', (e) => {
+  wtState.filter = e.target.value;
+  byId('wt-clear-walls').hidden = wtState.filter !== 'custom';
+  computeWallTree();
+  drawRG(animTime);
+});
+byId('wt-clear-walls').addEventListener('click', () => {
+  wtWalls.clear();
+  computeWallTree();
+});
+byId('canvas-wt').addEventListener('click', (e) => {
+  if (wtState.filter !== 'custom') {
+    wtState.filter = 'custom';
+    byId('wt-filter').value = 'custom';
+    byId('wt-clear-walls').hidden = false;
+  }
+  const rect = e.currentTarget.getBoundingClientRect();
+  const rel = Math.max(0, Math.min(1, (e.clientX - rect.left - 24) / Math.max(1, rect.width - 48)));
+  const val = Math.max(1, Math.round(rel * wtState.maxVal));
+  if (wtWalls.has(val)) wtWalls.delete(val); else wtWalls.add(val);
+  computeWallTree();
+});
+byId('wt-map-rg').addEventListener('click', () => {
+  byId('rg-source').value = 'walltree';
+  drawRG(animTime);
+  revealSection('lattice'); byId('lattice').scrollIntoView();
+});
+byId('wt-save').addEventListener('click', () => saveCanvasPNG(byId('canvas-wt'), 'c32z-wall-tree-n' + wtState.n + '.png'));
+
+byId('dd-scenario').addEventListener('change', () => {
+  computeDedupScenarios();
+  drawRG(animTime);
+});
+byId('dd-map-rg').addEventListener('click', () => {
+  byId('rg-source').value = 'dedup';
+  drawRG(animTime);
+  revealSection('lattice'); byId('lattice').scrollIntoView();
+});
+byId('dd-save').addEventListener('click', () => saveCanvasPNG(byId('canvas-dd-trace'), 'c32z-dedup-' + byId('dd-scenario').value + '.png'));
 
 
 function initShowcase() {
@@ -1993,9 +3226,13 @@ function initShowcase() {
     ['omega-light', ['Explore the ideal transmission feedback law x → exp(−g x).', () => byId('omega-light-note').textContent, () => 'omega-orbit']],
     ['order-of-waves', ['Reverse the prime layers and the signed difference reverses. Its leading wave runs at twice the drive frequency.', () => '5 → 7  /  7 → 5', () => 'wave-plate-image']],
     ['model-checks', ['Inspect the live checks and copy the settings for a repeatable run.', () => lastInvariants.filter(result => result.pass).length + ' of ' + lastInvariants.length + ' checks passing']],
+    ['chain', ['Every digit of c is a prime raised to a power. Three layers come apart and rebuild the number.', () => byId('chain-rebuild').textContent]],
+    ['units-compared', ['The same reading in all 14 units, with the modular reason each one ends or repeats.', () => 'metric ends · US customary repeats every 42 · nautical every 154']],
+    ['modular-cycle', ['The long-division remainders as a loop, and the same fraction as an exact cycle of the logistic map.', () => byId('cycle-note').textContent, () => 'cycle-art']],
+    ['authorship', ['Who made which part of this page.', () => 'Zolton Farkas · GPT and Codex · Gemini (Neon) · Claude']],
     ['thread-notes', ['Trace the original questions about digit towers, logistic mirrors, Catalan and CM vanishing through to the Ω wave plate.', () => 'Digit towers → quarter-turn → Catalan disk → Ω waves']],
   ]);
-  const stops = Array.from(document.querySelectorAll('.lab-menu a')).map(link => ({
+  const stops = Array.from(document.querySelectorAll('.lab-menu a:not([data-tour-exclude])')).map(link => ({
     link, name: link.textContent, target: link.getAttribute('href').slice(1),
   }));
   const canvas = byId('showcase-canvas');
@@ -2007,7 +3244,7 @@ function initShowcase() {
   let index = Math.max(0, linkedStop);
   let timer;
   let inView = true;
-  let playing = linkedStop < 0 && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let playing = !location.hash && !matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function drawPreview(sourceId) {
     const source = sourceId ? byId(sourceId()) : null;
@@ -2024,7 +3261,7 @@ function initShowcase() {
 
   function show() {
     const stop = stops[index];
-    const [description, detail, sourceId] = views.get(stop.target);
+    const [description, detail, sourceId] = views.get(stop.target) ?? ['', () => ''];
     byId('showcase-count').textContent = (index + 1) + ' / ' + stops.length;
     byId('showcase-screen').textContent = stop.name;
     byId('showcase-description').textContent = description;
@@ -2064,6 +3301,7 @@ function initShowcase() {
   play.addEventListener('click', () => { show(); setPlaying(!playing); });
   tour.addEventListener('focusin', event => { if (playing && event.target !== play) setPlaying(false); });
   open.addEventListener('click', () => setPlaying(false));
+  document.querySelector('.lab-menu a[data-tour-exclude]').addEventListener('click', () => setPlaying(false));
   stops.forEach((stop, position) => stop.link.addEventListener('click', () => {
     setPlaying(false);
     index = position;
@@ -2085,6 +3323,161 @@ function initShowcase() {
   setPlaying(playing);
 }
 
+// author tags on section titles
+function markAuthors() {
+  const by = {
+    'What this repository does': 'Zolton Farkas · Claude', 'The same speed in every unit system': 'Claude', 'The cycle behind the digits': 'Claude',
+    'Prime Forms showcase': 'GPT and Codex', 'Top-level configuration': 'GPT', 'Unit tree': 'GPT', 'Logistic fork': 'GPT',
+    'Lattice coarse-graining': 'Gemini · Claude', 'When does the hole disappear?': 'GPT · Gemini',
+    'Obstructions: Recamán walls': 'Gemini', 'Obstructions: photonic blockade': 'Gemini',
+    'Wall trees: why each Recamán step turned back': 'Gemini', 'Duplicates and three ways to constrain them': 'Gemini',
+    'Ω towers: one fixed point, many stabilities': 'GPT · Claude', 'Ω in a beam of light, and in the letters': 'GPT · Claude',
+    'The Order of Waves': 'Codex', 'From the original thread': 'Codex', 'One gain, many towers': 'GPT',
+    'Controls: which part is doing the work?': 'GPT', 'Model checks': 'Gemini · Claude',
+  };
+  for (const h2 of document.querySelectorAll('main h2')) {
+    const who = by[h2.textContent.trim()];
+    if (who && !h2.querySelector('.by')) h2.append(element('span', 'by', who));
+  }
+  const forms = byId('gallery-modes');
+  if (forms && !forms.querySelector('.by')) forms.append(element('span', 'by', 'Prime Forms drawings: GPT'));
+}
+
+// ---- minimizers: fold any section down to a one-line reference bar ----
+const MIN_KEY = 'c32z-minimized';
+const referenceTitles = ['Top-level configuration', 'Unit tree', 'Digit towers and phase slots', 'From the original thread',
+  'One gain, many towers', 'Controls: which part is doing the work?', 'Model checks', 'Who made what'];
+const minPanels = [];
+function redrawAll() {
+  try {
+    render(); renderOmega(); drawRG(animTime); paintDimension(animTime * 1000);
+    drawRecaman(animTime); drawPhotonic(0); drawWallTree(); drawMiniLattice(); drawDedupTrace(); drawDedupHist();
+  } catch (_) {}
+}
+function saveMinimized() {
+  try { localStorage.setItem(MIN_KEY, JSON.stringify(minPanels.filter((m) => m.panel.classList.contains('is-min')).map((m) => m.title))); } catch (_) {}
+}
+function setMinimized(entry, min, quiet) {
+  entry.panel.classList.toggle('is-min', min);
+  entry.bar.setAttribute('aria-expanded', String(!min));
+  if (!quiet) { if (!min) redrawAll(); saveMinimized(); markView(); }
+}
+function markView() {
+  const closed = new Set(minPanels.filter((m) => m.panel.classList.contains('is-min')).map((m) => m.title));
+  const expanded = byId('conjectural').open;
+  const state = expanded && closed.size === 0 ? 'all' : !expanded && closed.size === minPanels.length ? 'none'
+    : !expanded && closed.size === referenceTitles.length && referenceTitles.every((t) => closed.has(t)) ? 'cool' : '';
+  for (const b of document.querySelectorAll('.view-bar button')) b.setAttribute('aria-pressed', String(b.dataset.view === state));
+}
+function applyView(view) {
+  byId('conjectural').open = view === 'all';
+  for (const m of minPanels) setMinimized(m, view === 'none' || (view === 'cool' && referenceTitles.includes(m.title)), true);
+  redrawAll(); saveMinimized(); markView();
+}
+function revealSection(id) {
+  const target = byId(id);
+  if (!target) return;
+  const conjectural = target.closest('#conjectural');
+  if (conjectural) conjectural.open = true;
+  const own = target.closest('.panel, .showcase');
+  const panels = own ? [own] : [...target.querySelectorAll('.panel')];
+  let changed = false;
+  for (const m of minPanels) if (panels.includes(m.panel) && m.panel.classList.contains('is-min')) { setMinimized(m, false, true); changed = true; }
+  if (changed) { redrawAll(); saveMinimized(); markView(); }
+}
+function initMinimizers() {
+  const named = new Map([[byId('inspect'), 'Digit towers and phase slots'], [document.querySelector('nav.tree'), 'Unit tree'], [document.querySelector('.helix-lab'), 'Prime Forms and the logistic fork']]);
+  for (const panel of document.querySelectorAll('main .panel, main .showcase')) {
+    const h2 = panel.querySelector('h2');
+    let title = named.get(panel), who = '';
+    if (h2) {
+      const copy = h2.cloneNode(true);
+      const by = copy.querySelector('.by');
+      if (by) { who = by.textContent; by.remove(); }
+      title = title || copy.textContent.trim();
+    }
+    if (!title) continue;
+    const blurb = {
+      'Unit tree': 'Pick the unit: metric, US customary, nautical or normalized. Every other section follows it.',
+      'Digit towers and phase slots': 'The digits as factor towers, the optical phase model they drive, and the read-back of the word from its spectrum.',
+      'Prime Forms and the logistic fork': 'Six drawings made from the prime letters and two mirrored logistic orbits, with the controls that shape them.',
+      'Prime Forms showcase': 'An automatic tour of the main sections, with live previews.',
+      'Model checks': 'Live checks on the chain, the cycles, the spectrum, the knot, the gains and Ω.',
+      'Who made what': 'The author of every section: Zolton Farkas, GPT and Codex, Gemini (Neon), Claude.',
+    }[title];
+    const note = blurb ? { textContent: blurb } : panel.querySelector('.lead-note, .note, .thread-intro, td');
+    const bar = element('button', 'min-bar');
+    bar.type = 'button';
+    bar.append(element('strong', '', title));
+    if (who) bar.append(element('span', 'min-tag', who));
+    bar.append(element('span', 'min-desc', note ? note.textContent.trim().replace(/\s+/g, ' ') : ''), element('span', 'min-open', 'Open'));
+    bar.setAttribute('aria-label', 'Open section: ' + title);
+    const tools = element('div', 'panel-tools');
+    const btn = element('button', 'min-btn', 'Minimize');
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Minimize section: ' + title);
+    tools.append(btn);
+    panel.prepend(bar, tools);
+    const entry = { panel, bar, title };
+    minPanels.push(entry);
+    btn.addEventListener('click', () => setMinimized(entry, true));
+    bar.addEventListener('click', () => setMinimized(entry, false));
+  }
+  let stored = null;
+  try { stored = JSON.parse(localStorage.getItem(MIN_KEY)); } catch (_) {}
+  const closed = Array.isArray(stored) ? stored : referenceTitles;
+  for (const m of minPanels) setMinimized(m, closed.includes(m.title), true);
+  markView();
+  byId('conjectural').addEventListener('toggle', event => {
+    if (event.currentTarget.open) redrawAll();
+    markView();
+  });
+  for (const b of document.querySelectorAll('.view-bar button')) b.addEventListener('click', () => applyView(b.dataset.view));
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest?.('a[href^="#"]');
+    if (link) revealSection(link.getAttribute('href').slice(1));
+  }, true);
+  if (location.hash.length > 1) revealSection(location.hash.slice(1));
+}
+
+// Unified 60fps loop
+let frameDt = 0;
+const animatedViews = new Map([
+  [byId('wrap-rec'), () => drawRecaman(animTime)],
+  [byId('wrap-pho'), () => drawPhotonic(frameDt)],
+  [byId('wrap-rg'), () => drawRG(animTime)],
+  [byId('dimension-canvas'), () => paintDimension(animTime * 1000)],
+]);
+const visibleViews = new Set(animatedViews.keys());
+if (typeof IntersectionObserver === 'function') {
+  const visibility = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        visibleViews.add(entry.target);
+        animatedViews.get(entry.target)();
+      } else {
+        visibleViews.delete(entry.target);
+      }
+    }
+  });
+  for (const panel of animatedViews.keys()) visibility.observe(panel);
+}
+
+let lastTs = 0;
+function loop(ts) {
+  if (!lastTs) lastTs = ts;
+  const dt = Math.min(0.05, (ts - lastTs) / 1000);
+  lastTs = ts;
+  frameDt = dt;
+  if (isPlaying) {
+    animTime += dt;
+    for (const panel of visibleViews) animatedViews.get(panel)();
+  }
+  requestAnimationFrame(loop);
+}
+
+window.addEventListener('resize', () => { drawWallTree(); drawDedupTrace(); drawDedupHist(); drawRG(animTime); });
+
 window.onload = function () {
   renderGainProbe();
   renderResearchTower();
@@ -2092,6 +3485,14 @@ window.onload = function () {
   renderOmega();
   drawRG(animTime);
   paintDimension(animTime * 1000);
+  computeRecaman();
+  drawRecaman(animTime);
+  drawPhotonic(0);
+  computeWallTree();
+  computeDedupScenarios();
+  drawRG(animTime);
+  markAuthors();
+  initMinimizers();
   initShowcase();
   requestAnimationFrame(loop);
 };

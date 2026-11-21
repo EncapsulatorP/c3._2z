@@ -1,38 +1,10 @@
 # c3.2z ·  Power tower composition in physical constants like the speed of  light. Prime power tower composition Forms. Omega wave power towers
 
-<p align="center">
-  <a href="https://encapsulatorp.github.io/c3.2z/">
-    <img src="assets/c32z-walkthrough.svg" alt="c3.2z 5-Scene Interactive Walkthrough" width="100%">
-  </a>
-</p>
-
-<p align="center">
-  <strong><a href="https://encapsulatorp.github.io/c3.2z/">Launch Interactive Lab →</a></strong>
-  &nbsp;·&nbsp;
-  <code>0 Dependencies</code>
-  &nbsp;·&nbsp;
-  <code>TypedArray Wall &amp; Dedup Kernels</code>
-  &nbsp;·&nbsp;
-  <code>8 Live Invariants</code>
-</p>
-
-<details>
-<summary><strong>Technical Basics &amp; Non-Claims Contract (Click to expand)</strong></summary>
-
-- **01 · 3D Coarse-Graining Lattice:** 32×32 RG relief averaging discrete prime-factor heights and Recamán wall densities.
-- **02 · Recamán Wall Trees &amp; Dedup:** O(1) prime-sieve wall classifier comparing standard collisions (`a₂₀ = a₂₄ = 42`) against Strict Dedup (`0` duplicates).
-- **03 · Odd Mirror Knot &amp; Prime Rosette:** Antisymmetric cubic map `r·ξ − e·ξ³` paired with a 5-fold prime-letter rosette.
-- **04 · Ω = W(1) Prime Layers &amp; Optical Loop:** Prime pencil `Tₚ(x) = Ω·p^(Ω−x)` and Beer–Lambert feedback `xₙ₊₁ = exp(−xₙ)`.
-- **05 · Hopf Detector:** Supercritical limit cycle across IQ, Coherent Mirror Sum, and Power-only projections.
-- **Non-Claims:** Decimal digits of `c = 299,792,458 m/s` serve strictly as a deterministic symbolic test alphabet, not a physical derivation of `c`.
-
-</details>
-
-
-
-![Omega Stability](assets/omega-readme-banner.svg)
-
 This project studies **how perturbations travel through power towers and what survives a change of representation**. The analytic framework uses iterated logarithms to measure how a perturbation at the output of a tower propagates back through its layers. Prime Forms extends that inquiry by changing the units used to write the speed of light and reversing the order of prime-indexed maps.
+
+<p align="center">
+  <img src="assets/omega-readme-banner.svg" alt="Omega Stability" width="50%">
+</p>
 
 ## Analytic tower framework
 
@@ -54,7 +26,7 @@ The earlier work also uses $L_2(x)=\ln\ln x$ as a coordinate for numerical optim
 
 ## Explore the implementation
 
-Open [index.html](index.html) from a local checkout. The gallery combines a draggable lattice, prime forms, and feedback experiments. Neo developed the visual layout and the helper that exports the current settings and live checks as a Markdown specification.
+Open [index.html](index.html) in a browser from a local checkout to run Prime Lab. The gallery combines a draggable lattice, prime forms, and feedback experiments. Neo developed the visual layout and the helper that exports the current settings and live checks as a Markdown specification. The main tour cycles through 17 stops, including [From the original thread](index.html#thread-notes).
 
 | Screen | What you can examine |
 | --- | --- |
@@ -62,6 +34,14 @@ Open [index.html](index.html) from a local checkout. The gallery combines a drag
 | [Logistic fork](index.html#logistic-fork) | Even and odd mirror responses as the strands are swapped or biased |
 | [Hopf detector](index.html#dimensions) | Projecting an orbit to a detector and varying the pump setting |
 | [Gain sweep](index.html#gain-title) | Stability thresholds across a family of towers driven by one gain |
+
+<p align="center">
+  <a href="assets/c32z-walkthrough.png">
+    <img src="assets/c32z-walkthrough.svg" alt="Five scenes from Prime Lab" width="50%">
+  </a>
+</p>
+
+[Animated walkthrough (APNG)](assets/c32z-walkthrough.png)
 
 ## Reproduce the analytic sweep
 
@@ -74,8 +54,12 @@ The [reference outputs](outputs/omega_stability/) include the base sweep, the pe
 
 ## From the original thread
 
-The project grew from Zolton’s question about which patterns in the digits of the speed of light could survive a change in representation. The [original walkthrough](https://github.com/EncapsulatorP/c3._2z/blob/1ced156cc8c9f3e8c27d770afb229fc26c146d69/index.html) follows that question through the Goldbach and Collatz examples, the logistic quarter-turn, Catalan’s disk, and the prime-layer wave experiment.
+The project grew from Zolton’s question about which patterns in the digits of the speed of light could survive a change in representation. The [original walkthrough](index.html#thread-notes) follows that question through the Goldbach and Collatz examples, the logistic quarter-turn, Catalan’s disk, and the prime-layer wave experiment.
 
 [![Animated walkthrough of the unit tree, prime towers, and Ω wave plate](assets/prime-forms-walkthrough.png)](assets/prime-forms-walkthrough.png)
 
 [Still preview](assets/prime-forms-walkthrough-still.png) · [Animated SVG](assets/prime-forms-walkthrough.svg) · [Earlier gallery](pages/prime-forms.html)
+
+## Conjectural · Recamán and exclusion models
+
+The [Recamán lab](index.html#conjectural) compares wall filters, duplicate counts, and alternative step rules over finite runs. Each count refers to the selected rule and step count. A quantitative correspondence with the toy optical blockade remains an open question.
